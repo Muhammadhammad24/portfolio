@@ -1,0 +1,265 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+
+:root {
+  --green:       #00ff41;
+  --green-dim:   #00cc33;
+  --green-mid:   rgba(0,255,65,0.55);
+  --green-glow:  rgba(0,255,65,0.18);
+  --green-glow2: rgba(0,255,65,0.05);
+  --bg:          #030703;
+  --surface:     rgba(0,255,65,0.035);
+  --border:      rgba(0,255,65,0.11);
+  --border-hot:  rgba(0,255,65,0.32);
+  --text:        #e4ffe4;
+  --text-dim:    rgba(228,255,228,0.48);
+  --text-muted:  rgba(228,255,228,0.22);
+  --background: 120 100% 2%;
+  --foreground: 120 60% 97%;
+  --card: 120 50% 3%;
+  --card-foreground: 120 60% 97%;
+  --popover: 120 50% 3%;
+  --popover-foreground: 120 60% 97%;
+  --primary: 120 100% 50%;
+  --primary-foreground: 120 100% 2%;
+  --secondary: 120 20% 7%;
+  --secondary-foreground: 120 60% 97%;
+  --muted: 120 15% 7%;
+  --muted-foreground: 120 25% 50%;
+  --accent: 120 20% 9%;
+  --accent-foreground: 120 60% 97%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border-var: 120 25% 11%;
+  --input: 120 15% 7%;
+  --ring: 120 100% 50%;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    background-color: #030703;
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
+  code, pre, .mono { font-family: 'JetBrains Mono', monospace; }
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #030703; }
+::-webkit-scrollbar-thumb { background: #00aa22; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #00ff41; }
+
+/* Grid background — green only */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0,255,65,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,65,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Noise texture */
+body::before {
+  content: '';
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: 0.3;
+}
+
+/* Scanline */
+@keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
+.scanline {
+  position: fixed; top: 0; left: 0; width: 100%; height: 3px;
+  background: linear-gradient(transparent, rgba(0,255,65,0.07), transparent);
+  animation: scanline 12s linear infinite;
+  pointer-events: none; z-index: 100;
+}
+
+/* Marquee */
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.marquee-inner { animation: marquee 70s linear infinite; }
+
+/* Gradient text — pure green shimmer */
+.gradient-green {
+  background: linear-gradient(135deg, #00ff41 0%, #44ff44 35%, #00cc22 65%, #00ff41 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: shimmer-green 5s ease infinite;
+}
+@keyframes shimmer-green {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glow text */
+.glow-text { text-shadow: 0 0 18px rgba(0,255,65,0.65), 0 0 36px rgba(0,255,65,0.28); }
+
+/* Glass */
+.glass-cyber { background: var(--surface); backdrop-filter: blur(20px); border: 1px solid var(--border); }
+
+/* Blobs */
+@keyframes blob {
+  0%   { transform: translate(0,0) scale(1); }
+  33%  { transform: translate(28px,-45px) scale(1.1); }
+  66%  { transform: translate(-18px,18px) scale(0.9); }
+  100% { transform: translate(0,0) scale(1); }
+}
+.animate-blob { animation: blob 10s infinite; }
+.animation-delay-2000 { animation-delay: 2s; }
+.animation-delay-4000 { animation-delay: 4s; }
+
+/* Buttons */
+.btn-cyber {
+  position: relative;
+  background: transparent;
+  border: 1px solid rgba(0,255,65,0.5);
+  color: #00ff41;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.28s;
+  overflow: hidden;
+}
+.btn-cyber::before {
+  content: '';
+  position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0,255,65,0.14), transparent);
+  transition: left 0.38s;
+}
+.btn-cyber:hover::before { left: 100%; }
+.btn-cyber:hover {
+  background: rgba(0,255,65,0.09);
+  box-shadow: 0 0 18px rgba(0,255,65,0.18), inset 0 0 18px rgba(0,255,65,0.04);
+  color: #fff;
+  border-color: rgba(0,255,65,0.7);
+}
+.btn-cyber-fill {
+  background: #00ff41;
+  color: #000;
+  font-weight: 700;
+  border: 1px solid #00ff41;
+  transition: all 0.28s;
+}
+.btn-cyber-fill:hover {
+  background: #33ff55;
+  box-shadow: 0 0 28px rgba(0,255,65,0.5), 0 0 50px rgba(0,255,65,0.2);
+}
+
+/* Bracket corners */
+.bracket-card { position: relative; }
+.bracket-card::before, .bracket-card::after {
+  content: ''; position: absolute; width: 13px; height: 13px;
+  border-color: rgba(0,255,65,0.4); border-style: solid;
+  transition: all 0.28s;
+}
+.bracket-card::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+.bracket-card::after  { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+.bracket-card:hover::before, .bracket-card:hover::after {
+  border-color: rgba(0,255,65,0.7); width: 18px; height: 18px;
+}
+
+/* Float */
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.animate-float { animation: float 5s ease-in-out infinite; }
+
+/* Blink cursor */
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+.cursor::after { content: '█'; color: var(--green); animation: blink 1s step-end infinite; margin-left: 2px; font-size: 0.8em; }
+
+/* Progress bar */
+@keyframes pulse-bar { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+/* Static hover helpers */
+.social-icon-btn {
+  border: 1px solid rgba(0,255,65,0.14); color: rgba(0,255,65,0.5);
+}
+.social-icon-btn:hover {
+  border-color: #00ff41; color: #00ff41; box-shadow: 0 0 10px rgba(0,255,65,0.28);
+}
+.contact-icon-btn {
+  background: rgba(0,255,65,0.04); border: 1px solid rgba(0,255,65,0.12);
+}
+.contact-icon-btn:hover {
+  background: rgba(0,255,65,0.11); border-color: #00ff41;
+  box-shadow: 0 0 10px rgba(0,255,65,0.18);
+}
+.cyber-icon-sm { background: rgba(0,255,65,0.07); border: 1px solid rgba(0,255,65,0.12); }
+.cert-card { background: rgba(0,255,65,0.02); border: 1px solid rgba(0,255,65,0.09); cursor: default; }
+.cert-card:hover { border-color: rgba(0,255,65,0.28); box-shadow: 0 0 18px rgba(0,255,65,0.07); }
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Global descender fix — prevents g, y, p, q from clipping ── */
+p, h1, h2, h3, h4, h5, h6, span, div, a, button {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Syne font needs extra room for descenders at large sizes */
+.font-\[\'Syne\'\], [class*="font-['Syne']"] {
+  line-height: 1.15;
+  padding-bottom: 0.05em;
+}
+
+/* JetBrains Mono — tight tracking needs breathing room */
+.font-\[\'JetBrains_Mono\'\], [class*="JetBrains"] {
+  padding-bottom: 0.04em;
+}
+/* scroll-behavior is handled by JS for smooth eased animation */
+
+/* GPU-accelerate only what moves */
+.marquee-inner,
+[class*="animate-"],
+.scanline {
+  will-change: transform;
+}
+
+/* Reduce paint on static elements */
+.bracket-card::before,
+.bracket-card::after {
+  will-change: width, height, opacity;
+}
+
+/* Image rendering — crisp at all zoom levels */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+img.photo-crisp {
+  image-rendering: high-quality;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-inner { animation-duration: 200s !important; }
+  .animate-blob  { animation: none !important; }
+  .scanline      { animation: none !important; }
+}
+
+/* ══ DESCENDER FIX — g, y, p, q never clip ══ */
+/* The gradient-green span on the hero h1 clips because
+   background-clip:text cuts at the line box boundary.
+   display:block + padding-bottom gives descenders room. */
+.gradient-green {
+  display: block;
+  padding-bottom: 0.12em;
+  overflow: visible;
+}
+/* Section headings — leading-tight still clips at overflow:hidden parents */
+h1, h2, h3, h4 {
+  overflow: visible !important;
+  padding-bottom: 0.05em;
+}
