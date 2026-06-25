@@ -70,6 +70,7 @@ export default function Portfolio() {
                 <div className="w-12 h-12 rounded-full overflow-hidden"
                   style={{ border: '2px solid rgba(0,255,65,0.4)', boxShadow: '0 0 14px rgba(0,255,65,0.25)' }}>
                   <img src="/photo_hammad.jpg" alt="Muhammad Hammad"
+                    width={48} height={48} decoding="async" fetchPriority="high"
                     className="w-full h-full object-cover object-top" />
                 </div>
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full animate-pulse"

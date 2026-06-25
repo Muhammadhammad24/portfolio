@@ -42,6 +42,10 @@ export function ProfilePhoto() {
         <img
           src="/photo_hammad.jpg"
           alt="Muhammad Hammad"
+          width={184}
+          height={184}
+          loading="lazy"
+          decoding="async"
           style={{
             width: '100%',
             height: '100%',
