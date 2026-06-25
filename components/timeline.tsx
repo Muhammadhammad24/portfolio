@@ -74,7 +74,7 @@ export function Timeline() {
     <div className="relative">
       {/* Vertical line */}
       <div className="absolute left-4 md:left-8 top-0 bottom-0 w-px"
-        style={{ background: 'linear-gradient(to bottom, transparent, rgba(0,255,65,0.2), transparent)' }} />
+        style={{ background: 'linear-gradient(to bottom, transparent, var(--border), transparent)' }} />
 
       <div className="space-y-8">
         {experiences.map((exp, index) => (
@@ -90,7 +90,7 @@ export function Timeline() {
             <div className="absolute left-2.5 md:left-6 top-6">
               <motion.div
                 className="w-3 h-3 rounded-full"
-                style={{ border: '2px solid #00ff41', background: '#050a05', boxShadow: '0 0 8px rgba(0,255,65,0.5)' }}
+                style={{ border: '2px solid var(--green)', background: 'var(--bg)', boxShadow: '0 0 8px var(--green-glow)' }}
                 whileInView={{ scale: [0, 1.4, 1] }}
                 transition={{ duration: 0.4 }}
                 viewport={{ once: true }}
@@ -99,28 +99,28 @@ export function Timeline() {
 
             <div
               className="relative overflow-visible rounded-2xl bracket-card transition-all duration-300 p-5 group"
-              style={{ background: 'rgba(0,255,65,0.02)', border: '1px solid rgba(0,255,65,0.1)' }}
+              style={{ background: 'var(--card-bg)', border: '1px solid var(--border)' }}
             >
               <div className="absolute top-0 left-0 right-0 h-px"
-                style={{ background: 'linear-gradient(90deg, transparent, rgba(0,255,65,0.2), transparent)' }} />
+                style={{ background: 'linear-gradient(90deg, transparent, var(--border), transparent)' }} />
               {/* hover glow */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
-                style={{ boxShadow: 'inset 0 0 30px rgba(0,255,65,0.03)' }} />
+                style={{ boxShadow: 'inset 0 0 30px var(--green-glow2)' }} />
 
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
                 <div>
-                  <h3 className="font-['Syne'] text-lg font-bold leading-tight" style={{ color: '#e8ffe8' }}>
+                  <h3 className="font-['Syne'] text-lg font-bold leading-tight" style={{ color: 'var(--text)' }}>
                     {exp.title}
                   </h3>
-                  <p className="text-sm mt-0.5" style={{ color: 'rgba(0,255,65,0.6)' }}>
+                  <p className="text-sm mt-0.5" style={{ color: 'var(--green-mid)' }}>
                     {exp.company}
-                    <span style={{ color: 'rgba(0,255,65,0.3)' }}> · </span>
-                    <span style={{ color: 'rgba(232,255,232,0.4)' }}>{exp.location}</span>
+                    <span style={{ color: 'var(--border)' }}> · </span>
+                    <span style={{ color: 'var(--text-dim)' }}>{exp.location}</span>
                   </p>
                 </div>
                 <span
                   className="font-['JetBrains_Mono'] text-[10px] tracking-wider whitespace-nowrap h-fit px-2 py-1 rounded-sm"
-                  style={{ color: '#00ff41', border: '1px solid rgba(0,255,65,0.2)', background: 'rgba(0,255,65,0.05)' }}
+                  style={{ color: 'var(--green)', border: '1px solid var(--border)', background: 'var(--surface)' }}
                 >
                   {exp.period}
                 </span>
@@ -128,8 +128,8 @@ export function Timeline() {
 
               <ul className="space-y-1.5">
                 {exp.highlights.map((item, i) => (
-                  <li key={i} className="flex gap-2 text-sm leading-relaxed" style={{ color: 'rgba(232,255,232,0.5)' }}>
-                    <span className="shrink-0 mt-0.5 font-['JetBrains_Mono'] text-xs" style={{ color: '#00ff41' }}>▸</span>
+                  <li key={i} className="flex gap-2 text-sm leading-relaxed" style={{ color: 'var(--text-dim)' }}>
+                    <span className="shrink-0 mt-0.5 font-['JetBrains_Mono'] text-xs" style={{ color: 'var(--green)' }}>▸</span>
                     {item}
                   </li>
                 ))}

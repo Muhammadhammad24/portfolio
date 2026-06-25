@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Shield } from "lucide-react"
 import { useMobile } from "@/hooks/use-mobile"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 /**
  * Smooth scroll with easeInOutCubic — feels like an elevator,
@@ -61,25 +62,25 @@ export function FloatingNav() {
         <div
           className="relative px-5 py-2.5 rounded-full"
           style={{
-            background: 'rgba(3,8,3,0.96)',
-            border: '1px solid rgba(0,255,65,0.22)',
+            background: 'var(--nav-bg)',
+            border: '1px solid var(--border)',
             backdropFilter: 'blur(24px)',
             WebkitBackdropFilter: 'blur(24px)',
-            boxShadow: '0 0 0 1px rgba(0,255,65,0.05), 0 8px 32px rgba(0,0,0,0.7)',
+            boxShadow: '0 0 0 1px rgba(0,0,0,0.05), 0 8px 32px rgba(0,0,0,0.7)',
           }}
         >
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/5 h-px"
-            style={{ background: 'linear-gradient(90deg,transparent,rgba(0,255,65,0.5),transparent)' }} />
+            style={{ background: 'linear-gradient(90deg,transparent,var(--green),transparent)' }} />
 
           {isMobile ? (
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1.5">
-                <Shield className="h-3.5 w-3.5" style={{ color: '#00ff41' }} />
-                <span className="font-bold text-sm tracking-widest font-['Syne']" style={{ color: '#00ff41' }}>MH</span>
+                <Shield className="h-3.5 w-3.5" style={{ color: 'var(--green)' }} />
+                <span className="font-bold text-sm tracking-widest font-['Syne']" style={{ color: 'var(--green)' }}>MH</span>
               </div>
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                style={{ color: 'rgba(0,255,65,0.6)', background: 'none', border: 'none', cursor: 'pointer' }}
+                style={{ color: 'var(--green-mid)', background: 'none', border: 'none', cursor: 'pointer' }}
               >
                 {isOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
               </button>
@@ -87,8 +88,8 @@ export function FloatingNav() {
           ) : (
             <div className="flex items-center gap-1">
               <div className="flex items-center gap-1.5 mr-5">
-                <Shield className="h-3.5 w-3.5" style={{ color: '#00ff41', filter: 'drop-shadow(0 0 4px #00ff41)' }} />
-                <span className="font-bold text-sm tracking-widest font-['Syne']" style={{ color: '#00ff41' }}>M·H</span>
+                <Shield className="h-3.5 w-3.5" style={{ color: 'var(--green)', filter: 'drop-shadow(0 0 4px var(--green))' }} />
+                <span className="font-bold text-sm tracking-widest font-['Syne']" style={{ color: 'var(--green)' }}>M·H</span>
               </div>
 
               {navItems.map((item) => (
@@ -98,7 +99,7 @@ export function FloatingNav() {
                   className="relative px-3 py-1.5 text-xs font-medium tracking-wider uppercase transition-colors duration-200"
                   style={{
                     fontFamily: 'JetBrains Mono, monospace',
-                    color: active === item.name ? '#00ff41' : 'rgba(232,255,232,0.42)',
+                    color: active === item.name ? 'var(--green)' : 'var(--text-muted)',
                     background: 'none', border: 'none', cursor: 'pointer',
                   }}
                 >
@@ -106,7 +107,7 @@ export function FloatingNav() {
                     <motion.span
                       layoutId="nav-pill"
                       className="absolute inset-0 rounded-full"
-                      style={{ background: 'rgba(0,255,65,0.09)', border: '1px solid rgba(0,255,65,0.28)' }}
+                      style={{ background: 'rgba(0,255,65,0.09)', border: '1px solid var(--border)' }}
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}
@@ -121,6 +122,7 @@ export function FloatingNav() {
               >
                 Hire Me
               </button>
+              <ThemeToggle className="ml-1" />
             </div>
           )}
         </div>
@@ -131,7 +133,7 @@ export function FloatingNav() {
         {isMobile && isOpen && (
           <motion.div
             className="fixed inset-0 z-40 flex flex-col items-center justify-center"
-            style={{ background: 'rgba(3,8,3,0.98)', backdropFilter: 'blur(20px)' }}
+            style={{ background: 'var(--nav-bg)', backdropFilter: 'blur(20px)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -152,12 +154,20 @@ export function FloatingNav() {
                       setTimeout(() => smoothScrollTo(item.id), 350)
                     }}
                     className="text-3xl font-bold tracking-widest font-['Syne']"
-                    style={{ color: 'rgba(0,255,65,0.65)', background: 'none', border: 'none', cursor: 'pointer' }}
+                    style={{ color: 'var(--green-mid)', background: 'none', border: 'none', cursor: 'pointer' }}
                   >
                     {item.name}
                   </button>
                 </motion.div>
               ))}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navItems.length * 0.07 }}
+                className="flex justify-center pt-4"
+              >
+                <ThemeToggle />
+              </motion.div>
             </div>
           </motion.div>
         )}

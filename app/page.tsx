@@ -15,17 +15,37 @@ import { CertCard } from "@/components/cert-card"
 import { TechMarquee } from "@/components/tech-marquee"
 import { ProfilePhoto } from "@/components/profile-photo"
 
-const G = "#00ff41"
-const Gdim = "rgba(0,255,65,0.55)"
-const Gmuted = "rgba(0,255,65,0.25)"
-const Gborder = "rgba(0,255,65,0.12)"
-const surface = "rgba(0,255,65,0.03)"
-const textDim = "rgba(232,255,232,0.5)"
-const textMuted = "rgba(232,255,232,0.25)"
-
 export default function Portfolio() {
   return (
-    <div className="min-h-screen grid-bg" style={{ background: '#050a05', color: '#e8ffe8' }}>
+    <div className="min-h-screen grid-bg" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
+      {/* ── Premium background system ── */}
+      {/* Ambient orbs */}
+      <div className="bg-orbs">
+        <div className="bg-orb bg-orb-1" />
+        <div className="bg-orb bg-orb-2" />
+        <div className="bg-orb bg-orb-3" />
+        <div className="bg-orb bg-orb-4" />
+      </div>
+      {/* Diagonal mesh */}
+      <div className="bg-mesh" />
+      {/* Corner accent glows */}
+      <div className="bg-corner-glow bg-corner-tl" />
+      <div className="bg-corner-glow bg-corner-br" />
+      {/* Slow scan band */}
+      <div className="bg-scan-band" />
+      {/* Floating particles */}
+      <div className="bg-particles">
+        <div className="bg-particle" />
+        <div className="bg-particle" />
+        <div className="bg-particle" />
+        <div className="bg-particle" />
+        <div className="bg-particle" />
+        <div className="bg-particle" />
+        <div className="bg-particle" />
+        <div className="bg-particle" />
+        <div className="bg-particle" />
+        <div className="bg-particle" />
+      </div>
       <MouseFollower />
       <ScrollProgress />
       <FloatingNav />
@@ -53,49 +73,48 @@ export default function Portfolio() {
                     className="w-full h-full object-cover object-top" />
                 </div>
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full animate-pulse"
-                  style={{ background: '#00ff41', border: '1.5px solid #030703', boxShadow: '0 0 5px #00ff41' }} />
+                  style={{ background: 'var(--green)', border: '1.5px solid var(--bg)', boxShadow: '0 0 5px var(--green)' }} />
               </div>
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-full"
-                style={{ border: `1px solid ${Gborder}`, background: surface }}>
-                <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: G, boxShadow: `0 0 6px ${G}` }} />
-                <span className="font-['JetBrains_Mono'] text-xs tracking-[0.2em] uppercase" style={{ color: Gdim }}>
-                  Available · Germany
+                style={{ border: `1px solid var(--border)`, background: 'var(--card-bg)' }}>
+                <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--green)', boxShadow: `0 0 6px var(--green)` }} />
+                <span className="font-['JetBrains_Mono'] text-xs tracking-[0.2em] uppercase" style={{ color: 'var(--green-dim)' }}>
+                  STATUS: ONLINE · NODE: DE
                 </span>
               </div>
             </div>
 
-            {/* Role label */}
-            <div>
+              <div>
               <div className="flex items-center gap-2 mb-3">
-                <Terminal className="h-4 w-4" style={{ color: Gdim }} />
-                <span className="font-['JetBrains_Mono'] text-xs tracking-[0.3em] uppercase" style={{ color: textMuted }}>
-                  IT Infrastructure & Security Engineer
+                <Terminal className="h-4 w-4" style={{ color: 'var(--green-dim)' }} />
+                <span className="font-['JetBrains_Mono'] text-xs tracking-[0.3em] uppercase" style={{ color: 'var(--text-muted)' }}>
+                  Infrastructure · Security · Cloud · AI
                 </span>
               </div>
               <h1 className="font-['Syne'] text-6xl md:text-8xl font-bold leading-tight tracking-tight" style={{ overflow: 'visible' }}>
-                <span className="block" style={{ color: '#e8ffe8' }}>Muhammad</span>
+                <span className="block" style={{ color: 'var(--text)' }}>Muhammad</span>
                 <span className="block gradient-green" style={{ paddingBottom: '0.15em', overflow: 'visible' }}>Hammad</span>
               </h1>
             </div>
 
             {/* Summary */}
-            <p className="text-lg leading-relaxed max-w-xl" style={{ color: textDim }}>
-              6+ years securing & managing enterprise IT — from{" "}
-              <span style={{ color: G }}>Zero Trust architecture</span> to{" "}
-              <span style={{ color: G }}>AI-driven automation</span>,
-              delivering <span style={{ color: G }}>99.7% uptime</span> across 500+ endpoints.
+            <p className="text-lg leading-relaxed max-w-xl" style={{ color: 'var(--text-dim)' }}>
+              6+ years hardening & orchestrating enterprise infrastructure — deploying{" "}
+              <span style={{ color: 'var(--green)' }}>Zero Trust architecture</span>,{" "}
+              <span style={{ color: 'var(--green)' }}>AI-driven automation pipelines</span>,{" "}
+              and maintaining <span style={{ color: 'var(--green)' }}>99.7% system uptime</span> across 500+ endpoints under active threat conditions.
             </p>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 py-4" style={{ borderTop: `1px solid ${Gborder}`, borderBottom: `1px solid ${Gborder}` }}>
+            <div className="grid grid-cols-3 gap-4 py-4" style={{ borderTop: `1px solid var(--border)`, borderBottom: `1px solid var(--border)` }}>
               {[
-                { value: "6+", label: "Years Experience" },
-                { value: "500+", label: "Endpoints Managed" },
-                { value: "99.2%", label: "Threat Detection" },
+                { value: "6+", label: "YRS · ACTIVE DUTY" },
+                { value: "500+", label: "ENDPOINTS SECURED" },
+                { value: "99.2%", label: "THREAT INTERCEPT" },
               ].map((s) => (
                 <div key={s.label}>
-                  <div className="font-['Syne'] text-3xl font-bold glow-text" style={{ color: G }}>{s.value}</div>
-                  <div className="text-xs mt-0.5 font-['JetBrains_Mono'] tracking-wider" style={{ color: textMuted }}>{s.label}</div>
+                  <div className="font-['Syne'] text-3xl font-bold glow-text" style={{ color: 'var(--green)' }}>{s.value}</div>
+                  <div className="text-xs mt-0.5 font-['JetBrains_Mono'] tracking-wider" style={{ color: 'var(--text-muted)' }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -103,10 +122,10 @@ export default function Portfolio() {
             {/* CTAs */}
             <div className="flex flex-wrap gap-3">
               <a href="#projects" className="btn-cyber-fill flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold tracking-wider">
-                View Projects <ArrowRight className="h-4 w-4" />
+                ./view_projects.sh <ArrowRight className="h-4 w-4" />
               </a>
               <a href="#contact" className="btn-cyber flex items-center gap-2 px-6 py-3 rounded-full text-sm">
-                Contact Me
+                ssh contact@hammad.dev
               </a>
             </div>
 
@@ -123,7 +142,7 @@ export default function Portfolio() {
                   <Icon className="h-4 w-4" />
                 </Link>
               ))}
-              <span className="font-['JetBrains_Mono'] text-xs" style={{ color: textMuted }}>+49 176 8733 3721</span>
+              <span className="font-['JetBrains_Mono'] text-xs" style={{ color: 'var(--text-muted)' }}>+49 176 8733 3721</span>
             </div>
           </div>
 
@@ -135,10 +154,10 @@ export default function Portfolio() {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-          <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.3em] uppercase" style={{ color: Gmuted }}>
-            Scroll
+          <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.3em] uppercase" style={{ color: 'var(--green-mid)' }}>
+            scroll --down
           </span>
-          <div className="w-px h-10" style={{ background: `linear-gradient(to bottom, ${G}, transparent)` }} />
+          <div className="w-px h-10" style={{ background: `linear-gradient(to bottom, var(--green), transparent)` }} />
         </div>
       </section>
 
@@ -154,11 +173,11 @@ export default function Portfolio() {
         <div className="container">
           <div className="text-center mb-12">
             <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.4em] uppercase px-3 py-1 rounded-sm"
-              style={{ color: G, border: '1px solid rgba(0,255,65,0.2)', background: 'rgba(0,255,65,0.04)' }}>
-              Core Specializations
+              style={{ color: 'var(--green)', border: '1px solid rgba(0,255,65,0.2)', background: 'rgba(0,255,65,0.04)' }}>
+              [ SYSTEM MODULES ]
             </span>
-            <h2 className="font-['Syne'] text-3xl font-bold mt-4" style={{ color: '#e8ffe8' }}>
-              What I Do Best
+            <h2 className="font-['Syne'] text-3xl font-bold mt-4" style={{ color: 'var(--text)' }}>
+              Core Threat Vectors & Competencies
             </h2>
           </div>
 
@@ -167,42 +186,42 @@ export default function Portfolio() {
               {
                 role: "DevSecOps",
                 color: "#00ff41",
-                desc: "Bridging development, security, and operations — CI/CD pipelines with security baked in, not bolted on.",
+                desc: "Security-first CI/CD pipelines — threat modelling baked into every commit, not patched post-deployment.",
                 tools: ["CrowdStrike", "Splunk", "Okta", "Terraform", "Ansible", "Docker"],
                 metric: "95% automated resolution",
               },
               {
                 role: "Cloud Engineer",
                 color: "#39ff14",
-                desc: "Architecting and managing multi-cloud environments across Azure, AWS, and GCP with IaC and container orchestration.",
+                desc: "Multi-cloud perimeter design across Azure, AWS, and GCP — IaC provisioning, container orchestration, zero-downtime deployments.",
                 tools: ["Microsoft Azure", "AWS", "GCP", "Kubernetes", "Terraform", "Hyper-V"],
                 metric: "6h → 90min deployment",
               },
               {
                 role: "IT Infrastructure",
                 color: "#00e637",
-                desc: "End-to-end enterprise infrastructure management from bare-metal servers to virtual machines and endpoint fleets.",
+                desc: "Bare-metal to hypervisor-layer management — server clusters, VM fleets, endpoint hardening at enterprise scale.",
                 tools: ["VMware ESXi", "Windows Server", "Active Directory", "Intune", "SCCM", "Veeam"],
                 metric: "99.7% uptime maintained",
               },
               {
                 role: "Network Engineer",
                 color: "#66ff66",
-                desc: "Designing, securing, and monitoring enterprise networks with Cisco, Juniper, and next-gen firewall solutions.",
+                desc: "Cisco/Juniper backbone architecture, next-gen firewall rule enforcement, and real-time intrusion detection.",
                 tools: ["Cisco Meraki", "Juniper", "pfSense", "Fortinet", "VPN", "Wi-Fi 6/7"],
                 metric: "80% unauthorized access cut",
               },
               {
                 role: "IT Security",
                 color: "#00ffaa",
-                desc: "Implementing Zero Trust architecture, SIEM, endpoint protection, and vulnerability management at enterprise scale.",
+                desc: "Zero Trust policy enforcement, SIEM correlation rules, and vulnerability triage across 500+ nodes 24/7.",
                 tools: ["Microsoft Sentinel", "Defender", "CrowdStrike", "Okta", "Splunk", "Palo Alto"],
                 metric: "99.2% threat detection",
               },
               {
                 role: "IT Support Engineer",
                 color: "#80ff80",
-                desc: "Delivering L1/L2/L3 support, endpoint management, and ITSM operations with ITIL-aligned processes.",
+                desc: "L1/L2/L3 triage, ITIL-aligned ITSM workflows, and automated ticket routing — SLA compliance above 94%.",
                 tools: ["ServiceNow", "Jira SM", "Intune", "Jamf Pro", "Zendesk", "TeamViewer"],
                 metric: "94% SLA resolution rate",
               },
@@ -223,25 +242,25 @@ export default function Portfolio() {
             {/* ── LEFT: Photo + Contact ── */}
             <div className="lg:col-span-2 space-y-5">
               <div className="rounded-2xl p-6 bracket-card flex flex-col items-center text-center gap-4"
-                style={{ background: surface, border: `1px solid ${Gborder}` }}>
+                style={{ background: 'var(--card-bg)', border: `1px solid var(--border)` }}>
                 <ProfilePhoto />
                 <div>
-                  <div className="font-['Syne'] text-lg font-bold" style={{ color: '#e8ffe8' }}>Muhammad Hammad</div>
-                  <div className="font-['JetBrains_Mono'] text-[11px] tracking-widest uppercase mt-1" style={{ color: Gdim }}>
-                    IT Infrastructure & Security Engineer
+                  <div className="font-['Syne'] text-lg font-bold" style={{ color: 'var(--text)' }}>Muhammad Hammad</div>
+                  <div className="font-['JetBrains_Mono'] text-[11px] tracking-widest uppercase mt-1" style={{ color: 'var(--green-dim)' }}>
+                    Infrastructure · Security · Cloud · AI
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full"
                   style={{ background: 'rgba(0,255,65,0.06)', border: '1px solid rgba(0,255,65,0.18)' }}>
-                  <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: G, boxShadow: `0 0 5px ${G}` }} />
-                  <span className="font-['JetBrains_Mono'] text-[10px] tracking-wider" style={{ color: Gdim }}>
-                    Open to Opportunities
+                  <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--green)', boxShadow: `0 0 5px var(--green)` }} />
+                  <span className="font-['JetBrains_Mono'] text-[10px] tracking-wider" style={{ color: 'var(--green-dim)' }}>
+                    ACCEPTING_CONNECTIONS
                   </span>
                 </div>
               </div>
 
               <div className="rounded-2xl p-4 space-y-3 bracket-card"
-                style={{ background: surface, border: `1px solid ${Gborder}` }}>
+                style={{ background: 'var(--card-bg)', border: `1px solid var(--border)` }}>
                 {[
                   { icon: MapPin, text: "Germany" },
                   { icon: Phone, text: "+49 176 8733 3721" },
@@ -249,9 +268,9 @@ export default function Portfolio() {
                 ].map(({ icon: Icon, text }) => (
                   <div key={text} className="flex items-center gap-3">
                     <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 cyber-icon-sm">
-                      <Icon className="h-3 w-3" style={{ color: Gdim }} />
+                      <Icon className="h-3 w-3" style={{ color: 'var(--green-dim)' }} />
                     </div>
-                    <span className="text-sm" style={{ color: textDim }}>{text}</span>
+                    <span className="text-sm" style={{ color: 'var(--text-dim)' }}>{text}</span>
                   </div>
                 ))}
               </div>
@@ -264,26 +283,21 @@ export default function Portfolio() {
               <div>
                 {/* Section label */}
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-1 h-5 rounded-full" style={{ background: G, boxShadow: `0 0 8px ${G}` }} />
-                  <span className="font-['JetBrains_Mono'] text-[11px] tracking-[0.3em] uppercase font-bold" style={{ color: G }}>
-                    Professional Summary
+                  <div className="w-1 h-5 rounded-full" style={{ background: 'var(--green)', boxShadow: `0 0 8px var(--green)` }} />
+                  <span className="font-['JetBrains_Mono'] text-[11px] tracking-[0.3em] uppercase font-bold" style={{ color: 'var(--green)' }}>
+                    // OPERATOR PROFILE
                   </span>
                   <div className="flex-1 h-px" style={{ background: 'rgba(0,255,65,0.1)' }} />
                 </div>
                 <GlassmorphicCard>
-                  <p className="leading-relaxed text-sm mb-3" style={{ color: textDim }}>
-                    IT professional with <span style={{ color: G, fontWeight: 600 }}>6+ years</span> of expertise in system
-                    administration, cloud infrastructure, network engineering, and cybersecurity. Specializing in managing
-                    large-scale enterprise environments through intelligent automation and AI-driven orchestration.
+                  <p className="leading-relaxed text-sm mb-3" style={{ color: 'var(--text-dim)' }}>
+                    Operator with <span style={{ color: 'var(--green)', fontWeight: 600 }}>6+ years</span> in the field — system administration, cloud infrastructure, network hardening, and cybersecurity. Specializing in orchestrating large-scale enterprise environments through intelligent automation and AI-driven ops pipelines.
                   </p>
-                  <p className="leading-relaxed text-sm mb-3" style={{ color: textDim }}>
-                    Proven track record implementing <span style={{ color: G, fontWeight: 600 }}>Zero Trust security</span> frameworks,
-                    achieving <span style={{ color: G, fontWeight: 600 }}>99.2% threat detection accuracy</span> and deploying
-                    cloud environments for 180+ remote employees across 12 international locations.
+                  <p className="leading-relaxed text-sm mb-3" style={{ color: 'var(--text-dim)' }}>
+                    Deployed <span style={{ color: 'var(--green)', fontWeight: 600 }}>Zero Trust security</span> frameworks from scratch, achieved <span style={{ color: 'var(--green)', fontWeight: 600 }}>99.2% threat intercept rate</span>, and provisioned cloud environments for 180+ remote operators across 12 international nodes.
                   </p>
-                  <p className="leading-relaxed text-sm" style={{ color: textDim }}>
-                    Career objective: Integrating AI chatbots, automated provisioning, and intelligent monitoring
-                    to achieve <span style={{ color: G, fontWeight: 600 }}>80% automated support tickets</span> and zero-breach security posture.
+                  <p className="leading-relaxed text-sm" style={{ color: 'var(--text-dim)' }}>
+                    Mission objective: integrate AI-driven triage bots, automated provisioning scripts, and intelligent SIEM correlation to reach <span style={{ color: 'var(--green)', fontWeight: 600 }}>80% autonomous ticket resolution</span> and a zero-breach security posture.
                   </p>
                 </GlassmorphicCard>
               </div>
@@ -291,9 +305,9 @@ export default function Portfolio() {
               {/* ─ Education ─ */}
               <div>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-1 h-5 rounded-full" style={{ background: G, boxShadow: `0 0 8px ${G}` }} />
-                  <span className="font-['JetBrains_Mono'] text-[11px] tracking-[0.3em] uppercase font-bold" style={{ color: G }}>
-                    Education
+                  <div className="w-1 h-5 rounded-full" style={{ background: 'var(--green)', boxShadow: `0 0 8px var(--green)` }} />
+                  <span className="font-['JetBrains_Mono'] text-[11px] tracking-[0.3em] uppercase font-bold" style={{ color: 'var(--green)' }}>
+                    // TRAINING LOG
                   </span>
                   <div className="flex-1 h-px" style={{ background: 'rgba(0,255,65,0.1)' }} />
                 </div>
@@ -318,25 +332,25 @@ export default function Portfolio() {
                   ].map((edu) => (
                     <div key={edu.school}
                       className="rounded-xl p-4 bracket-card transition-all duration-300"
-                      style={{ background: surface, border: `1px solid ${Gborder}` }}>
+                      style={{ background: 'var(--card-bg)', border: `1px solid var(--border)` }}>
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
                             <span className="font-['JetBrains_Mono'] text-[9px] tracking-widest uppercase px-2 py-0.5 rounded-sm"
-                              style={{ background: 'rgba(0,255,65,0.08)', border: '1px solid rgba(0,255,65,0.2)', color: Gdim }}>
+                              style={{ background: 'rgba(0,255,65,0.08)', border: '1px solid rgba(0,255,65,0.2)', color: 'var(--green-dim)' }}>
                               {edu.badge}
                             </span>
                           </div>
-                          <div className="font-['Syne'] font-bold text-sm" style={{ color: '#e8ffe8' }}>{edu.degree}</div>
-                          <div className="text-xs mt-0.5" style={{ color: Gdim }}>
+                          <div className="font-['Syne'] font-bold text-sm" style={{ color: 'var(--text)' }}>{edu.degree}</div>
+                          <div className="text-xs mt-0.5" style={{ color: 'var(--green-dim)' }}>
                             {edu.school} · <span style={{ color: 'rgba(232,255,232,0.35)' }}>{edu.location}</span>
                           </div>
-                          <div className="font-['JetBrains_Mono'] text-[10px] mt-2 leading-relaxed" style={{ color: Gmuted }}>
+                          <div className="font-['JetBrains_Mono'] text-[10px] mt-2 leading-relaxed" style={{ color: 'var(--green-mid)' }}>
                             {edu.courses}
                           </div>
                         </div>
                         <span className="font-['JetBrains_Mono'] text-[10px] whitespace-nowrap px-2 py-1 rounded-sm shrink-0"
-                          style={{ color: G, border: `1px solid ${Gborder}`, background: 'rgba(0,255,65,0.05)' }}>
+                          style={{ color: 'var(--green)', border: `1px solid var(--border)`, background: 'rgba(0,255,65,0.05)' }}>
                           {edu.period}
                         </span>
                       </div>
@@ -348,9 +362,9 @@ export default function Portfolio() {
               {/* ─ Languages ─ */}
               <div>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-1 h-5 rounded-full" style={{ background: G, boxShadow: `0 0 8px ${G}` }} />
-                  <span className="font-['JetBrains_Mono'] text-[11px] tracking-[0.3em] uppercase font-bold" style={{ color: G }}>
-                    Languages
+                  <div className="w-1 h-5 rounded-full" style={{ background: 'var(--green)', boxShadow: `0 0 8px var(--green)` }} />
+                  <span className="font-['JetBrains_Mono'] text-[11px] tracking-[0.3em] uppercase font-bold" style={{ color: 'var(--green)' }}>
+                    // LOCALE CONFIG
                   </span>
                   <div className="flex-1 h-px" style={{ background: 'rgba(0,255,65,0.1)' }} />
                 </div>
@@ -360,24 +374,24 @@ export default function Portfolio() {
                     { lang: "German",  native: "B1", level: "Intermediate", pct: 55, code: "DE" },
                   ].map((l) => (
                     <div key={l.lang} className="rounded-xl p-4 bracket-card"
-                      style={{ background: surface, border: `1px solid ${Gborder}` }}>
+                      style={{ background: 'var(--card-bg)', border: `1px solid var(--border)` }}>
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2">
                           <span className="font-['JetBrains_Mono'] text-[10px] font-bold px-1.5 py-0.5 rounded"
-                            style={{ background: 'rgba(0,255,65,0.1)', border: '1px solid rgba(0,255,65,0.25)', color: '#00ff41' }}>
+                            style={{ background: 'rgba(0,255,65,0.1)', border: '1px solid rgba(0,255,65,0.25)', color: 'var(--green)' }}>
                             {l.code}
                           </span>
-                          <span className="font-['Syne'] text-sm font-bold" style={{ color: '#e8ffe8' }}>{l.lang}</span>
+                          <span className="font-['Syne'] text-sm font-bold" style={{ color: 'var(--text)' }}>{l.lang}</span>
                         </div>
                         <span className="font-['JetBrains_Mono'] text-[10px] px-2 py-0.5 rounded-sm"
-                          style={{ color: G, border: `1px solid ${Gborder}`, background: 'rgba(0,255,65,0.05)' }}>
+                          style={{ color: 'var(--green)', border: `1px solid var(--border)`, background: 'rgba(0,255,65,0.05)' }}>
                           {l.native}
                         </span>
                       </div>
-                      <div className="text-xs mb-2" style={{ color: textMuted }}>{l.level}</div>
+                      <div className="text-xs mb-2" style={{ color: 'var(--text-muted)' }}>{l.level}</div>
                       <div className="h-1 rounded-full overflow-hidden" style={{ background: 'rgba(0,255,65,0.08)' }}>
                         <div className="h-full rounded-full transition-all"
-                          style={{ width: `${l.pct}%`, background: `linear-gradient(90deg, #00cc33, ${G})`, boxShadow: `0 0 6px ${G}` }} />
+                          style={{ width: `${l.pct}%`, background: `linear-gradient(90deg, var(--green-dim), var(--green))`, boxShadow: `0 0 6px var(--green)` }} />
                       </div>
                     </div>
                   ))}
@@ -393,8 +407,8 @@ export default function Portfolio() {
       <section id="skills" className="py-32 relative">
         <div className="container">
           <SectionHeading title="My Skills" subtitle="02 — Expertise" />
-          <p className="text-center mt-4 text-sm max-w-2xl mx-auto" style={{ color: textDim }}>
-            I've worked with a variety of technologies throughout my career. Here's a breakdown of my technical skills and proficiency levels.
+          <p className="text-center mt-4 text-sm max-w-2xl mx-auto" style={{ color: 'var(--text-dim)' }}>
+            Toolkit acquired across 6+ years of live deployments — every stack battle-tested in production environments under real threat conditions.
           </p>
           <SkillsTabbed />
         </div>
@@ -404,8 +418,8 @@ export default function Portfolio() {
       <section className="py-24 relative">
         <div className="container">
           <SectionHeading title="Professional Certifications" subtitle="03 — Credentials" />
-          <p className="text-center mt-4 text-sm max-w-2xl mx-auto mb-12" style={{ color: textDim }}>
-            Industry-recognised certifications validating expertise in IT service management, cloud infrastructure, and enterprise security.
+          <p className="text-center mt-4 text-sm max-w-2xl mx-auto mb-12" style={{ color: 'var(--text-dim)' }}>
+            Verified credentials validating operational competency in ITSM, cloud infrastructure hardening, and enterprise security protocols.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
@@ -423,15 +437,15 @@ export default function Portfolio() {
           </div>
 
           {/* Bottom stats */}
-          <div className="grid grid-cols-3 gap-6 mt-14 pt-10" style={{ borderTop: `1px solid ${Gborder}` }}>
+          <div className="grid grid-cols-3 gap-6 mt-14 pt-10" style={{ borderTop: `1px solid var(--border)` }}>
             {[
-              { value: "13", label: "Technology Categories" },
-              { value: "95%+", label: "Automated Resolution" },
-              { value: "8", label: "Professional Certifications" },
+              { value: "13", label: "TECH STACKS ACTIVE" },
+              { value: "95%+", label: "AUTO-RESOLVE RATE" },
+              { value: "8", label: "CERTS VERIFIED" },
             ].map((s) => (
               <div key={s.label} className="text-center">
-                <div className="font-['Syne'] text-4xl font-bold glow-text mb-1" style={{ color: G }}>{s.value}</div>
-                <div className="font-['JetBrains_Mono'] text-xs tracking-widest uppercase" style={{ color: Gmuted }}>{s.label}</div>
+                <div className="font-['Syne'] text-4xl font-bold glow-text mb-1" style={{ color: 'var(--green)' }}>{s.value}</div>
+                <div className="font-['JetBrains_Mono'] text-xs tracking-widest uppercase" style={{ color: 'var(--green-mid)' }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -451,14 +465,14 @@ export default function Portfolio() {
             <ProjectCard
               number="01"
               title="InfoTech Wizard — AI-Powered IT Support Chatbot"
-              description="Full-stack RAG-based IT support chatbot. FastAPI backend with PyTorch, Sentence-Transformers, and FAISS vector search. React/TypeScript frontend with real-time chat interface, Docker containerization, and comprehensive security features."
+              description="RAG-based autonomous IT support agent. FastAPI backend with PyTorch, Sentence-Transformers, and FAISS vector search. React/TypeScript frontend with real-time chat, Docker containerization, and hardened security layer."
               metric="60% reduction"
               metricLabel="in IT ticket volume"
               features={[
                 "Retrieval-Augmented Generation (RAG) pipeline with FAISS vector search",
-                "Real-time chat interface with comprehensive security features",
-                "Docker containerization for seamless deployment",
-                "60% reduction in IT support ticket volume through intelligent automation",
+                "Real-time terminal-style chat interface with hardened security controls",
+                "Docker containerization — deploy anywhere, zero-config environment drift",
+                "60% drop in support ticket volume through intelligent autonomous triage",
               ]}
               tags={["FastAPI", "React", "TypeScript", "PyTorch", "Sentence-Transformers", "FAISS", "HuggingFace", "Docker", "RAG Architecture"]}
               repoUrl="https://github.com/Muhammadhammad24/Infotech-Wizard"
@@ -469,14 +483,14 @@ export default function Portfolio() {
             <ProjectCard
               number="02"
               title="NNApprox — AI-Powered System Analytics & Optimization"
-              description="Python-based framework using PyTorch and JAX for intelligent system performance prediction and automated optimization. Custom neural network models with adaptive learning algorithms processing IT infrastructure metrics and system logs."
+              description="Python framework using PyTorch and JAX for predictive system performance modelling and automated infrastructure optimization. Custom neural nets with adaptive learning algorithms parsing live IT metrics and system logs."
               metric="92% prediction accuracy"
               metricLabel="65% reduction in manual monitoring"
               features={[
-                "Intelligent system performance prediction using custom neural network models",
-                "Adaptive learning algorithms for IT infrastructure metrics analysis",
-                "Automated analysis pipelines with comparative benchmarking",
-                "92% prediction accuracy with 65% reduction in manual monitoring efforts",
+                "Custom neural network models for real-time infrastructure performance prediction",
+                "Adaptive learning algorithms ingesting live IT metrics and system event logs",
+                "Automated analysis pipelines with comparative benchmarking across node clusters",
+                "92% prediction accuracy — 65% drop in manual monitoring overhead",
               ]}
               tags={["Python", "PyTorch", "JAX", "TensorFlow", "Neural Networks", "Adaptive Learning", "System Analytics", "Performance Optimization", "Predictive Modeling", "Automated Pipelines"]}
               repoUrl="https://github.com/Muhammadhammad24/nnapprox"
@@ -506,10 +520,10 @@ export default function Portfolio() {
           <SectionHeading title="Get In Touch" subtitle="06 — Contact" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mt-16">
             <GlassmorphicCard>
-              <h3 className="font-['Syne'] text-2xl font-bold mb-2" style={{ color: '#e8ffe8' }}>
+              <h3 className="font-['Syne'] text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>
                 Let's Connect
               </h3>
-              <p className="text-sm mb-8 leading-relaxed" style={{ color: textDim }}>
+              <p className="text-sm mb-8 leading-relaxed" style={{ color: 'var(--text-dim)' }}>
                 Open to IT Engineer roles, consulting, and enterprise infrastructure projects in Germany and internationally.
               </p>
 
@@ -522,20 +536,20 @@ export default function Portfolio() {
                 ].map(({ icon: Icon, label, value, href }) => (
                   <a key={label} href={href} target="_blank" className="flex items-center gap-4 group">
                     <div className="contact-icon-btn w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300">
-                      <Icon className="h-4 w-4" style={{ color: Gdim }} />
+                      <Icon className="h-4 w-4" style={{ color: 'var(--green-dim)' }} />
                     </div>
                     <div>
-                      <div className="font-['JetBrains_Mono'] text-[10px] tracking-wider uppercase" style={{ color: Gmuted }}>{label}</div>
-                      <div className="text-sm" style={{ color: textDim }}>{value}</div>
+                      <div className="font-['JetBrains_Mono'] text-[10px] tracking-wider uppercase" style={{ color: 'var(--text-muted)' }}>{label}</div>
+                      <div className="text-sm" style={{ color: 'var(--text-dim)' }}>{value}</div>
                     </div>
                   </a>
                 ))}
               </div>
 
-              <div className="pt-6" style={{ borderTop: `1px solid ${Gborder}` }}>
+              <div className="pt-6" style={{ borderTop: `1px solid var(--border)` }}>
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: G, boxShadow: `0 0 6px ${G}` }} />
-                  <span className="text-sm" style={{ color: textMuted }}>Available · Germany-based · Remote-friendly</span>
+                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--green)', boxShadow: `0 0 6px var(--green)` }} />
+                  <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Available · Germany-based · Remote-friendly</span>
                 </div>
               </div>
             </GlassmorphicCard>
@@ -546,14 +560,14 @@ export default function Portfolio() {
       </section>
 
       {/* ═══════════ FOOTER ═══════════ */}
-      <footer className="py-10" style={{ borderTop: `1px solid ${Gborder}` }}>
+      <footer className="py-10" style={{ borderTop: `1px solid var(--border)` }}>
         <div className="container flex flex-col md:flex-row justify-between items-center gap-6">
           <div>
             <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4" style={{ color: G }} />
-              <span className="font-['Syne'] font-bold text-xl tracking-widest" style={{ color: G }}>M·H</span>
+              <Shield className="h-4 w-4" style={{ color: 'var(--green)' }} />
+              <span className="font-['Syne'] font-bold text-xl tracking-widest" style={{ color: 'var(--green)' }}>M·H</span>
             </div>
-            <p className="font-['JetBrains_Mono'] text-xs mt-1.5" style={{ color: textMuted }}>
+            <p className="font-['JetBrains_Mono'] text-xs mt-1.5" style={{ color: 'var(--text-muted)' }}>
               © {new Date().getFullYear()} Muhammad Hammad · IT Infrastructure & Security Engineer · Germany
             </p>
           </div>

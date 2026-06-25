@@ -43,8 +43,8 @@ export function CertCard({ cert, index }: CertCardProps) {
       <div
         className="relative h-full overflow-visible rounded-2xl p-5 flex flex-col gap-3 transition-all duration-300"
         style={{
-          background: hovered ? 'rgba(0,255,65,0.06)' : 'rgba(0,255,65,0.02)',
-          border: hovered ? `1px solid ${cert.color}` : '1px solid rgba(0,255,65,0.1)',
+          background: hovered ? 'var(--card-bg)' : 'var(--card-bg)',
+          border: hovered ? `1px solid var(--border-hot)` : '1px solid var(--border)',
           boxShadow: hovered ? `0 0 28px rgba(0,255,65,0.1)` : 'none',
         }}
       >
@@ -56,23 +56,23 @@ export function CertCard({ cert, index }: CertCardProps) {
           <div
             className="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300"
             style={{
-              background: hovered ? 'rgba(0,255,65,0.14)' : 'rgba(0,255,65,0.06)',
-              border: `1px solid ${hovered ? cert.color : 'rgba(0,255,65,0.15)'}`,
+              background: hovered ? 'var(--border)' : 'var(--surface)',
+              border: `1px solid ${hovered ? 'var(--border-hot)' : 'var(--border)'}`,
               boxShadow: hovered ? `0 0 16px rgba(0,255,65,0.22)` : 'none',
             }}
           >
             <Icon
               className="h-5 w-5 transition-all duration-300"
               style={{
-                color: hovered ? cert.color : 'rgba(0,255,65,0.65)',
+                color: hovered ? cert.color : 'var(--green)',
                 filter: hovered ? `drop-shadow(0 0 6px ${cert.color})` : 'none',
               }}
             />
           </div>
           <div className="flex items-center gap-1 px-2 py-0.5 rounded-full"
-            style={{ background: 'rgba(0,255,65,0.05)', border: '1px solid rgba(0,255,65,0.14)' }}>
-            <CheckCircle className="h-2.5 w-2.5" style={{ color: '#00ff41' }} />
-            <span className="font-['JetBrains_Mono'] text-[9px] tracking-wider" style={{ color: 'rgba(0,255,65,0.55)' }}>
+            style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+            <CheckCircle className="h-2.5 w-2.5" style={{ color: 'var(--green)' }} />
+            <span className="font-['JetBrains_Mono'] text-[9px] tracking-wider" style={{ color: 'var(--green-mid)' }}>
               VERIFIED
             </span>
           </div>
@@ -81,19 +81,19 @@ export function CertCard({ cert, index }: CertCardProps) {
         {/* Content */}
         <div className="flex-grow">
           <h4 className="font-['Syne'] text-sm font-bold leading-tight mb-1 transition-colors duration-300"
-            style={{ color: hovered ? cert.color : '#e8ffe8' }}>
+            style={{ color: hovered ? cert.color : 'var(--text)' }}>
             {cert.name}
           </h4>
-          <p className="text-xs leading-relaxed" style={{ color: 'rgba(232,255,232,0.43)' }}>
+          <p className="text-xs leading-relaxed" style={{ color: 'var(--text-dim)' }}>
             {cert.subtitle}
           </p>
         </div>
 
         {/* Issuer */}
-        <div className="flex items-center gap-2 pt-2.5" style={{ borderTop: '1px solid rgba(0,255,65,0.07)' }}>
+        <div className="flex items-center gap-2 pt-2.5" style={{ borderTop: '1px solid var(--border)' }}>
           <div className="w-1.5 h-1.5 rounded-full shrink-0"
             style={{ background: cert.color, boxShadow: `0 0 4px ${cert.color}` }} />
-          <span className="font-['JetBrains_Mono'] text-[10px] tracking-wider" style={{ color: 'rgba(0,255,65,0.48)' }}>
+          <span className="font-['JetBrains_Mono'] text-[10px] tracking-wider" style={{ color: 'var(--green-mid)' }}>
             {cert.issuer}
           </span>
         </div>

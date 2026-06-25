@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { ThemeProvider } from '@/components/theme-provider'
 
 export const metadata: Metadata = {
   title: 'Muhammad Hammad',
@@ -26,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" style={{ scrollBehavior: 'auto' }}>
+    <html lang="en" style={{ scrollBehavior: 'auto' }} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -39,9 +40,11 @@ export default function RootLayout({
         <meta name="theme-color" content="#050a05" />
         <meta name="msapplication-TileColor" content="#050a05" />
       </head>
-      <body className="antialiased bg-[#050a05] text-white overflow-x-hidden">
+      <body className="antialiased overflow-x-hidden" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
         <div className="scanline" />
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

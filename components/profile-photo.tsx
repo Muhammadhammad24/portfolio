@@ -15,7 +15,7 @@ export function ProfilePhoto() {
       {/* Slow rotating outer dashed ring */}
       <motion.div
         className="absolute inset-0 rounded-full pointer-events-none"
-        style={{ border: '1px dashed rgba(0,255,65,0.2)' }}
+        style={{ border: '1px dashed var(--border)' }}
         animate={{ rotate: 360 }}
         transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
       />
@@ -23,7 +23,7 @@ export function ProfilePhoto() {
       {/* Static inner ring */}
       <div
         className="absolute rounded-full pointer-events-none"
-        style={{ inset: 10, border: '1px solid rgba(0,255,65,0.1)' }}
+        style={{ inset: 10, border: '1px solid var(--border)' }}
       />
 
       {/* Photo container — NO filter here, must be isolated */}
@@ -31,8 +31,8 @@ export function ProfilePhoto() {
         className="absolute rounded-full overflow-hidden"
         style={{
           inset: 18,
-          border: '2.5px solid rgba(0,255,65,0.45)',
-          boxShadow: '0 0 0 1px rgba(0,255,65,0.1), 0 0 30px rgba(0,255,65,0.2), 0 0 60px rgba(0,255,65,0.07)',
+          border: '2.5px solid var(--border-hot)',
+          boxShadow: '0 0 0 1px var(--border), 0 0 30px var(--green-glow), 0 0 60px var(--green-glow2)',
           /* Isolate from any parent filter */
           isolation: 'isolate',
           transform: 'translateZ(0)',
@@ -62,9 +62,9 @@ export function ProfilePhoto() {
         style={{
           width: 14, height: 14,
           bottom: 22, right: 22,
-          background: '#00ff41',
-          border: '2px solid #030703',
-          boxShadow: '0 0 8px #00ff41, 0 0 16px rgba(0,255,65,0.4)',
+          background: 'var(--green)',
+          border: '2px solid var(--bg)',
+          boxShadow: '0 0 8px var(--green), 0 0 16px var(--green-glow)',
         }}
         animate={{ scale: [1, 1.2, 1] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

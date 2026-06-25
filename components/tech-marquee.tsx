@@ -86,9 +86,9 @@ export function TechMarquee() {
     <div
       className="overflow-hidden py-3 select-none"
       style={{
-        borderTop: '1px solid rgba(0,255,65,0.1)',
-        borderBottom: '1px solid rgba(0,255,65,0.1)',
-        background: 'rgba(0,255,65,0.015)',
+        borderTop: '1px solid var(--border)',
+        borderBottom: '1px solid var(--border)',
+        background: 'var(--surface)',
       }}
     >
       <div
@@ -112,8 +112,8 @@ export function TechMarquee() {
                 padding: '2px 10px 2px 10px',
                 borderRadius: 6,
                 transition: 'background 0.18s, box-shadow 0.18s',
-                background: isHovered ? 'rgba(0,255,65,0.1)' : 'transparent',
-                boxShadow: isHovered ? '0 0 12px rgba(0,255,65,0.15)' : 'none',
+                background: isHovered ? 'var(--surface)' : 'transparent',
+                boxShadow: isHovered ? '0 0 12px var(--green-glow)' : 'none',
                 gap: 7,
               }}
               onMouseEnter={() => setHoveredLabel(`${item.label}-${i}`)}
@@ -130,9 +130,7 @@ export function TechMarquee() {
                   objectFit: 'contain',
                   flexShrink: 0,
                   transition: 'filter 0.18s',
-                  filter: isHovered
-                    ? 'brightness(0) invert(1) sepia(1) saturate(6) hue-rotate(80deg) brightness(1.4)'
-                    : 'brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(80deg) brightness(0.75)',
+                  filter: 'var(--icon-filter)',
                 }}
               />
 
@@ -144,7 +142,7 @@ export function TechMarquee() {
                   fontWeight: isHovered ? 700 : 500,
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
-                  color: isHovered ? '#00ff41' : 'rgba(0,255,65,0.38)',
+                  color: isHovered ? 'var(--green)' : 'var(--green-mid)',
                   transition: 'color 0.18s, font-weight 0.18s',
                   whiteSpace: 'nowrap',
                 }}
@@ -161,7 +159,7 @@ export function TechMarquee() {
                   borderRadius: '50%',
                   flexShrink: 0,
                   marginLeft: 8,
-                  background: isHovered ? 'rgba(0,255,65,0.6)' : 'rgba(0,255,65,0.18)',
+                  background: isHovered ? 'var(--border-hot)' : 'var(--border)',
                   transition: 'background 0.18s',
                 }}
               />

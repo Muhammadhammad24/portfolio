@@ -115,9 +115,9 @@ function SkillCard({ skill, index }: { skill: { name: string; level: number }; i
       <div
         className="relative rounded-xl p-4 h-full transition-all duration-200"
         style={{
-          background: hovered ? 'rgba(0,255,65,0.07)' : 'rgba(0,255,65,0.025)',
-          border: hovered ? `1px solid ${meta.color}` : '1px solid rgba(0,255,65,0.1)',
-          boxShadow: hovered ? `0 0 20px rgba(0,255,65,0.1)` : 'none',
+          background: hovered ? 'var(--surface)' : 'var(--card-bg)',
+          border: hovered ? `1px solid ${meta.color}` : '1px solid var(--border)',
+          boxShadow: hovered ? `0 0 20px var(--surface)` : 'none',
         }}
       >
         {/* Top glow line on hover */}
@@ -132,7 +132,7 @@ function SkillCard({ skill, index }: { skill: { name: string; level: number }; i
         {/* Skill name */}
         <p
           className="font-['Space_Grotesk'] text-xs font-semibold leading-normal mb-3 pb-0.5"
-          style={{ color: hovered ? '#e8ffe8' : 'rgba(232,255,232,0.65)' }}
+          style={{ color: hovered ? 'var(--text)' : 'var(--text-dim)' }}
         >
           {skill.name}
         </p>
@@ -140,12 +140,12 @@ function SkillCard({ skill, index }: { skill: { name: string; level: number }; i
         {/* Animated fill bar — terminal loading style */}
         <div
           className="relative h-1.5 rounded-full overflow-hidden mb-2.5"
-          style={{ background: 'rgba(0,255,65,0.08)' }}
+          style={{ background: 'var(--surface)' }}
         >
           <motion.div
             className="absolute top-0 left-0 h-full rounded-full"
             style={{
-              background: `linear-gradient(90deg, #00cc33, ${meta.color})`,
+              background: `linear-gradient(90deg, var(--green-dim), ${meta.color})`,
               boxShadow: hovered ? `0 0 8px ${meta.color}` : 'none',
             }}
             initial={{ width: 0 }}
@@ -165,7 +165,7 @@ function SkillCard({ skill, index }: { skill: { name: string; level: number }; i
                 className="rounded-full"
                 style={{
                   width: 5, height: 5,
-                  background: d < meta.dots ? meta.color : 'rgba(0,255,65,0.1)',
+                  background: d < meta.dots ? meta.color : 'var(--border)',
                   boxShadow: d < meta.dots && hovered ? `0 0 5px ${meta.color}` : 'none',
                   transition: 'box-shadow 0.2s',
                 }}
@@ -180,7 +180,7 @@ function SkillCard({ skill, index }: { skill: { name: string; level: number }; i
           {/* Tier label */}
           <span
             className="font-['JetBrains_Mono'] text-[9px] tracking-widest uppercase"
-            style={{ color: hovered ? meta.color : 'rgba(0,255,65,0.3)' }}
+            style={{ color: hovered ? meta.color : 'var(--text-muted)' }}
           >
             {meta.tier}
           </span>
@@ -205,9 +205,9 @@ export function SkillsTabbed() {
             className="px-3 py-1.5 rounded-lg text-xs font-medium tracking-wider transition-all duration-200"
             style={{
               fontFamily: 'JetBrains Mono, monospace',
-              background: activeId === cat.id ? 'rgba(0,255,65,0.12)' : 'rgba(0,255,65,0.03)',
-              border: activeId === cat.id ? '1px solid rgba(0,255,65,0.4)' : '1px solid rgba(0,255,65,0.1)',
-              color: activeId === cat.id ? '#00ff41' : 'rgba(232,255,232,0.4)',
+              background: activeId === cat.id ? 'var(--surface)' : 'var(--card-bg)',
+              border: activeId === cat.id ? '1px solid var(--border-hot)' : '1px solid var(--border)',
+              color: activeId === cat.id ? 'var(--green)' : 'var(--text-muted)',
               boxShadow: activeId === cat.id ? '0 0 12px rgba(0,255,65,0.15)' : 'none',
               cursor: 'pointer',
             }}
@@ -245,11 +245,11 @@ export function SkillsTabbed() {
             <div className="flex gap-0.5">
               {Array.from({ length: 5 }).map((_, d) => (
                 <div key={d} className="w-2 h-2 rounded-full"
-                  style={{ background: d < l.dots ? l.color : 'rgba(0,255,65,0.1)' }} />
+                  style={{ background: d < l.dots ? l.color : 'var(--border)' }} />
               ))}
             </div>
             <span className="font-['JetBrains_Mono'] text-[9px] tracking-widest uppercase"
-              style={{ color: 'rgba(0,255,65,0.35)' }}>
+              style={{ color: 'var(--text-muted)' }}>
               {l.tier}
             </span>
           </div>

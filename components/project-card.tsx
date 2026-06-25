@@ -50,51 +50,51 @@ export function ProjectCard({
       <div
         className="relative h-full overflow-visible rounded-2xl transition-all duration-500"
         style={{
-          background: hovered ? 'rgba(0,255,65,0.05)' : 'rgba(0,255,65,0.02)',
-          border: hovered ? '1px solid rgba(0,255,65,0.35)' : '1px solid rgba(0,255,65,0.1)',
-          boxShadow: hovered ? '0 0 40px rgba(0,255,65,0.1), inset 0 0 40px rgba(0,255,65,0.02)' : 'none',
+          background: hovered ? 'var(--surface)' : 'var(--card-bg)',
+          border: hovered ? '1px solid var(--border-hot)' : '1px solid var(--border)',
+          boxShadow: hovered ? '0 0 40px var(--border), inset 0 0 40px var(--card-bg)' : 'none',
         }}
       >
         {/* Top glow line */}
         <div className="absolute top-0 left-0 right-0 h-px transition-opacity duration-500"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(0,255,65,0.5), transparent)', opacity: hovered ? 1 : 0.3 }} />
+          style={{ background: 'linear-gradient(90deg, transparent, var(--green-mid), transparent)', opacity: hovered ? 1 : 0.3 }} />
 
         {/* Number */}
         {number && (
           <div className="absolute top-4 left-4 font-['JetBrains_Mono'] text-[10px] tracking-widest"
-            style={{ color: 'rgba(0,255,65,0.3)' }}>
+            style={{ color: 'var(--border-hot)' }}>
             {number}
           </div>
         )}
 
         {/* Active dot */}
         <div className="absolute top-4 right-4 flex items-center gap-1.5">
-          <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#00ff41', boxShadow: '0 0 6px #00ff41' }} />
-          <span className="font-['JetBrains_Mono'] text-[9px] tracking-widest" style={{ color: 'rgba(0,255,65,0.5)' }}>LIVE</span>
+          <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--green)', boxShadow: '0 0 6px var(--green)' }} />
+          <span className="font-['JetBrains_Mono'] text-[9px] tracking-widest" style={{ color: 'var(--text-muted)' }}>LIVE</span>
         </div>
 
         <div className="p-6 flex flex-col h-full">
           {/* Title */}
           <h3 className="font-['Syne'] text-xl font-bold mt-4 mb-3 leading-tight transition-colors"
-            style={{ color: hovered ? '#00ff41' : '#e8ffe8' }}>
+            style={{ color: hovered ? 'var(--green)' : 'var(--text)' }}>
             {title}
           </h3>
 
           {/* Description */}
-          <p className="text-sm leading-relaxed mb-4" style={{ color: 'rgba(232,255,232,0.55)' }}>
+          <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-dim)' }}>
             {description}
           </p>
 
           {/* Metric highlight */}
           {metric && (
             <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-lg"
-              style={{ background: 'rgba(0,255,65,0.07)', border: '1px solid rgba(0,255,65,0.15)' }}>
-              <Zap className="h-3.5 w-3.5 shrink-0" style={{ color: '#00ff41' }} />
-              <span className="font-['JetBrains_Mono'] text-xs font-bold" style={{ color: '#00ff41' }}>
+              style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+              <Zap className="h-3.5 w-3.5 shrink-0" style={{ color: 'var(--green)' }} />
+              <span className="font-['JetBrains_Mono'] text-xs font-bold" style={{ color: 'var(--green)' }}>
                 {metric}
               </span>
               {metricLabel && (
-                <span className="text-xs" style={{ color: 'rgba(0,255,65,0.55)' }}>{metricLabel}</span>
+                <span className="text-xs" style={{ color: 'var(--green-mid)' }}>{metricLabel}</span>
               )}
             </div>
           )}
@@ -103,11 +103,11 @@ export function ProjectCard({
           {features && features.length > 0 && (
             <div className="mb-5">
               <p className="font-['JetBrains_Mono'] text-[10px] tracking-widest uppercase mb-2"
-                style={{ color: 'rgba(0,255,65,0.4)' }}>Key Features</p>
+                style={{ color: 'var(--border-hot)' }}>Key Features</p>
               <ul className="space-y-1.5">
                 {features.map((f, i) => (
-                  <li key={i} className="flex gap-2 text-xs" style={{ color: 'rgba(232,255,232,0.5)' }}>
-                    <span style={{ color: '#00ff41' }} className="shrink-0 mt-0.5">▸</span>
+                  <li key={i} className="flex gap-2 text-xs" style={{ color: 'var(--text-dim)' }}>
+                    <span style={{ color: 'var(--green)' }} className="shrink-0 mt-0.5">▸</span>
                     {f}
                   </li>
                 ))}
@@ -121,9 +121,9 @@ export function ProjectCard({
               <span key={i}
                 className="font-['JetBrains_Mono'] text-[10px] tracking-wider px-2 py-0.5 rounded-sm transition-all duration-300"
                 style={{
-                  background: hovered ? 'rgba(0,255,65,0.12)' : 'rgba(0,255,65,0.06)',
-                  border: '1px solid rgba(0,255,65,0.15)',
-                  color: hovered ? '#00ff41' : 'rgba(0,255,65,0.7)',
+                  background: hovered ? 'var(--border)' : 'var(--card-bg)',
+                  border: '1px solid var(--border)',
+                  color: hovered ? 'var(--green)' : 'var(--green-mid)',
                 }}>
                 {tag}
               </span>
@@ -131,16 +131,16 @@ export function ProjectCard({
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 pt-4" style={{ borderTop: '1px solid rgba(0,255,65,0.1)' }}>
+          <div className="flex gap-3 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
             <Link href={repoUrl} target="_blank"
               className="flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase transition-all duration-300 hover:scale-105"
-              style={{ color: 'rgba(0,255,65,0.6)', fontFamily: 'JetBrains Mono, monospace' }}>
+              style={{ color: 'var(--green-mid)', fontFamily: 'JetBrains Mono, monospace' }}>
               <Github className="h-3.5 w-3.5" />
               View Code
             </Link>
             <Link href={demoUrl} target="_blank"
               className="flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase transition-all duration-300 hover:scale-105 ml-auto"
-              style={{ color: '#00ff41', fontFamily: 'JetBrains Mono, monospace' }}>
+              style={{ color: 'var(--green)', fontFamily: 'JetBrains Mono, monospace' }}>
               Live Demo
               <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>

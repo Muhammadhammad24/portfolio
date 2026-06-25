@@ -29,13 +29,13 @@ export function MouseFollower() {
     <>
       <motion.div
         className="fixed pointer-events-none z-[9998] w-10 h-10 rounded-full"
-        style={{ border: '1px solid rgba(0,255,65,0.5)' }}
+        style={{ border: '1px solid var(--border-hot)' }}
         animate={{ x: pos.x - 20, y: pos.y - 20, opacity: visible ? 1 : 0, scale: clicking ? 0.6 : 1 }}
         transition={{ type: "spring", damping: 18, stiffness: 200, mass: 0.6 }}
       />
       <motion.div
         className="fixed pointer-events-none z-[9999] w-1.5 h-1.5 rounded-full"
-        style={{ background: '#00ff41', boxShadow: '0 0 6px #00ff41' }}
+        style={{ background: 'var(--green)', boxShadow: '0 0 6px var(--green)' }}
         animate={{ x: pos.x - 3, y: pos.y - 3, opacity: visible ? 1 : 0 }}
         transition={{ type: "spring", damping: 25, stiffness: 500 }}
       />

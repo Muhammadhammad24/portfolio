@@ -31,8 +31,8 @@ export function GlassmorphicCard({ children, className = "" }: GlassmorphicCardP
         rotateX, rotateY,
         transformPerspective: 800,
         transformStyle: "preserve-3d",
-        background: 'rgba(0,255,65,0.03)',
-        border: '1px solid rgba(0,255,65,0.12)',
+        background: 'var(--surface)',
+        border: '1px solid var(--border)',
         padding: '1.5rem',
       }}
       onMouseMove={handleMouse}
@@ -41,11 +41,11 @@ export function GlassmorphicCard({ children, className = "" }: GlassmorphicCardP
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      whileHover={{ borderColor: 'rgba(0,255,65,0.3)', boxShadow: '0 0 30px rgba(0,255,65,0.1)' }}
+      whileHover={{ borderColor: 'var(--border-hot)', boxShadow: '0 0 30px rgba(0,255,65,0.1)' }}
     >
       {/* top shine */}
       <div className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(0,255,65,0.3), transparent)' }} />
+        style={{ background: 'linear-gradient(90deg, transparent, var(--border-hot), transparent)' }} />
       <div className="relative z-10">{children}</div>
     </motion.div>
   )

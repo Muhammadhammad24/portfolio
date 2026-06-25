@@ -21,12 +21,12 @@ export function ContactForm() {
 
   const inputStyle = {
     width: '100%',
-    background: 'rgba(0,255,65,0.03)',
-    border: '1px solid rgba(0,255,65,0.15)',
+    background: 'var(--input-bg)',
+    border: '1px solid var(--border)',
     borderRadius: '0.75rem',
     padding: '0.75rem 1rem',
     fontSize: '0.875rem',
-    color: '#e8ffe8',
+    color: 'var(--text)',
     outline: 'none',
     fontFamily: 'Space Grotesk, sans-serif',
     transition: 'all 0.3s',
@@ -38,12 +38,12 @@ export function ContactForm() {
       transition={{ duration: 0.6 }} viewport={{ once: true }}
     >
       <div className="relative overflow-hidden rounded-2xl bracket-card" style={{
-        background: 'rgba(0,255,65,0.03)', border: '1px solid rgba(0,255,65,0.12)', padding: '1.75rem',
+        background: 'var(--card-bg)', border: '1px solid var(--border)', padding: '1.75rem',
       }}>
         <div className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(0,255,65,0.35), transparent)' }} />
+          style={{ background: 'linear-gradient(90deg, transparent, var(--border-hot), transparent)' }} />
 
-        <h3 className="font-['Syne'] text-2xl font-bold mb-6" style={{ color: '#e8ffe8' }}>
+        <h3 className="font-['Syne'] text-2xl font-bold mb-6" style={{ color: 'var(--text)' }}>
           Send a Message
         </h3>
 
@@ -52,9 +52,9 @@ export function ContactForm() {
             className="flex flex-col items-center justify-center py-12 text-center"
             initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
           >
-            <CheckCircle className="w-12 h-12 mb-4" style={{ color: '#00ff41' }} />
-            <p className="font-semibold text-lg" style={{ color: '#00ff41' }}>Message Sent!</p>
-            <p className="text-sm mt-1" style={{ color: 'rgba(0,255,65,0.5)' }}>I'll get back to you shortly.</p>
+            <CheckCircle className="w-12 h-12 mb-4" style={{ color: 'var(--green)' }} />
+            <p className="font-semibold text-lg" style={{ color: 'var(--green)' }}>Message Sent!</p>
+            <p className="text-sm mt-1" style={{ color: 'var(--green-mid)' }}>I'll get back to you shortly.</p>
           </motion.div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -64,13 +64,13 @@ export function ContactForm() {
               { type: "text", placeholder: "Subject" },
             ].map((field, i) => (
               <input key={i} type={field.type} placeholder={field.placeholder} required style={inputStyle}
-                onFocus={(e) => { e.target.style.borderColor = 'rgba(0,255,65,0.4)'; e.target.style.boxShadow = '0 0 15px rgba(0,255,65,0.08)' }}
-                onBlur={(e) => { e.target.style.borderColor = 'rgba(0,255,65,0.15)'; e.target.style.boxShadow = 'none' }}
+                onFocus={(e) => { e.target.style.borderColor = 'var(--border-hot)'; e.target.style.boxShadow = '0 0 15px var(--green-glow)' }}
+                onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.boxShadow = 'none' }}
               />
             ))}
             <textarea placeholder="Your Message" rows={5} required style={{ ...inputStyle, resize: 'none' }}
-              onFocus={(e) => { e.target.style.borderColor = 'rgba(0,255,65,0.4)'; e.target.style.boxShadow = '0 0 15px rgba(0,255,65,0.08)' }}
-              onBlur={(e) => { e.target.style.borderColor = 'rgba(0,255,65,0.15)'; e.target.style.boxShadow = 'none' }}
+              onFocus={(e) => { e.target.style.borderColor = 'var(--border-hot)'; e.target.style.boxShadow = '0 0 15px var(--green-glow)' }}
+              onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.boxShadow = 'none' }}
             />
             <button type="submit" disabled={isSubmitting}
               className="btn-cyber-fill w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold tracking-widest uppercase disabled:opacity-50"

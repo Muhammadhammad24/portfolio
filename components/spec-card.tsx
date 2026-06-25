@@ -173,9 +173,9 @@ export function SpecCard({ spec, index }: SpecCardProps) {
       <div
         className="relative overflow-visible rounded-2xl transition-all duration-400 p-5 flex flex-col"
         style={{
-          background: hovered ? 'rgba(0,255,65,0.06)' : 'rgba(0,255,65,0.02)',
-          border: `1px solid ${hovered ? spec.color : 'rgba(0,255,65,0.1)'}`,
-          boxShadow: hovered ? `0 0 35px rgba(0,255,65,0.1), 0 0 70px rgba(0,255,65,0.04)` : 'none',
+          background: 'var(--card-bg)',
+          border: `1px solid ${hovered ? spec.color : 'var(--border)'}`,
+          boxShadow: hovered ? `0 0 35px var(--green-glow), 0 0 70px var(--green-glow2)` : 'none',
         }}
       >
         <div className="absolute top-0 left-0 right-0 h-px transition-opacity duration-500"
@@ -185,7 +185,7 @@ export function SpecCard({ spec, index }: SpecCardProps) {
         <div className="relative mb-4">
           <div className="w-14 h-14 relative z-10 transition-all duration-300"
             style={{
-              filter: hovered ? `drop-shadow(0 0 12px ${spec.color})` : `drop-shadow(0 0 4px rgba(0,255,65,0.3))`,
+              filter: hovered ? `drop-shadow(0 0 12px ${spec.color})` : `drop-shadow(0 0 4px var(--border-hot))`,
               transform: hovered ? 'scale(1.08)' : 'scale(1)',
             }}>
             {icon}
@@ -204,16 +204,16 @@ export function SpecCard({ spec, index }: SpecCardProps) {
         </div>
 
         <h3 className="font-['Syne'] text-base font-bold mb-1.5 transition-colors duration-300"
-          style={{ color: hovered ? spec.color : '#e8ffe8' }}>
+          style={{ color: hovered ? spec.color : 'var(--text)' }}>
           {spec.role}
         </h3>
 
-        <p className="text-xs leading-relaxed mb-4 flex-grow" style={{ color: 'rgba(232,255,232,0.48)' }}>
+        <p className="text-xs leading-relaxed mb-4 flex-grow" style={{ color: 'var(--text-dim)' }}>
           {spec.desc}
         </p>
 
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg mb-4 transition-all duration-300"
-          style={{ background: hovered ? 'rgba(0,255,65,0.08)' : 'rgba(0,255,65,0.03)', border: '1px solid rgba(0,255,65,0.13)' }}>
+          style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
           <motion.div className="w-1.5 h-1.5 rounded-full shrink-0"
             style={{ background: spec.color, boxShadow: `0 0 5px ${spec.color}` }}
             animate={{ opacity: [1, 0.3, 1] }}
@@ -223,14 +223,14 @@ export function SpecCard({ spec, index }: SpecCardProps) {
           </span>
         </div>
 
-        <div className="flex flex-wrap gap-1.5 pt-3" style={{ borderTop: '1px solid rgba(0,255,65,0.07)' }}>
+        <div className="flex flex-wrap gap-1.5 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
           {spec.tools.map((tool) => (
             <span key={tool}
               className="font-['JetBrains_Mono'] text-[9px] tracking-wider px-1.5 py-0.5 rounded-sm transition-all duration-300"
               style={{
-                background: hovered ? 'rgba(0,255,65,0.09)' : 'rgba(0,255,65,0.03)',
-                border: '1px solid rgba(0,255,65,0.11)',
-                color: hovered ? spec.color : 'rgba(0,255,65,0.55)',
+                background: 'var(--surface)',
+                border: '1px solid var(--border)',
+                color: hovered ? spec.color : 'var(--green-mid)',
               }}>
               {tool}
             </span>
