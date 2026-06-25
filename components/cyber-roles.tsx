@@ -129,17 +129,17 @@ export function CyberRoles() {
     return () => clearInterval(id)
   }, [])
 
-  const ORBIT_R = 195
+  const ORBIT_R = 155
 
   return (
-    <div className="flex flex-col items-center gap-5">
+    <div className="flex flex-col items-center gap-5 w-full max-w-[420px] mx-auto">
       <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.4em] uppercase"
         style={{ color: 'var(--green-mid)' }}>
         Core Specializations
       </span>
 
       <div className="relative flex items-center justify-center"
-        style={{ width: ORBIT_R * 2 + 130, height: ORBIT_R * 2 + 130 }}>
+        style={{ width: ORBIT_R * 2 + 110, height: ORBIT_R * 2 + 110 }}>
 
         {/* Orbit ring */}
         <div className="absolute rounded-full pointer-events-none"
@@ -154,7 +154,7 @@ export function CyberRoles() {
         <RadarSweep radius={ORBIT_R + 2} />
 
         {/* Inner rings */}
-        {[85, 135].map((r, i) => (
+        {[65, 105].map((r, i) => (
           <div key={i} className="absolute rounded-full pointer-events-none"
             style={{
               width: r * 2, height: r * 2,
@@ -166,7 +166,7 @@ export function CyberRoles() {
 
         {/* Shield */}
         <div className="absolute" style={{ left: '50%', top: '50%', transform: 'translate(-50%,-50%)', zIndex: 10 }}>
-          <ShieldCore size={155} />
+          <ShieldCore size={120} />
         </div>
 
         {/* Chips */}
@@ -190,11 +190,11 @@ export function CyberRoles() {
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="flex items-center gap-3 px-5 py-2.5 rounded-xl"
+        className="flex items-center gap-3 px-5 py-2.5 rounded-xl w-full"
         style={{
           background: 'var(--surface)',
           border: '1px solid var(--border)',
-          minWidth: 240, justifyContent: 'center',
+          maxWidth: 280, justifyContent: 'center',
         }}
       >
         {(() => {

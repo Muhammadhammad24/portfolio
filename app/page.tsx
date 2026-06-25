@@ -60,11 +60,11 @@ export default function Portfolio() {
             style={{ background: 'radial-gradient(circle, rgba(0,204,51,0.04) 0%, transparent 70%)' }} />
         </div>
 
-        <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center pt-20 pb-10">
+        <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center pt-24 pb-10 px-4">
           {/* LEFT — Text */}
-          <div className="space-y-8">
+          <div className="space-y-6 lg:space-y-8">
             {/* Status pill + avatar */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap">
               {/* Mini avatar */}
               <div className="relative shrink-0">
                 <div className="w-12 h-12 rounded-full overflow-hidden"
@@ -79,58 +79,58 @@ export default function Portfolio() {
                 style={{ border: `1px solid var(--border)`, background: 'var(--card-bg)' }}>
                 <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--green)', boxShadow: `0 0 6px var(--green)` }} />
                 <span className="font-['JetBrains_Mono'] text-xs tracking-[0.2em] uppercase" style={{ color: 'var(--green-dim)' }}>
-                  STATUS: ONLINE · NODE: DE
+                  Available · Germany
                 </span>
               </div>
             </div>
 
-              <div>
+            <div>
               <div className="flex items-center gap-2 mb-3">
                 <Terminal className="h-4 w-4" style={{ color: 'var(--green-dim)' }} />
                 <span className="font-['JetBrains_Mono'] text-xs tracking-[0.3em] uppercase" style={{ color: 'var(--text-muted)' }}>
-                  Infrastructure · Security · Cloud · AI
+                  IT Infrastructure · AI · Security · Cloud · Network
                 </span>
               </div>
-              <h1 className="font-['Syne'] text-6xl md:text-8xl font-bold leading-tight tracking-tight" style={{ overflow: 'visible' }}>
+              <h1 className="font-['Syne'] text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight" style={{ overflow: 'visible' }}>
                 <span className="block" style={{ color: 'var(--text)' }}>Muhammad</span>
                 <span className="block gradient-green" style={{ paddingBottom: '0.15em', overflow: 'visible' }}>Hammad</span>
               </h1>
             </div>
 
             {/* Summary */}
-            <p className="text-lg leading-relaxed max-w-xl" style={{ color: 'var(--text-dim)' }}>
-              6+ years hardening & orchestrating enterprise infrastructure — deploying{" "}
-              <span style={{ color: 'var(--green)' }}>Zero Trust architecture</span>,{" "}
-              <span style={{ color: 'var(--green)' }}>AI-driven automation pipelines</span>,{" "}
-              and maintaining <span style={{ color: 'var(--green)' }}>99.7% system uptime</span> across 500+ endpoints under active threat conditions.
+            <p className="text-base lg:text-lg leading-relaxed max-w-xl" style={{ color: 'var(--text-dim)' }}>
+              6+ years securing & managing enterprise IT — from{" "}
+              <span style={{ color: 'var(--green)' }}>Zero Trust architecture</span> to{" "}
+              <span style={{ color: 'var(--green)' }}>AI-driven automation</span>,
+              delivering <span style={{ color: 'var(--green)' }}>99.7% uptime</span> across 500+ endpoints.
             </p>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 py-4" style={{ borderTop: `1px solid var(--border)`, borderBottom: `1px solid var(--border)` }}>
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 py-4" style={{ borderTop: `1px solid var(--border)`, borderBottom: `1px solid var(--border)` }}>
               {[
-                { value: "6+", label: "YRS · ACTIVE DUTY" },
-                { value: "500+", label: "ENDPOINTS SECURED" },
-                { value: "99.2%", label: "THREAT INTERCEPT" },
+                { value: "6+", label: "Years Experience" },
+                { value: "500+", label: "Endpoints Managed" },
+                { value: "99.2%", label: "Threat Detection" },
               ].map((s) => (
                 <div key={s.label}>
-                  <div className="font-['Syne'] text-3xl font-bold glow-text" style={{ color: 'var(--green)' }}>{s.value}</div>
-                  <div className="text-xs mt-0.5 font-['JetBrains_Mono'] tracking-wider" style={{ color: 'var(--text-muted)' }}>{s.label}</div>
+                  <div className="font-['Syne'] text-2xl sm:text-3xl font-bold glow-text" style={{ color: 'var(--green)' }}>{s.value}</div>
+                  <div className="text-[10px] sm:text-xs mt-0.5 font-['JetBrains_Mono'] tracking-wider" style={{ color: 'var(--text-muted)' }}>{s.label}</div>
                 </div>
               ))}
             </div>
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-3">
-              <a href="#projects" className="btn-cyber-fill flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold tracking-wider">
-                ./view_projects.sh <ArrowRight className="h-4 w-4" />
+              <a href="#projects" className="btn-cyber-fill flex items-center gap-2 px-5 py-3 rounded-full text-sm font-bold tracking-wider">
+                View Projects <ArrowRight className="h-4 w-4" />
               </a>
-              <a href="#contact" className="btn-cyber flex items-center gap-2 px-6 py-3 rounded-full text-sm">
-                ssh contact@hammad.dev
+              <a href="#contact" className="btn-cyber flex items-center gap-2 px-5 py-3 rounded-full text-sm">
+                Contact Me
               </a>
             </div>
 
             {/* Socials */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 flex-wrap">
               {[
                 { icon: Github, href: "https://github.com/Muhammadhammad24", label: "GitHub" },
                 { icon: Linkedin, href: "https://linkedin.com/in/Hammad", label: "LinkedIn" },
@@ -146,8 +146,8 @@ export default function Portfolio() {
             </div>
           </div>
 
-          {/* RIGHT — Cyber Roles Orbital (swapped here, canvas removed) */}
-          <div className="flex justify-center items-center">
+          {/* RIGHT — Cyber Roles Orbital — hidden on small mobile, shown md+ */}
+          <div className="hidden sm:flex justify-center items-center overflow-hidden">
             <CyberRoles />
           </div>
         </div>
@@ -155,7 +155,7 @@ export default function Portfolio() {
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
           <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.3em] uppercase" style={{ color: 'var(--green-mid)' }}>
-            scroll --down
+            Scroll
           </span>
           <div className="w-px h-10" style={{ background: `linear-gradient(to bottom, var(--green), transparent)` }} />
         </div>
@@ -174,10 +174,10 @@ export default function Portfolio() {
           <div className="text-center mb-12">
             <span className="font-['JetBrains_Mono'] text-[10px] tracking-[0.4em] uppercase px-3 py-1 rounded-sm"
               style={{ color: 'var(--green)', border: '1px solid rgba(0,255,65,0.2)', background: 'rgba(0,255,65,0.04)' }}>
-              [ SYSTEM MODULES ]
+              Core Specializations
             </span>
             <h2 className="font-['Syne'] text-3xl font-bold mt-4" style={{ color: 'var(--text)' }}>
-              Core Threat Vectors & Competencies
+              What I Do Best
             </h2>
           </div>
 
@@ -186,42 +186,42 @@ export default function Portfolio() {
               {
                 role: "DevSecOps",
                 color: "#00ff41",
-                desc: "Security-first CI/CD pipelines — threat modelling baked into every commit, not patched post-deployment.",
+                desc: "Bridging development, security, and operations — CI/CD pipelines with security baked in, not bolted on.",
                 tools: ["CrowdStrike", "Splunk", "Okta", "Terraform", "Ansible", "Docker"],
                 metric: "95% automated resolution",
               },
               {
                 role: "Cloud Engineer",
                 color: "#39ff14",
-                desc: "Multi-cloud perimeter design across Azure, AWS, and GCP — IaC provisioning, container orchestration, zero-downtime deployments.",
+                desc: "Architecting and managing multi-cloud environments across Azure, AWS, and GCP with IaC and container orchestration.",
                 tools: ["Microsoft Azure", "AWS", "GCP", "Kubernetes", "Terraform", "Hyper-V"],
                 metric: "6h → 90min deployment",
               },
               {
                 role: "IT Infrastructure",
                 color: "#00e637",
-                desc: "Bare-metal to hypervisor-layer management — server clusters, VM fleets, endpoint hardening at enterprise scale.",
+                desc: "End-to-end enterprise infrastructure management from bare-metal servers to virtual machines and endpoint fleets.",
                 tools: ["VMware ESXi", "Windows Server", "Active Directory", "Intune", "SCCM", "Veeam"],
                 metric: "99.7% uptime maintained",
               },
               {
                 role: "Network Engineer",
                 color: "#66ff66",
-                desc: "Cisco/Juniper backbone architecture, next-gen firewall rule enforcement, and real-time intrusion detection.",
+                desc: "Designing, securing, and monitoring enterprise networks with Cisco, Juniper, and next-gen firewall solutions.",
                 tools: ["Cisco Meraki", "Juniper", "pfSense", "Fortinet", "VPN", "Wi-Fi 6/7"],
                 metric: "80% unauthorized access cut",
               },
               {
                 role: "IT Security",
                 color: "#00ffaa",
-                desc: "Zero Trust policy enforcement, SIEM correlation rules, and vulnerability triage across 500+ nodes 24/7.",
+                desc: "Implementing Zero Trust architecture, SIEM, endpoint protection, and vulnerability management at enterprise scale.",
                 tools: ["Microsoft Sentinel", "Defender", "CrowdStrike", "Okta", "Splunk", "Palo Alto"],
                 metric: "99.2% threat detection",
               },
               {
                 role: "IT Support Engineer",
                 color: "#80ff80",
-                desc: "L1/L2/L3 triage, ITIL-aligned ITSM workflows, and automated ticket routing — SLA compliance above 94%.",
+                desc: "Delivering L1/L2/L3 support, endpoint management, and ITSM operations with ITIL-aligned processes.",
                 tools: ["ServiceNow", "Jira SM", "Intune", "Jamf Pro", "Zendesk", "TeamViewer"],
                 metric: "94% SLA resolution rate",
               },
@@ -247,14 +247,14 @@ export default function Portfolio() {
                 <div>
                   <div className="font-['Syne'] text-lg font-bold" style={{ color: 'var(--text)' }}>Muhammad Hammad</div>
                   <div className="font-['JetBrains_Mono'] text-[11px] tracking-widest uppercase mt-1" style={{ color: 'var(--green-dim)' }}>
-                    Infrastructure · Security · Cloud · AI
+                    IT Infrastructure · AI · Security · Cloud · Network
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full"
                   style={{ background: 'rgba(0,255,65,0.06)', border: '1px solid rgba(0,255,65,0.18)' }}>
                   <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--green)', boxShadow: `0 0 5px var(--green)` }} />
                   <span className="font-['JetBrains_Mono'] text-[10px] tracking-wider" style={{ color: 'var(--green-dim)' }}>
-                    ACCEPTING_CONNECTIONS
+                    Open to Opportunities
                   </span>
                 </div>
               </div>
@@ -285,19 +285,24 @@ export default function Portfolio() {
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-1 h-5 rounded-full" style={{ background: 'var(--green)', boxShadow: `0 0 8px var(--green)` }} />
                   <span className="font-['JetBrains_Mono'] text-[11px] tracking-[0.3em] uppercase font-bold" style={{ color: 'var(--green)' }}>
-                    // OPERATOR PROFILE
+                    Professional Summary
                   </span>
                   <div className="flex-1 h-px" style={{ background: 'rgba(0,255,65,0.1)' }} />
                 </div>
                 <GlassmorphicCard>
                   <p className="leading-relaxed text-sm mb-3" style={{ color: 'var(--text-dim)' }}>
-                    Operator with <span style={{ color: 'var(--green)', fontWeight: 600 }}>6+ years</span> in the field — system administration, cloud infrastructure, network hardening, and cybersecurity. Specializing in orchestrating large-scale enterprise environments through intelligent automation and AI-driven ops pipelines.
+                    IT professional with <span style={{ color: 'var(--green)', fontWeight: 600 }}>6+ years</span> of expertise in system
+                    administration, cloud infrastructure, network engineering, and cybersecurity. Specializing in managing
+                    large-scale enterprise environments through intelligent automation and AI-driven orchestration.
                   </p>
                   <p className="leading-relaxed text-sm mb-3" style={{ color: 'var(--text-dim)' }}>
-                    Deployed <span style={{ color: 'var(--green)', fontWeight: 600 }}>Zero Trust security</span> frameworks from scratch, achieved <span style={{ color: 'var(--green)', fontWeight: 600 }}>99.2% threat intercept rate</span>, and provisioned cloud environments for 180+ remote operators across 12 international nodes.
+                    Proven track record implementing <span style={{ color: 'var(--green)', fontWeight: 600 }}>Zero Trust security</span> frameworks,
+                    achieving <span style={{ color: 'var(--green)', fontWeight: 600 }}>99.2% threat detection accuracy</span> and deploying
+                    cloud environments for 180+ remote employees across 12 international locations.
                   </p>
                   <p className="leading-relaxed text-sm" style={{ color: 'var(--text-dim)' }}>
-                    Mission objective: integrate AI-driven triage bots, automated provisioning scripts, and intelligent SIEM correlation to reach <span style={{ color: 'var(--green)', fontWeight: 600 }}>80% autonomous ticket resolution</span> and a zero-breach security posture.
+                    Career objective: Integrating AI chatbots, automated provisioning, and intelligent monitoring
+                    to achieve <span style={{ color: 'var(--green)', fontWeight: 600 }}>80% automated support tickets</span> and zero-breach security posture.
                   </p>
                 </GlassmorphicCard>
               </div>
@@ -307,7 +312,7 @@ export default function Portfolio() {
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-1 h-5 rounded-full" style={{ background: 'var(--green)', boxShadow: `0 0 8px var(--green)` }} />
                   <span className="font-['JetBrains_Mono'] text-[11px] tracking-[0.3em] uppercase font-bold" style={{ color: 'var(--green)' }}>
-                    // TRAINING LOG
+                    Education
                   </span>
                   <div className="flex-1 h-px" style={{ background: 'rgba(0,255,65,0.1)' }} />
                 </div>
@@ -364,7 +369,7 @@ export default function Portfolio() {
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-1 h-5 rounded-full" style={{ background: 'var(--green)', boxShadow: `0 0 8px var(--green)` }} />
                   <span className="font-['JetBrains_Mono'] text-[11px] tracking-[0.3em] uppercase font-bold" style={{ color: 'var(--green)' }}>
-                    // LOCALE CONFIG
+                    Languages
                   </span>
                   <div className="flex-1 h-px" style={{ background: 'rgba(0,255,65,0.1)' }} />
                 </div>
@@ -408,7 +413,7 @@ export default function Portfolio() {
         <div className="container">
           <SectionHeading title="My Skills" subtitle="02 — Expertise" />
           <p className="text-center mt-4 text-sm max-w-2xl mx-auto" style={{ color: 'var(--text-dim)' }}>
-            Toolkit acquired across 6+ years of live deployments — every stack battle-tested in production environments under real threat conditions.
+            I've worked with a variety of technologies throughout my career. Here's a breakdown of my technical skills and proficiency levels.
           </p>
           <SkillsTabbed />
         </div>
@@ -419,7 +424,7 @@ export default function Portfolio() {
         <div className="container">
           <SectionHeading title="Professional Certifications" subtitle="03 — Credentials" />
           <p className="text-center mt-4 text-sm max-w-2xl mx-auto mb-12" style={{ color: 'var(--text-dim)' }}>
-            Verified credentials validating operational competency in ITSM, cloud infrastructure hardening, and enterprise security protocols.
+            Industry-recognised certifications validating expertise in IT service management, cloud infrastructure, and enterprise security.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
@@ -439,9 +444,9 @@ export default function Portfolio() {
           {/* Bottom stats */}
           <div className="grid grid-cols-3 gap-6 mt-14 pt-10" style={{ borderTop: `1px solid var(--border)` }}>
             {[
-              { value: "13", label: "TECH STACKS ACTIVE" },
-              { value: "95%+", label: "AUTO-RESOLVE RATE" },
-              { value: "8", label: "CERTS VERIFIED" },
+              { value: "13", label: "Technology Categories" },
+              { value: "95%+", label: "Automated Resolution" },
+              { value: "8", label: "Professional Certifications" },
             ].map((s) => (
               <div key={s.label} className="text-center">
                 <div className="font-['Syne'] text-4xl font-bold glow-text mb-1" style={{ color: 'var(--green)' }}>{s.value}</div>
@@ -465,14 +470,14 @@ export default function Portfolio() {
             <ProjectCard
               number="01"
               title="InfoTech Wizard — AI-Powered IT Support Chatbot"
-              description="RAG-based autonomous IT support agent. FastAPI backend with PyTorch, Sentence-Transformers, and FAISS vector search. React/TypeScript frontend with real-time chat, Docker containerization, and hardened security layer."
+              description="Full-stack RAG-based IT support chatbot. FastAPI backend with PyTorch, Sentence-Transformers, and FAISS vector search. React/TypeScript frontend with real-time chat interface, Docker containerization, and comprehensive security features."
               metric="60% reduction"
               metricLabel="in IT ticket volume"
               features={[
                 "Retrieval-Augmented Generation (RAG) pipeline with FAISS vector search",
-                "Real-time terminal-style chat interface with hardened security controls",
-                "Docker containerization — deploy anywhere, zero-config environment drift",
-                "60% drop in support ticket volume through intelligent autonomous triage",
+                "Real-time chat interface with comprehensive security features",
+                "Docker containerization for seamless deployment",
+                "60% reduction in IT support ticket volume through intelligent automation",
               ]}
               tags={["FastAPI", "React", "TypeScript", "PyTorch", "Sentence-Transformers", "FAISS", "HuggingFace", "Docker", "RAG Architecture"]}
               repoUrl="https://github.com/Muhammadhammad24/Infotech-Wizard"
@@ -483,14 +488,14 @@ export default function Portfolio() {
             <ProjectCard
               number="02"
               title="NNApprox — AI-Powered System Analytics & Optimization"
-              description="Python framework using PyTorch and JAX for predictive system performance modelling and automated infrastructure optimization. Custom neural nets with adaptive learning algorithms parsing live IT metrics and system logs."
+              description="Python-based framework using PyTorch and JAX for intelligent system performance prediction and automated optimization. Custom neural network models with adaptive learning algorithms processing IT infrastructure metrics and system logs."
               metric="92% prediction accuracy"
               metricLabel="65% reduction in manual monitoring"
               features={[
-                "Custom neural network models for real-time infrastructure performance prediction",
-                "Adaptive learning algorithms ingesting live IT metrics and system event logs",
-                "Automated analysis pipelines with comparative benchmarking across node clusters",
-                "92% prediction accuracy — 65% drop in manual monitoring overhead",
+                "Intelligent system performance prediction using custom neural network models",
+                "Adaptive learning algorithms for IT infrastructure metrics analysis",
+                "Automated analysis pipelines with comparative benchmarking",
+                "92% prediction accuracy with 65% reduction in manual monitoring efforts",
               ]}
               tags={["Python", "PyTorch", "JAX", "TensorFlow", "Neural Networks", "Adaptive Learning", "System Analytics", "Performance Optimization", "Predictive Modeling", "Automated Pipelines"]}
               repoUrl="https://github.com/Muhammadhammad24/nnapprox"
