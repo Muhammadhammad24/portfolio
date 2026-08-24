@@ -117,7 +117,7 @@ export function FloatingNav() {
                 className="btn-cyber ml-3 px-4 py-1.5 text-xs rounded-full"
                 style={{ cursor: 'pointer' }}
               >
-                Hire Me
+                Contact
               </button>
             </div>
           )}

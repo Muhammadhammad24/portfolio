@@ -52,15 +52,7 @@ export function SectionReveal({ children, className = "", id }: SectionRevealPro
 
   return (
     <div ref={ref} className={`relative ${className}`} id={id}>
-      {/* Data stream bar sweeps across top of section */}
-      {showStream && (
-        <div className="absolute top-0 left-0 right-0 overflow-hidden pointer-events-none z-10" style={{ height: 28 }}>
-          <div className="data-stream-bar" />
-          <div className="flex items-center justify-center mt-1">
-            <DataStreamText />
-          </div>
-        </div>
-      )}
+      {/* data stream removed */}
 
       {/* Section content fades + slides up */}
       <motion.div
