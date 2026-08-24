@@ -32,7 +32,7 @@ export function ProfilePhoto() {
         style={{
           inset: 18,
           border: '2.5px solid var(--border-hot)',
-          boxShadow: '0 0 0 1px var(--border), 0 0 30px var(--green-glow), 0 0 60px var(--green-glow2)',
+          boxShadow: '0 0 0 1px var(--border), 0 0 30px var(--accent-glow), 0 0 60px var(--accent-glow2)',
           /* Isolate from any parent filter */
           isolation: 'isolate',
           transform: 'translateZ(0)',
@@ -66,9 +66,9 @@ export function ProfilePhoto() {
         style={{
           width: 14, height: 14,
           bottom: 22, right: 22,
-          background: 'var(--green)',
+          background: 'var(--accent)',
           border: '2px solid var(--bg)',
-          boxShadow: '0 0 8px var(--green), 0 0 16px var(--green-glow)',
+          boxShadow: '0 0 8px var(--accent), 0 0 16px var(--accent-glow)',
         }}
         animate={{ scale: [1, 1.2, 1] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

@@ -41,7 +41,7 @@ export function GlassmorphicCard({ children, className = "" }: GlassmorphicCardP
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      whileHover={{ borderColor: 'var(--border-hot)', boxShadow: '0 0 30px rgba(0,255,65,0.1)' }}
+      whileHover={{ borderColor: 'var(--border-hot)', boxShadow: '0 0 30px rgba(255,255,255,0.1)' }}
     >
       {/* top shine */}
       <div className="absolute top-0 left-0 right-0 h-px"

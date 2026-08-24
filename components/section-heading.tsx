@@ -18,7 +18,7 @@ export function SectionHeading({ title, subtitle, align = "center" }: SectionHea
       >
         <span
           className="inline-block font-['JetBrains_Mono'] text-xs tracking-[0.35em] uppercase px-3 py-1 rounded-sm"
-          style={{ color: 'var(--green)', border: '1px solid var(--border)', background: 'var(--surface)' }}
+          style={{ color: 'var(--accent)', border: '1px solid var(--border)', background: 'var(--surface)' }}
         >
           {subtitle}
         </span>
@@ -39,8 +39,8 @@ export function SectionHeading({ title, subtitle, align = "center" }: SectionHea
         transition={{ duration: 0.6, delay: 0.3 }} viewport={{ once: true }}
         style={{ transformOrigin: isCenter ? "center" : "left" }}
       >
-        <div className="h-px w-10" style={{ background: 'var(--green)' }} />
-        <div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--green)', boxShadow: '0 0 8px var(--green)' }} />
+        <div className="h-px w-10" style={{ background: 'var(--accent)' }} />
+        <div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--accent)', boxShadow: '0 0 8px var(--accent)' }} />
         <div className="h-px w-20" style={{ background: 'var(--border)' }} />
       </motion.div>
     </div>

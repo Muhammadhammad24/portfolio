@@ -57,7 +57,7 @@ export function ProjectCard({
       >
         {/* Top glow line */}
         <div className="absolute top-0 left-0 right-0 h-px transition-opacity duration-500"
-          style={{ background: 'linear-gradient(90deg, transparent, var(--green-mid), transparent)', opacity: hovered ? 1 : 0.3 }} />
+          style={{ background: 'linear-gradient(90deg, transparent, var(--accent-mid), transparent)', opacity: hovered ? 1 : 0.3 }} />
 
         {/* Number */}
         {number && (
@@ -69,14 +69,14 @@ export function ProjectCard({
 
         {/* Active dot */}
         <div className="absolute top-4 right-4 flex items-center gap-1.5">
-          <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--green)', boxShadow: '0 0 6px var(--green)' }} />
+          <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--accent)', boxShadow: '0 0 6px var(--accent)' }} />
           <span className="font-['JetBrains_Mono'] text-[9px] tracking-widest" style={{ color: 'var(--text-muted)' }}>LIVE</span>
         </div>
 
         <div className="p-6 flex flex-col h-full">
           {/* Title */}
           <h3 className="font-['Syne'] text-xl font-bold mt-4 mb-3 leading-tight transition-colors"
-            style={{ color: hovered ? 'var(--green)' : 'var(--text)' }}>
+            style={{ color: hovered ? 'var(--accent)' : 'var(--text)' }}>
             {title}
           </h3>
 
@@ -89,12 +89,12 @@ export function ProjectCard({
           {metric && (
             <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-lg"
               style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-              <Zap className="h-3.5 w-3.5 shrink-0" style={{ color: 'var(--green)' }} />
-              <span className="font-['JetBrains_Mono'] text-xs font-bold" style={{ color: 'var(--green)' }}>
+              <Zap className="h-3.5 w-3.5 shrink-0" style={{ color: 'var(--accent)' }} />
+              <span className="font-['JetBrains_Mono'] text-xs font-bold" style={{ color: 'var(--accent)' }}>
                 {metric}
               </span>
               {metricLabel && (
-                <span className="text-xs" style={{ color: 'var(--green-mid)' }}>{metricLabel}</span>
+                <span className="text-xs" style={{ color: 'var(--accent-mid)' }}>{metricLabel}</span>
               )}
             </div>
           )}
@@ -107,7 +107,7 @@ export function ProjectCard({
               <ul className="space-y-1.5">
                 {features.map((f, i) => (
                   <li key={i} className="flex gap-2 text-xs" style={{ color: 'var(--text-dim)' }}>
-                    <span style={{ color: 'var(--green)' }} className="shrink-0 mt-0.5">▸</span>
+                    <span style={{ color: 'var(--accent)' }} className="shrink-0 mt-0.5">▸</span>
                     {f}
                   </li>
                 ))}
@@ -123,7 +123,7 @@ export function ProjectCard({
                 style={{
                   background: hovered ? 'var(--border)' : 'var(--card-bg)',
                   border: '1px solid var(--border)',
-                  color: hovered ? 'var(--green)' : 'var(--green-mid)',
+                  color: hovered ? 'var(--accent)' : 'var(--accent-mid)',
                 }}>
                 {tag}
               </span>
@@ -134,13 +134,13 @@ export function ProjectCard({
           <div className="flex gap-3 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
             <Link href={repoUrl} target="_blank"
               className="flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase transition-all duration-300 hover:scale-105"
-              style={{ color: 'var(--green-mid)', fontFamily: 'JetBrains Mono, monospace' }}>
+              style={{ color: 'var(--accent-mid)', fontFamily: 'JetBrains Mono, monospace' }}>
               <Github className="h-3.5 w-3.5" />
               View Code
             </Link>
             <Link href={demoUrl} target="_blank"
               className="flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase transition-all duration-300 hover:scale-105 ml-auto"
-              style={{ color: 'var(--green)', fontFamily: 'JetBrains Mono, monospace' }}>
+              style={{ color: 'var(--accent)', fontFamily: 'JetBrains Mono, monospace' }}>
               Live Demo
               <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>

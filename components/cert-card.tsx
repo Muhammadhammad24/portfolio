@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { CheckCircle, Shield, Cloud, Terminal, Server, Wifi, BookOpen, Network, Settings } from "lucide-react"
+import { useMagneticTilt } from "@/hooks/use-magnetic-tilt"
 
 const CERT_ICONS: Record<string, typeof Shield> = {
   "ITIL Foundation":                         Settings,
@@ -28,16 +29,19 @@ interface CertCardProps {
 export function CertCard({ cert, index }: CertCardProps) {
   const [hovered, setHovered] = useState(false)
   const Icon = CERT_ICONS[cert.name] ?? Shield
+  const { ref, rotateX, rotateY, onMouseMove, onMouseLeave } = useMagneticTilt(5)
 
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.07 }}
       viewport={{ once: true }}
-      whileHover={{ y: -5 }}
+      style={{ rotateX, rotateY, transformPerspective: 900, transformStyle: "preserve-3d" }}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseLeave={() => { setHovered(false); onMouseLeave() }}
+      onMouseMove={onMouseMove}
       className="bracket-card"
     >
       <div
@@ -45,7 +49,7 @@ export function CertCard({ cert, index }: CertCardProps) {
         style={{
           background: hovered ? 'var(--card-bg)' : 'var(--card-bg)',
           border: hovered ? `1px solid var(--border-hot)` : '1px solid var(--border)',
-          boxShadow: hovered ? `0 0 28px rgba(0,255,65,0.1)` : 'none',
+          boxShadow: hovered ? `0 0 28px rgba(255,255,255,0.1)` : 'none',
         }}
       >
         <div className="absolute top-0 left-0 right-0 h-px transition-opacity duration-500"
@@ -58,21 +62,21 @@ export function CertCard({ cert, index }: CertCardProps) {
             style={{
               background: hovered ? 'var(--border)' : 'var(--surface)',
               border: `1px solid ${hovered ? 'var(--border-hot)' : 'var(--border)'}`,
-              boxShadow: hovered ? `0 0 16px rgba(0,255,65,0.22)` : 'none',
+              boxShadow: hovered ? `0 0 16px rgba(255,255,255,0.22)` : 'none',
             }}
           >
             <Icon
               className="h-5 w-5 transition-all duration-300"
               style={{
-                color: hovered ? cert.color : 'var(--green)',
+                color: hovered ? cert.color : 'var(--accent)',
                 filter: hovered ? `drop-shadow(0 0 6px ${cert.color})` : 'none',
               }}
             />
           </div>
           <div className="flex items-center gap-1 px-2 py-0.5 rounded-full"
             style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-            <CheckCircle className="h-2.5 w-2.5" style={{ color: 'var(--green)' }} />
-            <span className="font-['JetBrains_Mono'] text-[9px] tracking-wider" style={{ color: 'var(--green-mid)' }}>
+            <CheckCircle className="h-2.5 w-2.5" style={{ color: 'var(--accent)' }} />
+            <span className="font-['JetBrains_Mono'] text-[9px] tracking-wider" style={{ color: 'var(--accent-mid)' }}>
               VERIFIED
             </span>
           </div>
@@ -93,7 +97,7 @@ export function CertCard({ cert, index }: CertCardProps) {
         <div className="flex items-center gap-2 pt-2.5" style={{ borderTop: '1px solid var(--border)' }}>
           <div className="w-1.5 h-1.5 rounded-full shrink-0"
             style={{ background: cert.color, boxShadow: `0 0 4px ${cert.color}` }} />
-          <span className="font-['JetBrains_Mono'] text-[10px] tracking-wider" style={{ color: 'var(--green-mid)' }}>
+          <span className="font-['JetBrains_Mono'] text-[10px] tracking-wider" style={{ color: 'var(--accent-mid)' }}>
             {cert.issuer}
           </span>
         </div>

@@ -4,37 +4,27 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Shield } from "lucide-react"
 import { useMobile } from "@/hooks/use-mobile"
-import { ThemeToggle } from "@/components/theme-toggle"
 
-/**
- * Smooth scroll with easeInOutCubic — feels like an elevator,
- * starts slow, accelerates, then slows into the target.
- * Offset = fixed nav height so section heading is visible.
- */
 function smoothScrollTo(id: string) {
   const el = document.getElementById(id)
   if (!el) return
-
   const NAV_OFFSET = 84
   const targetY = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET
   const startY = window.scrollY
   const distance = targetY - startY
-  const duration = Math.min(Math.max(Math.abs(distance) * 0.5, 400), 900) // 400–900ms
+  const duration = Math.min(Math.max(Math.abs(distance) * 0.5, 400), 900)
   let startTime: number | null = null
 
   function easeInOutCubic(t: number) {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
   }
-
   function step(timestamp: number) {
     if (!startTime) startTime = timestamp
     const elapsed = timestamp - startTime
     const progress = Math.min(elapsed / duration, 1)
-    const eased = easeInOutCubic(progress)
-    window.scrollTo(0, startY + distance * eased)
+    window.scrollTo(0, startY + distance * easeInOutCubic(progress))
     if (progress < 1) requestAnimationFrame(step)
   }
-
   requestAnimationFrame(step)
 }
 
@@ -66,21 +56,25 @@ export function FloatingNav() {
             border: '1px solid var(--border)',
             backdropFilter: 'blur(24px)',
             WebkitBackdropFilter: 'blur(24px)',
-            boxShadow: '0 0 0 1px rgba(0,0,0,0.05), 0 8px 32px rgba(0,0,0,0.7)',
+            boxShadow: '0 0 0 1px rgba(0,0,0,0.1), 0 8px 32px rgba(0,0,0,0.7)',
           }}
         >
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/5 h-px"
-            style={{ background: 'linear-gradient(90deg,transparent,var(--green),transparent)' }} />
+          {/* Top shimmer */}
+          <div
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-2/5 h-px"
+            style={{ background: 'linear-gradient(90deg, transparent, var(--accent), transparent)' }}
+          />
 
           {isMobile ? (
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1.5">
-                <Shield className="h-3.5 w-3.5" style={{ color: 'var(--green)' }} />
-                <span className="font-bold text-sm tracking-widest font-['Syne']" style={{ color: 'var(--green)' }}>MH</span>
+                <Shield className="h-3.5 w-3.5" style={{ color: 'var(--accent)' }} />
+                <span className="font-bold text-sm tracking-widest font-['Syne']" style={{ color: 'var(--accent)' }}>MH</span>
               </div>
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                style={{ color: 'var(--green-mid)', background: 'none', border: 'none', cursor: 'pointer' }}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                style={{ color: 'var(--accent-mid)', background: 'none', border: 'none', cursor: 'pointer' }}
               >
                 {isOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
               </button>
@@ -88,8 +82,11 @@ export function FloatingNav() {
           ) : (
             <div className="flex items-center gap-1">
               <div className="flex items-center gap-1.5 mr-5">
-                <Shield className="h-3.5 w-3.5" style={{ color: 'var(--green)', filter: 'drop-shadow(0 0 4px var(--green))' }} />
-                <span className="font-bold text-sm tracking-widest font-['Syne']" style={{ color: 'var(--green)' }}>M·H</span>
+                <Shield
+                  className="h-3.5 w-3.5"
+                  style={{ color: 'var(--accent)', filter: 'drop-shadow(0 0 4px var(--accent))' }}
+                />
+                <span className="font-bold text-sm tracking-widest font-['Syne']" style={{ color: 'var(--accent)' }}>M·H</span>
               </div>
 
               {navItems.map((item) => (
@@ -99,7 +96,7 @@ export function FloatingNav() {
                   className="relative px-3 py-1.5 text-xs font-medium tracking-wider uppercase transition-colors duration-200"
                   style={{
                     fontFamily: 'JetBrains Mono, monospace',
-                    color: active === item.name ? 'var(--green)' : 'var(--text-muted)',
+                    color: active === item.name ? 'var(--accent)' : 'var(--text-muted)',
                     background: 'none', border: 'none', cursor: 'pointer',
                   }}
                 >
@@ -107,7 +104,7 @@ export function FloatingNav() {
                     <motion.span
                       layoutId="nav-pill"
                       className="absolute inset-0 rounded-full"
-                      style={{ background: 'rgba(0,255,65,0.09)', border: '1px solid var(--border)' }}
+                      style={{ background: 'rgba(255,255,255,0.09)', border: '1px solid var(--border)' }}
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}
@@ -122,13 +119,12 @@ export function FloatingNav() {
               >
                 Hire Me
               </button>
-              <ThemeToggle className="ml-1" />
             </div>
           )}
         </div>
       </nav>
 
-      {/* Mobile full-screen menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {isMobile && isOpen && (
           <motion.div
@@ -150,24 +146,15 @@ export function FloatingNav() {
                     onClick={() => {
                       setActive(item.name)
                       setIsOpen(false)
-                      // Small delay so menu closes before scroll starts
                       setTimeout(() => smoothScrollTo(item.id), 350)
                     }}
                     className="text-3xl font-bold tracking-widest font-['Syne']"
-                    style={{ color: 'var(--green-mid)', background: 'none', border: 'none', cursor: 'pointer' }}
+                    style={{ color: 'var(--accent-mid)', background: 'none', border: 'none', cursor: 'pointer' }}
                   >
                     {item.name}
                   </button>
                 </motion.div>
               ))}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navItems.length * 0.07 }}
-                className="flex justify-center pt-4"
-              >
-                <ThemeToggle />
-              </motion.div>
             </div>
           </motion.div>
         )}

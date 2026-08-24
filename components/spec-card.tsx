@@ -2,235 +2,195 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
+import { useMagneticTilt } from "@/hooks/use-magnetic-tilt"
 
-/* ─── 3D SVG icons per specialization ─── */
+const LIME = "#B1EB21"
+const LIME_DIM = "#9BD117"
+const LIME_BRIGHT = "#C2F343"
+
 const ICONS: Record<string, JSX.Element> = {
   DevSecOps: (
-    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+    <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
       <defs>
-        <linearGradient id="dso1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#00ff41"/>
-          <stop offset="1" stopColor="#00cc33"/>
+        <linearGradient id="g-dso" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+          <stop stopColor={LIME_BRIGHT}/><stop offset="1" stopColor={LIME_DIM}/>
         </linearGradient>
-        <filter id="dsoglow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
-      {/* Shield body */}
-      <path d="M24 4L6 11v14c0 10 8 18 18 19 10-1 18-9 18-19V11Z" fill="rgba(0,255,65,0.1)" stroke="url(#dso1)" strokeWidth="2" strokeLinejoin="round" filter="url(#dsoglow)"/>
-      {/* Lock body */}
-      <rect x="17" y="23" width="14" height="10" rx="2" fill="url(#dso1)" opacity="0.85"/>
-      {/* Lock shackle */}
-      <path d="M19 23v-3a5 5 0 0 1 10 0v3" stroke="url(#dso1)" strokeWidth="2" strokeLinecap="round" fill="none" filter="url(#dsoglow)"/>
-      {/* Keyhole */}
-      <circle cx="24" cy="27.5" r="1.5" fill="#050a05"/>
-      <rect x="23" y="28" width="2" height="3" rx="1" fill="#050a05"/>
-      {/* Gear teeth top-right */}
-      <circle cx="35" cy="13" r="4" fill="rgba(0,255,65,0.15)" stroke="rgba(0,255,65,0.5)" strokeWidth="1"/>
-      <line x1="35" y1="8" x2="35" y2="6" stroke="rgba(0,255,65,0.6)" strokeWidth="1.5" strokeLinecap="round"/>
-      <line x1="35" y1="18" x2="35" y2="20" stroke="rgba(0,255,65,0.6)" strokeWidth="1.5" strokeLinecap="round"/>
-      <line x1="30" y1="13" x2="28" y2="13" stroke="rgba(0,255,65,0.6)" strokeWidth="1.5" strokeLinecap="round"/>
-      <line x1="40" y1="13" x2="42" y2="13" stroke="rgba(0,255,65,0.6)" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M24 4L6 11v14c0 10 8 18 18 19 10-1 18-9 18-19V11Z"
+        fill="rgba(177,235,33,0.06)" stroke="url(#g-dso)" strokeWidth="2" strokeLinejoin="round"/>
+      <rect x="17" y="23" width="14" height="10" rx="2" fill="url(#g-dso)" opacity="0.85"/>
+      <path d="M19 23v-3a5 5 0 0 1 10 0v3" stroke="url(#g-dso)" strokeWidth="2" strokeLinecap="round" fill="none"/>
+      <circle cx="24" cy="27.5" r="1.5" fill="#000027"/>
+      <circle cx="35" cy="13" r="4" fill="rgba(177,235,33,0.08)" stroke={LIME} strokeWidth="1" opacity="0.7"/>
+      <line x1="35" y1="8"  x2="35" y2="6"  stroke={LIME} strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+      <line x1="35" y1="18" x2="35" y2="20" stroke={LIME} strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+      <line x1="30" y1="13" x2="28" y2="13" stroke={LIME} strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+      <line x1="40" y1="13" x2="42" y2="13" stroke={LIME} strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
     </svg>
   ),
   "Cloud Engineer": (
-    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+    <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
       <defs>
-        <linearGradient id="ceg1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#39ff14"/><stop offset="1" stopColor="#00cc33"/>
+        <linearGradient id="g-ce" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+          <stop stopColor={LIME_BRIGHT}/><stop offset="1" stopColor={LIME_DIM}/>
         </linearGradient>
-        <filter id="ceglow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
-      {/* Cloud shape */}
-      <path d="M34 32H14a8 8 0 0 1-1-16 10 10 0 0 1 20 2 6 6 0 0 1 1 14Z" fill="rgba(57,255,20,0.1)" stroke="url(#ceg1)" strokeWidth="2" strokeLinejoin="round" filter="url(#ceglow)"/>
-      {/* Upload arrow */}
-      <line x1="24" y1="38" x2="24" y2="26" stroke="url(#ceg1)" strokeWidth="2" strokeLinecap="round"/>
-      <polyline points="20,30 24,26 28,30" stroke="url(#ceg1)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-      {/* Nodes below cloud */}
-      <circle cx="16" cy="41" r="2.5" fill="rgba(57,255,20,0.2)" stroke="url(#ceg1)" strokeWidth="1.2"/>
-      <circle cx="24" cy="43" r="2.5" fill="rgba(57,255,20,0.2)" stroke="url(#ceg1)" strokeWidth="1.2"/>
-      <circle cx="32" cy="41" r="2.5" fill="rgba(57,255,20,0.2)" stroke="url(#ceg1)" strokeWidth="1.2"/>
-      <line x1="16" y1="41" x2="24" y2="43" stroke="rgba(57,255,20,0.4)" strokeWidth="1"/>
-      <line x1="32" y1="41" x2="24" y2="43" stroke="rgba(57,255,20,0.4)" strokeWidth="1"/>
+      <path d="M34 32H14a8 8 0 0 1-1-16 10 10 0 0 1 20 2 6 6 0 0 1 1 14Z"
+        fill="rgba(177,235,33,0.06)" stroke="url(#g-ce)" strokeWidth="2" strokeLinejoin="round"/>
+      <line x1="24" y1="38" x2="24" y2="26" stroke="url(#g-ce)" strokeWidth="2" strokeLinecap="round"/>
+      <polyline points="20,30 24,26 28,30" stroke="url(#g-ce)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+      <circle cx="16" cy="41" r="2.5" fill="rgba(177,235,33,0.08)" stroke="url(#g-ce)" strokeWidth="1.2"/>
+      <circle cx="24" cy="43" r="2.5" fill="rgba(177,235,33,0.08)" stroke="url(#g-ce)" strokeWidth="1.2"/>
+      <circle cx="32" cy="41" r="2.5" fill="rgba(177,235,33,0.08)" stroke="url(#g-ce)" strokeWidth="1.2"/>
+      <line x1="16" y1="41" x2="24" y2="43" stroke="rgba(177,235,33,0.30)" strokeWidth="1"/>
+      <line x1="32" y1="41" x2="24" y2="43" stroke="rgba(177,235,33,0.30)" strokeWidth="1"/>
     </svg>
   ),
   "IT Infrastructure": (
-    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+    <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
       <defs>
-        <linearGradient id="itg1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#00ff41"/><stop offset="1" stopColor="#00aa22"/>
+        <linearGradient id="g-it" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+          <stop stopColor={LIME_BRIGHT}/><stop offset="1" stopColor={LIME_DIM}/>
         </linearGradient>
-        <filter id="itglow"><feGaussianBlur stdDeviation="1.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
-      {/* Server rack 1 */}
-      <rect x="8" y="8" width="32" height="8" rx="2" fill="rgba(0,255,65,0.1)" stroke="url(#itg1)" strokeWidth="1.5" filter="url(#itglow)"/>
-      <circle cx="14" cy="12" r="1.5" fill="#00ff41"/>
-      <rect x="18" y="10.5" width="16" height="3" rx="1" fill="rgba(0,255,65,0.2)"/>
-      {/* Server rack 2 */}
-      <rect x="8" y="20" width="32" height="8" rx="2" fill="rgba(0,255,65,0.1)" stroke="url(#itg1)" strokeWidth="1.5" filter="url(#itglow)"/>
-      <circle cx="14" cy="24" r="1.5" fill="#39ff14"/>
-      <rect x="18" y="22.5" width="16" height="3" rx="1" fill="rgba(0,255,65,0.2)"/>
-      {/* Server rack 3 */}
-      <rect x="8" y="32" width="32" height="8" rx="2" fill="rgba(0,255,65,0.1)" stroke="url(#itg1)" strokeWidth="1.5" filter="url(#itglow)"/>
-      <circle cx="14" cy="36" r="1.5" fill="#00ff41"/>
-      <rect x="18" y="34.5" width="16" height="3" rx="1" fill="rgba(0,255,65,0.2)"/>
-      {/* Status dots */}
-      <circle cx="36" cy="12" r="1.2" fill="#00ff41" opacity="0.8"/>
-      <circle cx="36" cy="24" r="1.2" fill="#00ff41" opacity="0.8"/>
-      <circle cx="36" cy="36" r="1.2" fill="#39ff14" opacity="0.8"/>
+      <rect x="8" y="8"  width="32" height="8" rx="2" fill="rgba(177,235,33,0.06)" stroke="url(#g-it)" strokeWidth="1.5"/>
+      <circle cx="14" cy="12" r="1.5" fill={LIME_DIM}/>
+      <rect x="18" y="10.5" width="16" height="3" rx="1" fill="rgba(177,235,33,0.18)"/>
+      <rect x="8" y="20" width="32" height="8" rx="2" fill="rgba(177,235,33,0.06)" stroke="url(#g-it)" strokeWidth="1.5"/>
+      <circle cx="14" cy="24" r="1.5" fill={LIME}/>
+      <rect x="18" y="22.5" width="16" height="3" rx="1" fill="rgba(177,235,33,0.18)"/>
+      <rect x="8" y="32" width="32" height="8" rx="2" fill="rgba(177,235,33,0.06)" stroke="url(#g-it)" strokeWidth="1.5"/>
+      <circle cx="14" cy="36" r="1.5" fill={LIME_DIM}/>
+      <rect x="18" y="34.5" width="16" height="3" rx="1" fill="rgba(177,235,33,0.18)"/>
     </svg>
   ),
   "Network Engineer": (
-    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+    <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
       <defs>
-        <linearGradient id="neg1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#66ff66"/><stop offset="1" stopColor="#00cc33"/>
+        <linearGradient id="g-ne" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+          <stop stopColor={LIME_BRIGHT}/><stop offset="1" stopColor={LIME_DIM}/>
         </linearGradient>
-        <filter id="neglow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
-      {/* Centre hub */}
-      <circle cx="24" cy="24" r="5" fill="rgba(102,255,102,0.15)" stroke="url(#neg1)" strokeWidth="2" filter="url(#neglow)"/>
-      <circle cx="24" cy="24" r="2" fill="url(#neg1)"/>
-      {/* Nodes */}
-      <circle cx="8" cy="12" r="3.5" fill="rgba(102,255,102,0.12)" stroke="url(#neg1)" strokeWidth="1.5"/>
-      <circle cx="40" cy="12" r="3.5" fill="rgba(102,255,102,0.12)" stroke="url(#neg1)" strokeWidth="1.5"/>
-      <circle cx="8" cy="36" r="3.5" fill="rgba(102,255,102,0.12)" stroke="url(#neg1)" strokeWidth="1.5"/>
-      <circle cx="40" cy="36" r="3.5" fill="rgba(102,255,102,0.12)" stroke="url(#neg1)" strokeWidth="1.5"/>
-      <circle cx="24" cy="7" r="3" fill="rgba(102,255,102,0.12)" stroke="url(#neg1)" strokeWidth="1.5"/>
-      {/* Connections */}
-      <line x1="11" y1="14" x2="21" y2="21" stroke="rgba(102,255,102,0.45)" strokeWidth="1.2"/>
-      <line x1="37" y1="14" x2="27" y2="21" stroke="rgba(102,255,102,0.45)" strokeWidth="1.2"/>
-      <line x1="11" y1="34" x2="21" y2="27" stroke="rgba(102,255,102,0.45)" strokeWidth="1.2"/>
-      <line x1="37" y1="34" x2="27" y2="27" stroke="rgba(102,255,102,0.45)" strokeWidth="1.2"/>
-      <line x1="24" y1="10" x2="24" y2="19" stroke="rgba(102,255,102,0.45)" strokeWidth="1.2"/>
+      <circle cx="24" cy="24" r="5" fill="rgba(177,235,33,0.08)" stroke="url(#g-ne)" strokeWidth="2"/>
+      <circle cx="24" cy="24" r="2" fill="url(#g-ne)"/>
+      <circle cx="8"  cy="12" r="3.5" fill="rgba(177,235,33,0.06)" stroke="url(#g-ne)" strokeWidth="1.5"/>
+      <circle cx="40" cy="12" r="3.5" fill="rgba(177,235,33,0.06)" stroke="url(#g-ne)" strokeWidth="1.5"/>
+      <circle cx="8"  cy="36" r="3.5" fill="rgba(177,235,33,0.06)" stroke="url(#g-ne)" strokeWidth="1.5"/>
+      <circle cx="40" cy="36" r="3.5" fill="rgba(177,235,33,0.06)" stroke="url(#g-ne)" strokeWidth="1.5"/>
+      <circle cx="24" cy="7"  r="3"   fill="rgba(177,235,33,0.06)" stroke="url(#g-ne)" strokeWidth="1.5"/>
+      <line x1="11" y1="14" x2="21" y2="21" stroke="rgba(177,235,33,0.28)" strokeWidth="1.2"/>
+      <line x1="37" y1="14" x2="27" y2="21" stroke="rgba(177,235,33,0.28)" strokeWidth="1.2"/>
+      <line x1="11" y1="34" x2="21" y2="27" stroke="rgba(177,235,33,0.28)" strokeWidth="1.2"/>
+      <line x1="37" y1="34" x2="27" y2="27" stroke="rgba(177,235,33,0.28)" strokeWidth="1.2"/>
+      <line x1="24" y1="10" x2="24" y2="19" stroke="rgba(177,235,33,0.28)" strokeWidth="1.2"/>
     </svg>
   ),
   "IT Security": (
-    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+    <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
       <defs>
-        <linearGradient id="isg1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#00ffaa"/><stop offset="1" stopColor="#00cc77"/>
+        <linearGradient id="g-is" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+          <stop stopColor={LIME_BRIGHT}/><stop offset="1" stopColor={LIME_DIM}/>
         </linearGradient>
-        <filter id="isglow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
-      {/* Shield */}
-      <path d="M24 4L6 11v14c0 10 8 18 18 19 10-1 18-9 18-19V11Z" fill="rgba(0,255,170,0.08)" stroke="url(#isg1)" strokeWidth="2" strokeLinejoin="round" filter="url(#isglow)"/>
-      {/* Checkmark */}
-      <polyline points="15,24 21,30 33,18" stroke="url(#isg1)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" filter="url(#isglow)"/>
-      {/* Eye scan lines */}
-      <line x1="6" y1="36" x2="42" y2="36" stroke="rgba(0,255,170,0.2)" strokeWidth="0.8"/>
-      <line x1="6" y1="39" x2="42" y2="39" stroke="rgba(0,255,170,0.12)" strokeWidth="0.8"/>
-      <line x1="6" y1="42" x2="42" y2="42" stroke="rgba(0,255,170,0.07)" strokeWidth="0.8"/>
+      <path d="M24 4L6 11v14c0 10 8 18 18 19 10-1 18-9 18-19V11Z"
+        fill="rgba(177,235,33,0.05)" stroke="url(#g-is)" strokeWidth="2" strokeLinejoin="round"/>
+      <polyline points="15,24 21,30 33,18" stroke="url(#g-is)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
     </svg>
   ),
   "IT Support Engineer": (
-    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+    <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
       <defs>
-        <linearGradient id="spg1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#80ff80"/><stop offset="1" stopColor="#00aa33"/>
+        <linearGradient id="g-sp" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+          <stop stopColor={LIME_BRIGHT}/><stop offset="1" stopColor={LIME_DIM}/>
         </linearGradient>
-        <filter id="spglow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
-      {/* Headset arc */}
-      <path d="M10 24a14 14 0 0 1 28 0" stroke="url(#spg1)" strokeWidth="2.5" strokeLinecap="round" fill="none" filter="url(#spglow)"/>
-      {/* Left ear cup */}
-      <rect x="7" y="22" width="7" height="10" rx="3" fill="rgba(128,255,128,0.12)" stroke="url(#spg1)" strokeWidth="1.8" filter="url(#spglow)"/>
-      {/* Right ear cup */}
-      <rect x="34" y="22" width="7" height="10" rx="3" fill="rgba(128,255,128,0.12)" stroke="url(#spg1)" strokeWidth="1.8" filter="url(#spglow)"/>
-      {/* Mic arm */}
-      <path d="M34 30 Q40 34 38 40" stroke="url(#spg1)" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-      <circle cx="38" cy="41" r="2" fill="rgba(128,255,128,0.3)" stroke="url(#spg1)" strokeWidth="1.2"/>
-      {/* Signal waves */}
-      <path d="M20 40 Q24 36 28 40" stroke="rgba(128,255,128,0.4)" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
-      <path d="M16 43 Q24 37 32 43" stroke="rgba(128,255,128,0.25)" strokeWidth="1" fill="none" strokeLinecap="round"/>
+      <path d="M10 24a14 14 0 0 1 28 0" stroke="url(#g-sp)" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+      <rect x="7"  y="22" width="7" height="10" rx="3" fill="rgba(177,235,33,0.06)" stroke="url(#g-sp)" strokeWidth="1.8"/>
+      <rect x="34" y="22" width="7" height="10" rx="3" fill="rgba(177,235,33,0.06)" stroke="url(#g-sp)" strokeWidth="1.8"/>
+      <path d="M34 30 Q40 34 38 40" stroke="url(#g-sp)" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
+      <circle cx="38" cy="41" r="2" fill="rgba(177,235,33,0.10)" stroke="url(#g-sp)" strokeWidth="1.2"/>
     </svg>
   ),
 }
 
 interface SpecCardProps {
-  spec: {
-    role: string
-    color: string
-    desc: string
-    tools: string[]
-    metric: string
-  }
+  spec: { role: string; color: string; desc: string; tools: string[]; metric: string }
   index: number
 }
 
 export function SpecCard({ spec, index }: SpecCardProps) {
   const [hovered, setHovered] = useState(false)
   const icon = ICONS[spec.role]
+  const { ref, rotateX, rotateY, onMouseMove, onMouseLeave } = useMagneticTilt(6)
 
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
       viewport={{ once: true }}
       className="bracket-card"
+      style={{ rotateX, rotateY, transformPerspective: 900, transformStyle: "preserve-3d" }}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseLeave={() => { setHovered(false); onMouseLeave() }}
+      onMouseMove={onMouseMove}
     >
       <div
-        className="relative overflow-visible rounded-2xl transition-all duration-400 p-5 flex flex-col"
+        className="relative overflow-visible rounded-2xl transition-all duration-300 p-5 flex flex-col"
         style={{
-          background: 'var(--card-bg)',
-          border: `1px solid ${hovered ? spec.color : 'var(--border)'}`,
-          boxShadow: hovered ? `0 0 35px var(--green-glow), 0 0 70px var(--green-glow2)` : 'none',
+          background: hovered ? "var(--bg-card-hover)" : "var(--bg-card)",
+          border: `1px solid ${hovered ? "rgba(177,235,33,0.28)" : "var(--border-dark-soft)"}`,
+          boxShadow: hovered ? "0 0 32px rgba(177,235,33,0.08)" : "none",
+          borderRadius: "var(--radius-lg)",
         }}
       >
-        <div className="absolute top-0 left-0 right-0 h-px transition-opacity duration-500"
-          style={{ background: `linear-gradient(90deg, transparent, ${spec.color}, transparent)`, opacity: hovered ? 0.7 : 0.2 }} />
+        {/* Top shine */}
+        <div className="absolute top-0 left-0 right-0 h-px rounded-t-2xl"
+          style={{ background: "linear-gradient(90deg, transparent, rgba(177,235,33,0.40), transparent)", opacity: hovered ? 1 : 0.15, transition: "opacity 0.3s" }} />
 
-        {/* 3D SVG Icon */}
+        {/* Icon */}
         <div className="relative mb-4">
-          <div className="w-14 h-14 relative z-10 transition-all duration-300"
-            style={{
-              filter: hovered ? `drop-shadow(0 0 12px ${spec.color})` : `drop-shadow(0 0 4px var(--border-hot))`,
-              transform: hovered ? 'scale(1.08)' : 'scale(1)',
-            }}>
+          <div className="w-12 h-12 transition-all duration-300"
+            style={{ filter: hovered ? `drop-shadow(0 0 10px rgba(177,235,33,0.55))` : `drop-shadow(0 0 3px rgba(177,235,33,0.20))`, transform: hovered ? "scale(1.08)" : "scale(1)" }}>
             {icon}
           </div>
-          {/* Hex watermark */}
-          <svg className="absolute -top-2 -left-2 opacity-15 pointer-events-none" width="56" height="60" viewBox="0 0 56 60">
-            <polygon points="28,2 54,15 54,45 28,58 2,45 2,15" fill="none" stroke={spec.color} strokeWidth="1"/>
-          </svg>
-          {hovered && (
-            <motion.div className="absolute top-0 left-0 w-14 h-14 rounded-xl"
-              style={{ border: `1px solid ${spec.color}`, borderRadius: '12px' }}
-              animate={{ scale: [1, 1.6, 1.9], opacity: [0.5, 0.15, 0] }}
-              transition={{ duration: 1.1, repeat: Infinity }}
-            />
-          )}
         </div>
 
-        <h3 className="font-['Syne'] text-base font-bold mb-1.5 transition-colors duration-300"
-          style={{ color: hovered ? spec.color : 'var(--text)' }}>
+        {/* Eyebrow */}
+        <span className="eyebrow mb-2" style={{ color: LIME, opacity: 0.7 }}>Specialization</span>
+
+        <h3 className="text-base font-bold mb-2 transition-colors duration-300"
+          style={{ color: hovered ? "#ffffff" : "var(--text-on-dark)", fontFamily: "Inter, sans-serif", fontSize: 17 }}>
           {spec.role}
         </h3>
 
-        <p className="text-xs leading-relaxed mb-4 flex-grow" style={{ color: 'var(--text-dim)' }}>
+        <p className="text-sm leading-relaxed mb-4 flex-grow" style={{ color: "var(--text-on-dark-secondary)", lineHeight: 1.6 }}>
           {spec.desc}
         </p>
 
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg mb-4 transition-all duration-300"
-          style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+        {/* Metric badge */}
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full mb-4"
+          style={{ background: "var(--lime-subtle)", border: "1px solid rgba(177,235,33,0.20)" }}>
           <motion.div className="w-1.5 h-1.5 rounded-full shrink-0"
-            style={{ background: spec.color, boxShadow: `0 0 5px ${spec.color}` }}
+            style={{ background: LIME, boxShadow: `0 0 6px rgba(177,235,33,0.60)` }}
             animate={{ opacity: [1, 0.3, 1] }}
             transition={{ duration: 1.6, repeat: Infinity }} />
-          <span className="font-['JetBrains_Mono'] text-[10px] tracking-wider font-bold" style={{ color: spec.color }}>
+          <span className="font-['JetBrains_Mono'] text-[10px] tracking-wider font-bold" style={{ color: LIME }}>
             {spec.metric}
           </span>
         </div>
 
-        <div className="flex flex-wrap gap-1.5 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
+        {/* Tools */}
+        <div className="flex flex-wrap gap-1.5 pt-3" style={{ borderTop: "1px solid var(--border-dark-soft)" }}>
           {spec.tools.map((tool) => (
             <span key={tool}
-              className="font-['JetBrains_Mono'] text-[9px] tracking-wider px-1.5 py-0.5 rounded-sm transition-all duration-300"
+              className="font-['JetBrains_Mono'] text-[9px] tracking-wider px-1.5 py-0.5 rounded"
               style={{
-                background: 'var(--surface)',
-                border: '1px solid var(--border)',
-                color: hovered ? spec.color : 'var(--green-mid)',
+                background: "rgba(177,235,33,0.06)",
+                border: "1px solid rgba(177,235,33,0.14)",
+                color: hovered ? LIME : "var(--text-on-dark-muted)",
+                transition: "color 0.2s",
               }}>
               {tool}
             </span>

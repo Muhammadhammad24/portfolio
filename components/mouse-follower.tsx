@@ -4,68 +4,90 @@ import { useEffect, useState } from "react"
 import { motion, useMotionValue, useSpring } from "framer-motion"
 
 export function MouseFollower() {
-  // Motion values update WITHOUT triggering React re-renders (key perf win)
-  const x = useMotionValue(-100)
-  const y = useMotionValue(-100)
-  const ringX = useSpring(x, { damping: 18, stiffness: 200, mass: 0.6 })
-  const ringY = useSpring(y, { damping: 18, stiffness: 200, mass: 0.6 })
-  const dotX = useSpring(x, { damping: 25, stiffness: 500 })
-  const dotY = useSpring(y, { damping: 25, stiffness: 500 })
+  const rawX = useMotionValue(-400)
+  const rawY = useMotionValue(-400)
 
-  const [enabled, setEnabled] = useState(false)
-  const [visible, setVisible] = useState(false)
+  const ringX = useSpring(rawX, { stiffness: 150, damping: 20, mass: 0.6 })
+  const ringY = useSpring(rawY, { stiffness: 150, damping: 20, mass: 0.6 })
+  const dotX  = useSpring(rawX, { stiffness: 800, damping: 35 })
+  const dotY  = useSpring(rawY, { stiffness: 800, damping: 35 })
+
+  const [visible,  setVisible]  = useState(false)
   const [clicking, setClicking] = useState(false)
+  const [hovering, setHovering] = useState(false)
+  const [enabled,  setEnabled]  = useState(false)
 
   useEffect(() => {
-    // Only run on devices with a real (fine) pointer — skip phones/tablets entirely
     if (typeof window === "undefined") return
-    const fine = window.matchMedia("(pointer: fine)").matches
-    if (!fine) return
+    if (!window.matchMedia("(pointer: fine)").matches) return
     setEnabled(true)
 
-    const move = (e: MouseEvent) => {
-      x.set(e.clientX)
-      y.set(e.clientY)
-      if (!visible) setVisible(true)
+    const onMove = (e: MouseEvent) => {
+      rawX.set(e.clientX)
+      rawY.set(e.clientY)
+      setVisible(true)
+      const el = e.target as HTMLElement
+      setHovering(!!el.closest("a,button,input,textarea,[role='button']"))
     }
-    const leave = () => setVisible(false)
-    const down = () => setClicking(true)
-    const up = () => setClicking(false)
+    const onLeave = () => setVisible(false)
+    const onDown  = () => setClicking(true)
+    const onUp    = () => setClicking(false)
 
-    window.addEventListener("mousemove", move, { passive: true })
-    document.body.addEventListener("mouseleave", leave)
-    window.addEventListener("mousedown", down)
-    window.addEventListener("mouseup", up)
+    window.addEventListener("mousemove",    onMove,  { passive: true })
+    document.addEventListener("mouseleave", onLeave)
+    window.addEventListener("mousedown",    onDown)
+    window.addEventListener("mouseup",      onUp)
     return () => {
-      window.removeEventListener("mousemove", move)
-      document.body.removeEventListener("mouseleave", leave)
-      window.removeEventListener("mousedown", down)
-      window.removeEventListener("mouseup", up)
+      window.removeEventListener("mousemove",    onMove)
+      document.removeEventListener("mouseleave", onLeave)
+      window.removeEventListener("mousedown",    onDown)
+      window.removeEventListener("mouseup",      onUp)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!enabled) return null
 
+  const ringSize = clicking ? 18 : hovering ? 38 : 28
+  const opacity  = visible ? 1 : 0
+
   return (
     <>
+      {/* Outer ring — smooth lag */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9998] w-10 h-10 rounded-full"
+        className="fixed top-0 left-0 pointer-events-none z-[9998] rounded-full"
         style={{
-          border: '1px solid var(--border-hot)',
           x: ringX, y: ringY,
-          translateX: '-50%', translateY: '-50%',
-          opacity: visible ? 1 : 0,
-          scale: clicking ? 0.6 : 1,
+          translateX: "-50%", translateY: "-50%",
+          opacity,
         }}
-      />
+      >
+        <motion.div
+          className="rounded-full"
+          animate={{
+            width:  ringSize,
+            height: ringSize,
+            borderColor: hovering ? "#B1EB21" : "rgba(177,235,33,0.55)",
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          style={{
+            border: "1.5px solid rgba(177,235,33,0.55)",
+            boxShadow: hovering ? "0 0 12px rgba(177,235,33,0.30)" : "none",
+          }}
+        />
+      </motion.div>
+
+      {/* Center dot — instant */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] w-1.5 h-1.5 rounded-full"
+        className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full"
         style={{
-          background: 'var(--green)', boxShadow: '0 0 6px var(--green)',
+          width:  clicking ? 3 : 4,
+          height: clicking ? 3 : 4,
+          background: "#B1EB21",
+          boxShadow: "0 0 6px rgba(177,235,33,0.70)",
           x: dotX, y: dotY,
-          translateX: '-50%', translateY: '-50%',
-          opacity: visible ? 1 : 0,
+          translateX: "-50%", translateY: "-50%",
+          opacity,
         }}
       />
     </>

@@ -113,7 +113,7 @@ export function TechMarquee() {
                 borderRadius: 6,
                 transition: 'background 0.18s, box-shadow 0.18s',
                 background: isHovered ? 'var(--surface)' : 'transparent',
-                boxShadow: isHovered ? '0 0 12px var(--green-glow)' : 'none',
+                boxShadow: isHovered ? '0 0 12px var(--accent-glow)' : 'none',
                 gap: 7,
               }}
               onMouseEnter={() => setHoveredLabel(`${item.label}-${i}`)}
@@ -142,7 +142,7 @@ export function TechMarquee() {
                   fontWeight: isHovered ? 700 : 500,
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
-                  color: isHovered ? 'var(--green)' : 'var(--green-mid)',
+                  color: isHovered ? 'var(--accent)' : 'var(--accent-mid)',
                   transition: 'color 0.18s, font-weight 0.18s',
                   whiteSpace: 'nowrap',
                 }}
