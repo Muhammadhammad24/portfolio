@@ -2,13 +2,13 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Muhammad Hammad — IT Specialist',
-  description: '6+ years IT professional specializing in system administration, cloud infrastructure, network engineering, and intelligent automation. Based in Germany.',
-  keywords: ['IT Specialist', 'System Administration', 'Cloud Infrastructure', 'Azure', 'Network Engineering', 'Germany', 'DevSecOps', 'Cybersecurity'],
+  title: 'Muhammad Hammad',
+  description: 'IT Specialist — Cloud, Security & Infrastructure',
+  keywords: ['IT Specialist', 'System Administration', 'Cloud Infrastructure', 'Azure', 'Network Engineering', 'Germany'],
   authors: [{ name: 'Muhammad Hammad' }],
   openGraph: {
-    title: 'Muhammad Hammad — IT Specialist',
-    description: 'IT Infrastructure & Security Specialist | Cloud & Automation | Germany / USA',
+    title: 'Muhammad Hammad',
+    description: 'IT Specialist — Cloud, Security & Infrastructure',
     type: 'website',
   },
   icons: {
