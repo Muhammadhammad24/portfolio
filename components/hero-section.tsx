@@ -1,16 +1,12 @@
 "use client"
 
-import { useState, useCallback } from "react"
 import Link from "next/link"
 import { ArrowRight, Github, Linkedin, Mail, Terminal } from "lucide-react"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import { CyberRoles } from "@/components/cyber-roles"
-import { TerminalBoot, HeroName } from "@/components/terminal-boot"
-import { StatCounter } from "@/components/stat-counter"
+import { HeroName } from "@/components/terminal-boot"
 
 export function HeroSection() {
-  const [bootDone, setBootDone] = useState(false)
-  const handleBootComplete = useCallback(() => setBootDone(true), [])
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -84,122 +80,82 @@ export function HeroSection() {
             </span>
           </div>
 
-          {/* Boot sequence → then name */}
-          <div className="min-h-[220px] sm:min-h-[200px]">
-            <AnimatePresence mode="wait">
-              {!bootDone ? (
-                <motion.div key="boot" exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.25 }}>
-                  <TerminalBoot onComplete={handleBootComplete} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="name"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.35 }}
-                >
-                  <HeroName firstName="Muhammad" lastName="Hammad" bootDone={bootDone} />
-                </motion.div>
-              )}
-            </AnimatePresence>
+          {/* Name — direct, no boot sequence */}
+          <div className="min-h-[160px] sm:min-h-[140px]">
+            <HeroName firstName="Muhammad" lastName="Hammad" bootDone={true} />
           </div>
 
-          {/* Summary — fades in after boot */}
-          <AnimatePresence>
-            {bootDone && (
-              <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-                style={{
-                  color: "var(--text-on-dark-secondary)",
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "clamp(16px, 1.8vw, 20px)",
-                  lineHeight: 1.6,
-                  fontWeight: 400,
-                  maxWidth: 520,
-                }}
-              >
-                6+ years securing & managing enterprise IT — from{" "}
-                <span style={{ color: "var(--lime)", fontWeight: 600 }}>Zero Trust architecture</span> to{" "}
-                <span style={{ color: "var(--lime)", fontWeight: 600 }}>AI-driven automation</span>, delivering{" "}
-                <span style={{ color: "var(--lime)", fontWeight: 600 }}>99.7% uptime</span> across 500+ endpoints.
-              </motion.p>
-            )}
-          </AnimatePresence>
+          {/* Summary */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            style={{
+              color: "var(--text-on-dark-secondary)",
+              fontFamily: "Inter, sans-serif",
+              fontSize: "clamp(16px, 1.8vw, 20px)",
+              lineHeight: 1.6,
+              fontWeight: 400,
+              maxWidth: 520,
+            }}
+          >
+            6+ years securing & managing enterprise IT — from{" "}
+            <span style={{ color: "var(--lime)", fontWeight: 600 }}>Zero Trust architecture</span> to{" "}
+            <span style={{ color: "var(--lime)", fontWeight: 600 }}>AI-driven automation</span>, delivering{" "}
+            <span style={{ color: "var(--lime)", fontWeight: 600 }}>99.7% uptime</span> across 500+ endpoints.
+          </motion.p>
 
-          {/* Stats */}
-          <AnimatePresence>
-            {bootDone && (
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.0 }}
-                className="h-px"
-                style={{ background: "var(--border)" }}
-              />
-            )}
-          </AnimatePresence>
+          {/* Divider */}
+          <div className="h-px" style={{ background: "var(--border)" }} />
 
           {/* CTAs */}
-          <AnimatePresence>
-            {bootDone && (
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.15 }}
-                className="flex flex-wrap gap-3 items-center"
-              >
-                <a
-                  href="#contact"
-                  className="btn-cyber-fill flex items-center gap-2 px-6 py-3 text-sm font-bold"
-                  style={{ borderRadius: "var(--radius-pill)", fontFamily: "Inter, sans-serif", fontSize: 15 }}
-                >
-                  Hire Me <ArrowRight className="h-4 w-4" />
-                </a>
-                <a
-                  href="#projects"
-                  className="btn-cyber flex items-center gap-2 px-6 py-3 text-sm"
-                  style={{ borderRadius: "var(--radius-pill)", fontFamily: "Inter, sans-serif", fontSize: 15 }}
-                >
-                  View Projects
-                </a>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.35 }}
+            className="flex flex-wrap gap-3 items-center"
+          >
+            <a
+              href="#contact"
+              className="btn-cyber-fill flex items-center gap-2 px-6 py-3 text-sm font-bold"
+              style={{ borderRadius: "var(--radius-pill)", fontFamily: "Inter, sans-serif", fontSize: 15 }}
+            >
+              Get In Touch <ArrowRight className="h-4 w-4" />
+            </a>
+            <a
+              href="#projects"
+              className="btn-cyber flex items-center gap-2 px-6 py-3 text-sm"
+              style={{ borderRadius: "var(--radius-pill)", fontFamily: "Inter, sans-serif", fontSize: 15 }}
+            >
+              View Projects
+            </a>
+          </motion.div>
 
           {/* Socials */}
-          <AnimatePresence>
-            {bootDone && (
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.25 }}
-                className="flex items-center gap-3 flex-wrap"
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.45 }}
+            className="flex items-center gap-3 flex-wrap"
+          >
+            {[
+              { icon: Github,   href: "https://github.com/Muhammadhammad24",    label: "GitHub" },
+              { icon: Linkedin, href: "https://www.linkedin.com/in/mhammad24/", label: "LinkedIn" },
+              { icon: Mail,     href: "mailto:muhammad24997@gmail.com",          label: "Email" },
+            ].map(({ icon: Icon, href, label }) => (
+              <Link
+                key={label}
+                href={href}
+                target="_blank"
+                className="social-icon-btn w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
               >
-                {[
-                  { icon: Github,   href: "https://github.com/Muhammadhammad24",       label: "GitHub" },
-                  { icon: Linkedin, href: "https://www.linkedin.com/in/mhammad24/",    label: "LinkedIn" },
-                  { icon: Mail,     href: "mailto:muhammad24997@gmail.com",             label: "Email" },
-                ].map(({ icon: Icon, href, label }) => (
-                  <Link
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    className="social-icon-btn w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-                  >
-                    <Icon className="h-4 w-4" />
-                  </Link>
-                ))}
-                <span
-                  className="font-['JetBrains_Mono'] text-xs"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  +49 176 8733 3721
-                </span>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                <Icon className="h-4 w-4" />
+              </Link>
+            ))}
+            <span className="font-['JetBrains_Mono'] text-xs" style={{ color: "var(--text-muted)" }}>
+              +49 176 8733 3721
+            </span>
+          </motion.div>
         </div>
 
         {/* RIGHT — Cyber Roles Orbital */}
