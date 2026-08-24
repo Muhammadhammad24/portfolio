@@ -134,7 +134,7 @@ export default function Portfolio() {
             <div className="flex items-center gap-3 flex-wrap">
               {[
                 { icon: Github, href: "https://github.com/Muhammadhammad24", label: "GitHub" },
-                { icon: Linkedin, href: "https://linkedin.com/in/Hammad", label: "LinkedIn" },
+                { icon: Linkedin, href: "https://www.linkedin.com/in/mhammad24/", label: "LinkedIn" },
                 { icon: Mail, href: "mailto:muhammad24997@gmail.com", label: "Email" },
               ].map(({ icon: Icon, href, label }) => (
                 <Link key={label} href={href} target="_blank"
@@ -328,7 +328,7 @@ export default function Portfolio() {
                       badge: "Masters",
                     },
                     {
-                      degree: "B.Sc. Computer Science",
+                      degree: "B.Sc. Computational Mathematics",
                       school: "University of Karachi",
                       location: "Pakistan",
                       period: "2016 – 2018",
@@ -537,7 +537,7 @@ export default function Portfolio() {
                 {[
                   { icon: Mail, label: "Email", value: "muhammad24997@gmail.com", href: "mailto:muhammad24997@gmail.com" },
                   { icon: Phone, label: "Phone", value: "+49 176 8733 3721", href: "tel:+4917687333721" },
-                  { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/Hammad", href: "https://linkedin.com/in/Hammad" },
+                  { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/mhammad24", href: "https://www.linkedin.com/in/mhammad24/" },
                   { icon: Github, label: "GitHub", value: "github.com/Muhammadhammad24", href: "https://github.com/Muhammadhammad24" },
                 ].map(({ icon: Icon, label, value, href }) => (
                   <a key={label} href={href} target="_blank" className="flex items-center gap-4 group">
@@ -580,7 +580,7 @@ export default function Portfolio() {
           <div className="flex items-center gap-4">
             {[
               { icon: Github, href: "https://github.com/Muhammadhammad24" },
-              { icon: Linkedin, href: "https://linkedin.com/in/Hammad" },
+              { icon: Linkedin, href: "https://www.linkedin.com/in/mhammad24/" },
               { icon: Mail, href: "mailto:muhammad24997@gmail.com" },
             ].map(({ icon: Icon, href }) => (
               <Link key={href} href={href} target="_blank"

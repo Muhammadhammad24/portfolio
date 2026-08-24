@@ -4,9 +4,9 @@ import { motion } from "framer-motion"
 
 const experiences = [
   {
-    title: "IT Support & Administration Specialist",
+    title: "IT Specialist",
     company: "Kontinental Establishment",
-    location: "New York, USA (Remote)",
+    location: "Germany / USA (Remote)",
     period: "Apr 2023 – Present",
     highlights: [
       "Managed cloud infrastructure across Azure, AWS & GCP with Docker/Kubernetes & Terraform/Ansible — deployment time 6h → 90min",
@@ -19,7 +19,7 @@ const experiences = [
     ],
   },
   {
-    title: "IT Support Specialist",
+    title: "IT Specialist",
     company: "Liberty Books (Pvt.) Ltd",
     location: "Karachi, Pakistan",
     period: "Jun 2022 – Oct 2022",
@@ -32,7 +32,7 @@ const experiences = [
     ],
   },
   {
-    title: "IT Support and Administration Specialist",
+    title: "IT Specialist",
     company: "KTDMC",
     location: "Karachi, Pakistan",
     period: "Oct 2021 – May 2022",
@@ -45,7 +45,7 @@ const experiences = [
     ],
   },
   {
-    title: "IT Support Specialist",
+    title: "IT Specialist",
     company: "Target Logistics International (Pvt.) Ltd",
     location: "Karachi, Pakistan",
     period: "Jul 2020 – Sep 2021",
@@ -57,7 +57,7 @@ const experiences = [
     ],
   },
   {
-    title: "IT Support Engineer",
+    title: "IT Specialist",
     company: "The Active Solutions",
     location: "Karachi, Pakistan",
     period: "Apr 2019 – Feb 2020",
