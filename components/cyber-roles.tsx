@@ -23,8 +23,8 @@ function ShieldCore({ size = 160 }: { size?: number }) {
         <motion.div key={i}
           className="absolute rounded-full"
           style={{ width: size * scale, height: size * scale, border: "1px solid rgba(177,235,33,0.10)" }}
-          animate={{ scale: [1, 1.04, 1], opacity: [0.4, 0.08, 0.4] }}
-          transition={{ duration: 3, delay: i * 0.9, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ scale: [1, 1.03, 1], opacity: [0.35, 0.07, 0.35] }}
+          transition={{ duration: 5, delay: i * 1.5, repeat: Infinity, ease: "easeInOut" }}
         />
       ))}
       <div className="relative z-10 flex items-center justify-center rounded-full"
@@ -50,7 +50,7 @@ function RadarSweep({ radius }: { radius: number }) {
     <motion.div className="absolute pointer-events-none"
       style={{ width: d, height: d, left: "50%", top: "50%", translateX: "-50%", translateY: "-50%", transformOrigin: "center" }}
       animate={{ rotate: 360 }}
-      transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
     >
       <svg width={d} height={d} viewBox={`0 0 ${d} ${d}`} style={{ overflow: "visible" }}>
         <defs>
@@ -153,7 +153,7 @@ export function CyberRoles() {
 
         {ROLES.map((role, i) => (
           <RoleChip key={role.label} role={role} orbitR={ORBIT_R} index={i} total={ROLES.length}
-            speed={26 + i * 3} active={activeIdx === i} onClick={() => setActiveIdx(i)} />
+            speed={40 + i * 5} active={activeIdx === i} onClick={() => setActiveIdx(i)} />
         ))}
       </div>
 

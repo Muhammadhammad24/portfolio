@@ -10,14 +10,10 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* BG blobs */}
+      {/* BG blobs — subtle only */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div
-          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full animate-blob"
-          style={{ background: "radial-gradient(circle, rgba(177,235,33,0.05) 0%, transparent 70%)" }}
-        />
-        <div
-          className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full animate-blob animation-delay-2000"
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full"
           style={{ background: "radial-gradient(circle, rgba(177,235,33,0.04) 0%, transparent 70%)" }}
         />
       </div>

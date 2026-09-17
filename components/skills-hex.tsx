@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+// AnimatePresence kept for category switch animation
 
 const SKILL_CATEGORIES = [
   {
@@ -136,8 +137,7 @@ function HexCell({
   const [hovered, setHovered] = useState(false)
   const meta = getLevelMeta(skill.level)
 
-  // SVG hexagon: flat-top, 80×92 viewBox
-  // clip-path hex
+  // SVG hexagon: flat-top
   const hexClip = "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)"
 
   return (
@@ -149,14 +149,14 @@ function HexCell({
       viewport={{ once: true }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ width: 96 }}
+      style={{ width: 140 }}
     >
       {/* Hex shape */}
       <motion.div
         className="relative flex items-center justify-center"
         style={{
-          width: 88,
-          height: 100,
+          width: 130,
+          height: 148,
           clipPath: hexClip,
           background: hovered
             ? `linear-gradient(145deg, ${color}22, ${color}0a)`
@@ -165,40 +165,40 @@ function HexCell({
           transition: "background 0.25s",
         }}
         animate={{
-          filter: hovered ? `drop-shadow(0 0 10px ${color}88)` : "none",
+          filter: hovered ? `drop-shadow(0 0 14px ${color}88)` : "none",
         }}
         transition={{ duration: 0.25 }}
-        whileHover={{ scale: 1.08 }}
+        whileHover={{ scale: 1.06 }}
       >
         {/* Hex border via pseudo SVG overlay */}
         <svg
           className="absolute inset-0 pointer-events-none"
-          width="88" height="100"
-          viewBox="0 0 88 100"
+          width="130" height="148"
+          viewBox="0 0 130 148"
           style={{ overflow: "visible" }}
         >
           <polygon
-            points="44,2 86,23 86,77 44,98 2,77 2,23"
+            points="65,3 127,34 127,114 65,145 3,114 3,34"
             fill="none"
             stroke={hovered ? color : "var(--border)"}
-            strokeWidth={hovered ? "1.5" : "1"}
+            strokeWidth={hovered ? "2" : "1.5"}
             style={{ transition: "stroke 0.25s, stroke-width 0.2s" }}
           />
         </svg>
 
         {/* Content */}
-        <div className="flex flex-col items-center justify-center px-3 text-center gap-1.5 z-10">
+        <div className="flex flex-col items-center justify-center px-4 text-center gap-2 z-10">
           {/* Proficiency dots */}
-          <div className="flex gap-0.5">
+          <div className="flex gap-1">
             {Array.from({ length: 5 }).map((_, d) => (
               <div
                 key={d}
                 className="rounded-full transition-all duration-200"
                 style={{
-                  width: 4,
-                  height: 4,
+                  width: 6,
+                  height: 6,
                   background: d < meta.dots ? color : "var(--border)",
-                  boxShadow: d < meta.dots && hovered ? `0 0 4px ${color}` : "none",
+                  boxShadow: d < meta.dots && hovered ? `0 0 5px ${color}` : "none",
                 }}
               />
             ))}
@@ -208,31 +208,28 @@ function HexCell({
           <span
             className="font-['JetBrains_Mono'] leading-tight text-center"
             style={{
-              fontSize: "8.5px",
+              fontSize: "11px",
               color: hovered ? color : "var(--text-dim)",
               transition: "color 0.2s",
               wordBreak: "break-word",
-              lineHeight: 1.3,
+              lineHeight: 1.35,
             }}
           >
             {skill.name}
           </span>
 
-          {/* Tier badge — only on hover */}
-          <AnimatePresence>
-            {hovered && (
-              <motion.span
-                initial={{ opacity: 0, scale: 0.7 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.7 }}
-                transition={{ duration: 0.15 }}
-                className="font-['JetBrains_Mono'] tracking-widest uppercase"
-                style={{ fontSize: "7px", color }}
-              >
-                {meta.tier}
-              </motion.span>
-            )}
-          </AnimatePresence>
+          {/* Tier badge — always visible */}
+          <span
+            className="font-['JetBrains_Mono'] tracking-widest uppercase"
+            style={{
+              fontSize: "9px",
+              color: hovered ? color : "var(--text-muted)",
+              opacity: hovered ? 1 : 0.6,
+              transition: "color 0.2s, opacity 0.2s",
+            }}
+          >
+            {meta.tier}
+          </span>
         </div>
       </motion.div>
     </motion.div>
@@ -314,13 +311,13 @@ export function SkillsHex() {
           */}
           <div className="flex flex-col items-center gap-0">
             {/* Row 1 — 3 cells */}
-            <div className="flex gap-1" style={{ marginBottom: "-18px" }}>
+            <div className="flex gap-2" style={{ marginBottom: "-26px" }}>
               {active.skills.slice(0, 3).map((s, i) => (
                 <HexCell key={s.name} skill={s} color={active.color} index={i} />
               ))}
             </div>
             {/* Row 2 — 3 cells offset */}
-            <div className="flex gap-1" style={{ marginLeft: "48px", marginBottom: "-18px" }}>
+            <div className="flex gap-2" style={{ marginLeft: "72px", marginBottom: "-26px" }}>
               {active.skills.slice(3, 6).map((s, i) => (
                 <HexCell key={s.name} skill={s} color={active.color} index={i + 3} />
               ))}

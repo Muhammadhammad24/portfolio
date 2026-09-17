@@ -4,7 +4,6 @@ import { ProjectCard } from "@/components/project-card"
 import { Timeline } from "@/components/timeline"
 import { ContactForm } from "@/components/contact-form"
 import { FloatingNav } from "@/components/floating-nav"
-import { MouseFollower } from "@/components/mouse-follower"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { SectionHeading } from "@/components/section-heading"
 import { GlassmorphicCard } from "@/components/glassmorphic-card"
@@ -21,34 +20,17 @@ export default function Portfolio() {
   return (
     <div className="min-h-screen grid-bg" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
       {/* ── Premium background system ── */}
-      {/* Ambient orbs */}
+      {/* Ambient orbs — reduced for performance */}
       <div className="bg-orbs">
         <div className="bg-orb bg-orb-1" />
         <div className="bg-orb bg-orb-2" />
         <div className="bg-orb bg-orb-3" />
-        <div className="bg-orb bg-orb-4" />
       </div>
       {/* Diagonal mesh */}
       <div className="bg-mesh" />
       {/* Corner accent glows */}
       <div className="bg-corner-glow bg-corner-tl" />
       <div className="bg-corner-glow bg-corner-br" />
-      {/* Slow scan band */}
-      <div className="bg-scan-band" />
-      {/* Floating particles */}
-      <div className="bg-particles">
-        <div className="bg-particle" />
-        <div className="bg-particle" />
-        <div className="bg-particle" />
-        <div className="bg-particle" />
-        <div className="bg-particle" />
-        <div className="bg-particle" />
-        <div className="bg-particle" />
-        <div className="bg-particle" />
-        <div className="bg-particle" />
-        <div className="bg-particle" />
-      </div>
-      <MouseFollower />
       <ScrollProgress />
       <FloatingNav />
 
