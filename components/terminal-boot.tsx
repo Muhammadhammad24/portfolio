@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 const BOOT_LINES = [
   { text: "> initializing profile...",         delay: 0,    duration: 600 },
@@ -149,7 +149,7 @@ export function HeroName({ firstName, lastName, bootDone }: HeroNameProps) {
         className="eyebrow mb-4"
         style={{ color: "var(--lime)", letterSpacing: "0.08em" }}
       >
-        IT Infrastructure Engineer
+        IT Specialist
       </div>
 
       {/* Name — NordLayer H1 style: Inter 700, tight leading */}

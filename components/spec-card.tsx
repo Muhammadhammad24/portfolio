@@ -1,6 +1,5 @@
 "use client"
 
-import type React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { useMagneticTilt } from "@/hooks/use-magnetic-tilt"
@@ -9,7 +8,7 @@ const LIME = "#B1EB21"
 const LIME_DIM = "#9BD117"
 const LIME_BRIGHT = "#C2F343"
 
-const ICONS: Record<string, React.JSX.Element> = {
+const ICONS: Record<string, JSX.Element> = {
   DevSecOps: (
     <svg viewBox="0 0 48 48" fill="none" className="w-full h-full">
       <defs>
