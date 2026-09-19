@@ -9,7 +9,7 @@ interface ProjectCardProps {
   title: string
   description: string
   tags: string[]
-  demoUrl: string
+  demoUrl?: string
   repoUrl: string
   metric?: string
   metricLabel?: string
@@ -138,12 +138,14 @@ export function ProjectCard({
               <Github className="h-3.5 w-3.5" />
               View Code
             </Link>
-            <Link href={demoUrl} target="_blank"
-              className="flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase transition-all duration-300 hover:scale-105 ml-auto"
-              style={{ color: 'var(--accent)', fontFamily: 'JetBrains Mono, monospace' }}>
-              Live Demo
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </Link>
+            {demoUrl && (
+              <Link href={demoUrl} target="_blank"
+                className="flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase transition-all duration-300 hover:scale-105 ml-auto"
+                style={{ color: 'var(--accent)', fontFamily: 'JetBrains Mono, monospace' }}>
+                Live Site
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
+            )}
           </div>
         </div>
       </div>

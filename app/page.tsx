@@ -332,37 +332,70 @@ export default function Portfolio() {
             {/* Project 1 */}
             <ProjectCard
               number="01"
-              title="InfoTech Wizard — AI-Powered IT Support Chatbot"
-              description="Full-stack RAG-based IT support chatbot. FastAPI backend with PyTorch, Sentence-Transformers, and FAISS vector search. React/TypeScript frontend with real-time chat interface, Docker containerization, and comprehensive security features."
-              metric="60% reduction"
-              metricLabel="in IT ticket volume"
+              title="InfoTech Wizard — RAG IT Helpdesk Assistant"
+              description="Answers IT support questions by retrieving similar resolved tickets from a multilingual knowledge base and generating step-by-step fixes with a local LLM, so ticket data never leaves the machine."
+              metric="3,531 tickets"
+              metricLabel="indexed across 5 languages"
               features={[
-                "Retrieval-Augmented Generation (RAG) pipeline with FAISS vector search",
-                "Real-time chat interface with comprehensive security features",
-                "Docker containerization for seamless deployment",
-                "60% reduction in IT support ticket volume through intelligent automation",
+                "Cross-lingual retrieval with multilingual MiniLM embeddings and FAISS",
+                "Grounded answers from TinyLlama 1.1B, returned with source tickets and scores",
+                "FastAPI service with typed schemas, readiness checks and 503 until models load",
+                "React chat UI, Docker Compose deployment, tests and CI",
               ]}
-              tags={["FastAPI", "React", "TypeScript", "PyTorch", "Sentence-Transformers", "FAISS", "HuggingFace", "Docker", "RAG Architecture"]}
+              tags={["FastAPI", "PyTorch", "FAISS", "Sentence-Transformers", "HuggingFace", "React", "TypeScript", "Docker", "RAG"]}
               repoUrl="https://github.com/Muhammadhammad24/Infotech-Wizard"
-              demoUrl="https://github.com/Muhammadhammad24/Infotech-Wizard"
             />
 
             {/* Project 2 */}
             <ProjectCard
               number="02"
-              title="NNApprox — AI-Powered System Analytics & Optimization"
-              description="Python-based framework using PyTorch and JAX for intelligent system performance prediction and automated optimization. Custom neural network models with adaptive learning algorithms processing IT infrastructure metrics and system logs."
-              metric="92% prediction accuracy"
-              metricLabel="65% reduction in manual monitoring"
+              title="pfSense Firewall Lab"
+              description="A virtualised perimeter firewall on pfSense CE with WAN/LAN segmentation, a DHCP-served LAN, stateful rules and OpenVPN remote access, documented as reproducible runbooks."
+              metric="WAN / LAN"
+              metricLabel="segmented, default-deny inbound"
               features={[
-                "Intelligent system performance prediction using custom neural network models",
-                "Adaptive learning algorithms for IT infrastructure metrics analysis",
-                "Automated analysis pipelines with comparative benchmarking",
-                "92% prediction accuracy with 65% reduction in manual monitoring efforts",
+                "pfSense CE on VirtualBox with NAT WAN and host-only LAN",
+                "DHCP server and DNS resolver for LAN clients",
+                "Stateful rule set exported and audited in CI",
+                "Runbooks for install, rules, VPN and troubleshooting",
               ]}
-              tags={["Python", "PyTorch", "JAX", "TensorFlow", "Neural Networks", "Adaptive Learning", "System Analytics", "Performance Optimization", "Predictive Modeling", "Automated Pipelines"]}
+              tags={["pfSense", "Firewall", "OpenVPN", "VirtualBox", "Nmap", "Network Security"]}
+              repoUrl="https://github.com/Muhammadhammad24/pfSense-Firewall-Lab"
+            />
+
+            {/* Project 3 */}
+            <ProjectCard
+              number="03"
+              title="NNApprox — Function Approximation with ReLU Networks"
+              description="Research project (with Sharareh Sayyad) comparing constructive ReLU approximation with the greedy 'growing axons' method on 1-D and 2-D targets, including a singularly perturbed boundary-value problem."
+              metric="~10⁻⁵ error"
+              metricLabel="for √x with 100 greedy neurons"
+              features={[
+                "Closed-form shallow and deep ReLU baselines with measured error rates",
+                "Greedy Axon baseline against random initialisation",
+                "Experiments on x², √x, e⁻ˣ, sin(20x) and a 2-D cone",
+                "Tested Python package with CI",
+              ]}
+              tags={["Python", "PyTorch", "NumPy", "Nevergrad", "Numerical Analysis", "Deep Learning"]}
               repoUrl="https://github.com/Muhammadhammad24/nnapprox"
-              demoUrl="https://github.com/Muhammadhammad24/nnapprox"
+            />
+
+            {/* Project 4 */}
+            <ProjectCard
+              number="04"
+              title="Velqa Technologies — Company Website"
+              description="Production marketing site for a BPO and customer-experience company, with 13 service lines and 6 industry verticals, statically exported and deployed on Vercel."
+              metric="33 routes"
+              metricLabel="statically generated"
+              features={[
+                "Next.js 14 static export served from the edge",
+                "Per-page metadata, Open Graph, sitemap and robots",
+                "Reusable service and industry page layouts",
+                "Typecheck, lint and build in CI on every push",
+              ]}
+              tags={["Next.js", "TypeScript", "Tailwind CSS", "SEO", "Vercel"]}
+              repoUrl="https://github.com/Muhammadhammad24/velqatechnologies"
+              demoUrl="https://velqatechnologies.com"
             />
           </div>
         </div>
