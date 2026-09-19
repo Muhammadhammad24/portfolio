@@ -18,9 +18,9 @@ type Project = {
 
 const PROJECTS: Project[] = [
   {
-    short: "Self-Healing AWS Platform",
+    short: "aws-terraform-platform",
     category: "Platform · DevSecOps",
-    title: "Self-Healing AWS Platform — Terraform, GitOps & Keyless CI/CD",
+    title: "aws-terraform-platform",
     description:
       "Production-style AWS infrastructure written entirely in Terraform. Failed servers are replaced automatically across two availability zones, and GitHub Actions deploys through OIDC, so no cloud keys are ever stored.",
     metric: "0 failed",
@@ -35,9 +35,9 @@ const PROJECTS: Project[] = [
     repoUrl: "https://github.com/Muhammadhammad24/aws-terraform-platform",
   },
   {
-    short: "Private GenAI Helpdesk",
+    short: "Infotech-Wizard",
     category: "AIOps · RAG",
-    title: "InfoTech Wizard — Private GenAI Helpdesk with Multilingual RAG",
+    title: "Infotech-Wizard",
     description:
       "An AI support assistant that answers IT questions from 3,531 resolved tickets in five languages. Retrieval and generation run on local hardware, so sensitive ticket data never leaves the company.",
     metric: "3,531 tickets",
@@ -52,9 +52,9 @@ const PROJECTS: Project[] = [
     repoUrl: "https://github.com/Muhammadhammad24/Infotech-Wizard",
   },
   {
-    short: "Firewall Policy-as-Code",
+    short: "pfSense-Firewall-Lab",
     category: "Network Security",
-    title: "Firewall Policy-as-Code — pfSense with Automated Security Audits",
+    title: "pfSense-Firewall-Lab",
     description:
       "A segmented pfSense perimeter whose firewall rules are written as code, rendered to importable XML and audited in CI for exposed ports and any-to-any rules before they reach the firewall.",
     metric: "0 findings",
@@ -69,9 +69,9 @@ const PROJECTS: Project[] = [
     repoUrl: "https://github.com/Muhammadhammad24/pfSense-Firewall-Lab",
   },
   {
-    short: "nova2labs Studio Platform",
+    short: "nova2labs",
     category: "Full-Stack · Cloud",
-    title: "nova2labs — AI & Cloud Engineering Studio, Full-Stack SSR Platform",
+    title: "nova2labs",
     description:
       "The website of nova2labs, an AI, software and infrastructure studio. Server-rendered React with generative SVG artwork instead of stock images, and a contact pipeline that delivers leads straight to the business mailbox.",
     metric: "29 pages",
@@ -86,9 +86,9 @@ const PROJECTS: Project[] = [
     demoUrl: "https://www.nova2labs.com",
   },
   {
-    short: "Velqa Company Website",
+    short: "velqatechnologies",
     category: "Web · Edge",
-    title: "Velqa Technologies — Edge-Delivered Company Website",
+    title: "velqatechnologies",
     description:
       "The production website of a BPO and customer-experience company: 13 service lines and 6 industries, exported as static pages and served from Vercel's global edge network.",
     metric: "33 routes",
@@ -104,9 +104,9 @@ const PROJECTS: Project[] = [
     demoUrl: "https://velqatechnologies.vercel.app",
   },
   {
-    short: "NNApprox Research",
+    short: "nnapprox",
     category: "AI Research",
-    title: "NNApprox — Deep Learning Research on ReLU Network Approximation",
+    title: "nnapprox",
     description:
       "A University of Göttingen research project with Sharareh Sayyad: how well neural networks approximate functions, comparing closed-form ReLU constructions with the greedy 'growing axons' method.",
     metric: "33 tests",
