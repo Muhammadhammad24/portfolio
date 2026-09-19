@@ -1,4 +1,25 @@
 import type { Metadata } from 'next'
+// Fonts are self-hosted (same families as before) so nothing blocks the first paint.
+import '@fontsource/inter/latin-300.css'
+import '@fontsource/inter/latin-400.css'
+import '@fontsource/inter/latin-500.css'
+import '@fontsource/inter/latin-600.css'
+import '@fontsource/inter/latin-700.css'
+import '@fontsource/inter/latin-800.css'
+import '@fontsource/space-grotesk/latin-300.css'
+import '@fontsource/space-grotesk/latin-400.css'
+import '@fontsource/space-grotesk/latin-500.css'
+import '@fontsource/space-grotesk/latin-600.css'
+import '@fontsource/space-grotesk/latin-700.css'
+import '@fontsource/syne/latin-400.css'
+import '@fontsource/syne/latin-500.css'
+import '@fontsource/syne/latin-600.css'
+import '@fontsource/syne/latin-700.css'
+import '@fontsource/syne/latin-800.css'
+import '@fontsource/jetbrains-mono/latin-300.css'
+import '@fontsource/jetbrains-mono/latin-400.css'
+import '@fontsource/jetbrains-mono/latin-500.css'
+import '@fontsource/jetbrains-mono/latin-700.css'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -24,12 +45,6 @@ export default function RootLayout({
   return (
     <html lang="en" style={{ scrollBehavior: 'smooth' }}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&display=swap"
-          rel="stylesheet"
-        />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <meta name="theme-color" content="#000027" />

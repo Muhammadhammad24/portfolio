@@ -13,11 +13,9 @@ export function ProfilePhoto() {
       style={{ width: 220, height: 220 }}
     >
       {/* Slow rotating outer dashed ring */}
-      <motion.div
-        className="absolute inset-0 rounded-full pointer-events-none"
+      <div
+        className="spin-slow absolute inset-0 rounded-full pointer-events-none"
         style={{ border: '1px dashed var(--border)' }}
-        animate={{ rotate: 360 }}
-        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
       />
 
       {/* Static inner ring */}
@@ -61,8 +59,8 @@ export function ProfilePhoto() {
       </div>
 
       {/* Online pulse dot */}
-      <motion.div
-        className="absolute rounded-full z-20"
+      <div
+        className="dot-pulse absolute rounded-full z-20"
         style={{
           width: 14, height: 14,
           bottom: 22, right: 22,
@@ -70,8 +68,6 @@ export function ProfilePhoto() {
           border: '2px solid var(--bg)',
           boxShadow: '0 0 8px var(--accent), 0 0 16px var(--accent-glow)',
         }}
-        animate={{ scale: [1, 1.2, 1] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       />
     </motion.div>
   )

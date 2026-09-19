@@ -149,14 +149,14 @@ function HexCell({
       viewport={{ once: true }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ width: 140 }}
+      style={{ width: 180 }}
     >
       {/* Hex shape */}
       <motion.div
         className="relative flex items-center justify-center"
         style={{
-          width: 130,
-          height: 148,
+          width: 168,
+          height: 192,
           clipPath: hexClip,
           background: hovered
             ? `linear-gradient(145deg, ${color}22, ${color}0a)`
@@ -173,12 +173,12 @@ function HexCell({
         {/* Hex border via pseudo SVG overlay */}
         <svg
           className="absolute inset-0 pointer-events-none"
-          width="130" height="148"
-          viewBox="0 0 130 148"
+          width="168" height="192"
+          viewBox="0 0 168 192"
           style={{ overflow: "visible" }}
         >
           <polygon
-            points="65,3 127,34 127,114 65,145 3,114 3,34"
+            points="84,4 164,44 164,148 84,188 4,148 4,44"
             fill="none"
             stroke={hovered ? color : "var(--border)"}
             strokeWidth={hovered ? "2" : "1.5"}
@@ -187,16 +187,16 @@ function HexCell({
         </svg>
 
         {/* Content */}
-        <div className="flex flex-col items-center justify-center px-4 text-center gap-2 z-10">
+        <div className="flex flex-col items-center justify-center px-5 text-center gap-2.5 z-10">
           {/* Proficiency dots */}
-          <div className="flex gap-1">
+          <div className="flex gap-1.5">
             {Array.from({ length: 5 }).map((_, d) => (
               <div
                 key={d}
                 className="rounded-full transition-all duration-200"
                 style={{
-                  width: 6,
-                  height: 6,
+                  width: 7,
+                  height: 7,
                   background: d < meta.dots ? color : "var(--border)",
                   boxShadow: d < meta.dots && hovered ? `0 0 5px ${color}` : "none",
                 }}
@@ -208,7 +208,7 @@ function HexCell({
           <span
             className="font-['JetBrains_Mono'] leading-tight text-center"
             style={{
-              fontSize: "11px",
+              fontSize: "13px",
               color: hovered ? color : "var(--text-dim)",
               transition: "color 0.2s",
               wordBreak: "break-word",
@@ -222,7 +222,7 @@ function HexCell({
           <span
             className="font-['JetBrains_Mono'] tracking-widest uppercase"
             style={{
-              fontSize: "9px",
+              fontSize: "10px",
               color: hovered ? color : "var(--text-muted)",
               opacity: hovered ? 1 : 0.6,
               transition: "color 0.2s, opacity 0.2s",
@@ -311,13 +311,13 @@ export function SkillsHex() {
           */}
           <div className="flex flex-col items-center gap-0">
             {/* Row 1 — 3 cells */}
-            <div className="flex gap-2" style={{ marginBottom: "-26px" }}>
+            <div className="flex gap-3" style={{ marginBottom: "-34px" }}>
               {active.skills.slice(0, 3).map((s, i) => (
                 <HexCell key={s.name} skill={s} color={active.color} index={i} />
               ))}
             </div>
             {/* Row 2 — 3 cells offset */}
-            <div className="flex gap-2" style={{ marginLeft: "72px", marginBottom: "-26px" }}>
+            <div className="flex gap-3" style={{ marginLeft: "92px", marginBottom: "-34px" }}>
               {active.skills.slice(3, 6).map((s, i) => (
                 <HexCell key={s.name} skill={s} color={active.color} index={i + 3} />
               ))}

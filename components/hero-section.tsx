@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { ArrowRight, Github, Linkedin, Mail, Terminal } from "lucide-react"
-import { motion } from "framer-motion"
 import { CyberRoles } from "@/components/cyber-roles"
 import { HeroName } from "@/components/terminal-boot"
 
@@ -82,11 +81,10 @@ export function HeroSection() {
           </div>
 
           {/* Summary */}
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+          <p
+            className="hero-in"
             style={{
+              animationDelay: "0.2s",
               color: "var(--text-on-dark-secondary)",
               fontFamily: "Inter, sans-serif",
               fontSize: "clamp(16px, 1.8vw, 20px)",
@@ -99,17 +97,15 @@ export function HeroSection() {
             <span style={{ color: "var(--lime)", fontWeight: 600 }}>Zero Trust architecture</span> to{" "}
             <span style={{ color: "var(--lime)", fontWeight: 600 }}>AI-driven automation</span>, delivering{" "}
             <span style={{ color: "var(--lime)", fontWeight: 600 }}>99.7% uptime</span> across 500+ endpoints.
-          </motion.p>
+          </p>
 
           {/* Divider */}
           <div className="h-px" style={{ background: "var(--border)" }} />
 
           {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
-            className="flex flex-wrap gap-3 items-center"
+          <div
+            className="hero-in flex flex-wrap gap-3 items-center"
+            style={{ animationDelay: "0.35s" }}
           >
             <a
               href="#contact"
@@ -125,14 +121,12 @@ export function HeroSection() {
             >
               View Projects
             </a>
-          </motion.div>
+          </div>
 
           {/* Socials */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.45 }}
-            className="flex items-center gap-3 flex-wrap"
+          <div
+            className="hero-in flex items-center gap-3 flex-wrap"
+            style={{ animationDelay: "0.45s" }}
           >
             {[
               { icon: Github,   href: "https://github.com/Muhammadhammad24",    label: "GitHub" },
@@ -151,7 +145,7 @@ export function HeroSection() {
             <span className="font-['JetBrains_Mono'] text-xs" style={{ color: "var(--text-muted)" }}>
               +49 176 8733 3721
             </span>
-          </motion.div>
+          </div>
         </div>
 
         {/* RIGHT — Cyber Roles Orbital */}
