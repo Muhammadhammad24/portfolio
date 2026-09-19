@@ -479,3 +479,8 @@ img.photo-crisp {
 @keyframes hero-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 .hero-in { animation: hero-in .5s ease-out both; }
 @media (prefers-reduced-motion: reduce) { .hero-in { animation: none; } }
+
+/* Honeycomb cells pop in once, from CSS */
+@keyframes hex-in { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: none; } }
+.hex-cell { animation: hex-in .4s cubic-bezier(.34,1.56,.64,1) both; }
+@media (prefers-reduced-motion: reduce) { .hex-cell { animation: none; } }

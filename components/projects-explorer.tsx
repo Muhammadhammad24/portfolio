@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { ProjectCard } from "@/components/project-card"
+import { HexGallery, type HexItem } from "@/components/hex-gallery"
 
 type Project = {
   short: string
@@ -86,7 +87,7 @@ const PROJECTS: Project[] = [
     demoUrl: "https://www.nova2labs.com",
   },
   {
-    short: "velqatechnologies",
+    short: "velqa​technologies", // zero-width break point; reads the same
     category: "Web · Edge",
     title: "velqatechnologies",
     description:
@@ -123,77 +124,35 @@ const PROJECTS: Project[] = [
 ]
 
 /**
- * Projects as a navigator: a list on the left (chips on mobile), one project
- * card open at a time on the right, like the services picker on nova2labs.
+ * Projects as a honeycomb, like the skills section: all six visible at once,
+ * the selected one opens in full underneath.
  */
 export function ProjectsExplorer() {
   const [active, setActive] = useState(0)
   const p = PROJECTS[active]
+  const items: HexItem[] = PROJECTS.map((proj, i) => ({
+    id: String(i),
+    title: proj.short,
+    sub: proj.category,
+    badge: proj.demoUrl ? "Live" : "Open source",
+  }))
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6 lg:gap-8 mt-16 max-w-6xl mx-auto items-start">
-      {/* Project list */}
-      <div
-        role="tablist"
-        aria-label="Projects"
-        className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 -mx-4 px-4 lg:mx-0 lg:px-0 lg:sticky lg:top-28"
-      >
-        {PROJECTS.map((proj, i) => {
-          const on = i === active
-          return (
-            <button
-              key={proj.short}
-              role="tab"
-              type="button"
-              aria-selected={on}
-              aria-controls="project-panel"
-              onClick={() => setActive(i)}
-              className="group shrink-0 text-left transition-all duration-300"
-              style={{
-                padding: "14px 16px",
-                borderRadius: "var(--radius-md)",
-                background: on ? "rgba(177,235,33,0.08)" : "var(--card-bg)",
-                border: `1px solid ${on ? "rgba(177,235,33,0.40)" : "var(--border)"}`,
-                boxShadow: on ? "0 0 18px rgba(177,235,33,0.10)" : "none",
-                minWidth: 220,
-              }}
-            >
-              <div className="flex items-center gap-3">
-                <span
-                  className="font-['JetBrains_Mono'] text-[11px] font-bold"
-                  style={{ color: on ? "var(--lime)" : "var(--text-muted)" }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div className="min-w-0">
-                  <div
-                    className="text-sm font-semibold leading-tight"
-                    style={{ color: on ? "#ffffff" : "var(--text-on-dark-secondary)", fontFamily: "Inter, sans-serif" }}
-                  >
-                    {proj.short}
-                  </div>
-                  <div
-                    className="font-['JetBrains_Mono'] text-[10px] tracking-wider uppercase mt-1"
-                    style={{ color: on ? "var(--lime)" : "var(--text-muted)" }}
-                  >
-                    {proj.category}
-                  </div>
-                </div>
-                <span
-                  className="ml-auto hidden lg:block transition-transform duration-300"
-                  style={{ color: on ? "var(--lime)" : "var(--text-muted)", transform: on ? "translateX(2px)" : "none" }}
-                  aria-hidden="true"
-                >
-                  →
-                </span>
-              </div>
-            </button>
-          )
-        })}
+    <div className="mt-12 max-w-5xl mx-auto">
+      <HexGallery items={items} activeId={String(active)} onSelect={(id) => setActive(Number(id))} label="Projects" />
+
+      <div className="flex items-center justify-center gap-3 mt-12 mb-6" aria-hidden="true">
+        <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to right, transparent, rgba(177,235,33,0.35))" }} />
+        <span
+          className="font-['JetBrains_Mono'] text-[10px] tracking-[0.35em] uppercase px-3 py-1 rounded-sm"
+          style={{ color: "var(--lime)", border: "1px solid rgba(177,235,33,0.2)", background: "rgba(177,235,33,0.03)" }}
+        >
+          {String(active + 1).padStart(2, "0")} / {String(PROJECTS.length).padStart(2, "0")}
+        </span>
+        <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to left, transparent, rgba(177,235,33,0.35))" }} />
       </div>
 
-      {/* Selected project */}
-      <div id="project-panel" role="tabpanel" key={active} className="orbit-fade">
+      <div id="project-panel" role="tabpanel" key={active} className="orbit-fade max-w-3xl mx-auto">
         <ProjectCard
           number={String(active + 1).padStart(2, "0")}
           title={p.title}

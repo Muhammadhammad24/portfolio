@@ -9,7 +9,7 @@ import { SectionHeading } from "@/components/section-heading"
 import { GlassmorphicCard } from "@/components/glassmorphic-card"
 import { SpecCard } from "@/components/spec-card"
 import { SkillsHex } from "@/components/skills-hex"
-import { CertCard } from "@/components/cert-card"
+import { CertsHex } from "@/components/certs-hex"
 import { TechMarquee } from "@/components/tech-marquee"
 import { ProfilePhoto } from "@/components/profile-photo"
 import { HeroSection } from "@/components/hero-section"
@@ -300,22 +300,9 @@ export default function Portfolio() {
         <div className="container">
           <SectionHeading title="Professional Certifications" subtitle="03 — Credentials" />
           <p className="text-center mt-4 text-sm max-w-2xl mx-auto mb-12" style={{ color: 'var(--text-dim)' }}>
-            Industry-recognised certifications validating expertise in IT service management, cloud infrastructure, and enterprise security.
+            Certifications in infrastructure, networking, security and software. Select one for details; Coursera credentials link to public verification.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              { name: "ITIL Foundation", subtitle: "IT Service Management", issuer: "ITIL", color: "#B1EB21", icon: "◈" },
-              { name: "System Administration & IT Infrastructure", subtitle: "Cloud Infrastructure", issuer: "Google", color: "#C2F343", icon: "◈" },
-              { name: "Information Security", subtitle: "IT Support Technicians", issuer: "Security Institute", color: "#9BD117", icon: "◈" },
-              { name: "Windows Server Fundamentals", subtitle: "Enterprise Infrastructure", issuer: "Microsoft", color: "#C2F343", icon: "◈" },
-              { name: "HDI Support Center Analyst", subtitle: "Help Desk Best Practices", issuer: "HDI", color: "#B1EB21", icon: "◈" },
-              { name: "Linux Essentials", subtitle: "Linux Administration", issuer: "Linux Professional Institute", color: "#C2F343", icon: "◈" },
-              { name: "Discovering Computer Networks", subtitle: "Network Engineering", issuer: "Open Networking Lab", color: "#9BD117", icon: "◈" },
-              { name: "Successful IT Systems", subtitle: "Strategic IT Design", issuer: "IT Systems Institute", color: "#C2F343", icon: "◈" },
-            ].map((cert, i) => (
-              <CertCard key={i} cert={cert} index={i} />
-            ))}
-          </div>
+          <CertsHex />
 
           {/* Bottom stats removed */}
         </div>
