@@ -27,7 +27,8 @@ cards, and a work timeline.
 | `floating-nav`, `scroll-progress` | Section navigation and reading progress |
 
 The page is prerendered at build time and served from Vercel's edge, and the
-tech-stack logos are local SVGs.
+tech-stack logos are local SVGs. SEO is handled in `app/`: canonical metadata,
+a generated Open Graph image, Person JSON-LD, and `sitemap.xml` / `robots.txt`.
 
 ## Development
 
@@ -43,8 +44,10 @@ npm run build
 
 ```
 app/
-  layout.tsx       metadata, fonts, favicon
+  layout.tsx       metadata, JSON-LD, fonts, favicon
   page.tsx         all sections
+  opengraph-image.tsx  social preview card, rendered at build time
+  sitemap.ts, robots.ts, not-found.tsx
   globals.css      theme tokens
 components/        one file per section or widget
 hooks/             use-magnetic-tilt, use-mobile
