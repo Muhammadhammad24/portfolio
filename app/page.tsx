@@ -470,7 +470,7 @@ export default function Portfolio() {
               <span className="font-['Syne'] font-bold text-xl tracking-widest" style={{ color: 'var(--accent)' }}>M·H</span>
             </div>
             <p className="font-['JetBrains_Mono'] text-xs mt-1.5" style={{ color: 'var(--text-muted)' }}>
-              © {new Date().getFullYear()} Muhammad Hammad · AIOps Engineer · Germany
+              © {new Date().getFullYear()} Muhammad Hammad · IT Infrastructure Engineer · Germany
             </p>
           </div>
           <div className="flex items-center gap-4">

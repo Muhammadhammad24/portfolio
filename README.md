@@ -1,6 +1,6 @@
 # muhammadhammad.vercel.app
 
-Personal site for **Muhammad Hammad**, an AIOps engineer in Germany working
+Personal site for **Muhammad Hammad**, an IT infrastructure engineer in Germany working
 across cloud infrastructure, DevOps and automation, networks and systems. It is one statically rendered page with interactive
 diagrams for each specialisation, a skills matrix, project and certification
 cards, and a work timeline.
