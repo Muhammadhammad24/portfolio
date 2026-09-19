@@ -8,12 +8,13 @@ import { useMagneticTilt } from "@/hooks/use-magnetic-tilt"
 const CERT_ICONS: Record<string, typeof Shield> = {
   "ITIL Foundation":                         Settings,
   "System Administration & IT Infrastructure": Cloud,
-  "Information Security":                    Shield,
+  "Information Security Basics":             Shield,
   "Windows Server Fundamentals":             Server,
   "HDI Support Center Analyst":              BookOpen,
   "Linux Essentials":                        Terminal,
   "Discovering Computer Networks":           Network,
   "Successful IT Systems":                   Settings,
+  "Full Stack Software Developer Assessment": Terminal,
 }
 
 interface CertCardProps {

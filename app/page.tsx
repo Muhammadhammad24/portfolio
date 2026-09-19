@@ -304,13 +304,14 @@ export default function Portfolio() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               { name: "ITIL Foundation", subtitle: "IT Service Management", issuer: "ITIL", color: "#B1EB21", icon: "◈" },
-              { name: "System Administration & IT Infrastructure", subtitle: "Cloud Infrastructure", issuer: "Google", color: "#C2F343", icon: "◈" },
-              { name: "Information Security", subtitle: "IT Support Technicians", issuer: "Security Institute", color: "#9BD117", icon: "◈" },
+              { name: "System Administration & IT Infrastructure", subtitle: "Cloud Infrastructure", issuer: "Google · Coursera", color: "#C2F343", icon: "◈" },
+              { name: "Information Security Basics", subtitle: "For IT Support Technicians", issuer: "Udemy", color: "#9BD117", icon: "◈" },
               { name: "Windows Server Fundamentals", subtitle: "Enterprise Infrastructure", issuer: "Microsoft", color: "#C2F343", icon: "◈" },
               { name: "HDI Support Center Analyst", subtitle: "Help Desk Best Practices", issuer: "HDI", color: "#B1EB21", icon: "◈" },
               { name: "Linux Essentials", subtitle: "Linux Administration", issuer: "Linux Professional Institute", color: "#C2F343", icon: "◈" },
-              { name: "Discovering Computer Networks", subtitle: "Network Engineering", issuer: "Open Networking Lab", color: "#9BD117", icon: "◈" },
-              { name: "Successful IT Systems", subtitle: "Strategic IT Design", issuer: "IT Systems Institute", color: "#C2F343", icon: "◈" },
+              { name: "Discovering Computer Networks", subtitle: "Hands-on in the Open Networking Lab", issuer: "The Open University", color: "#9BD117", icon: "◈" },
+              { name: "Successful IT Systems", subtitle: "Strategic IT Design", issuer: "The Open University", color: "#C2F343", icon: "◈" },
+              { name: "Full Stack Software Developer Assessment", subtitle: "Software Engineering", issuer: "IBM · Coursera", color: "#B1EB21", icon: "◈" },
             ].map((cert, i) => (
               <CertCard key={i} cert={cert} index={i} />
             ))}
@@ -469,7 +470,7 @@ export default function Portfolio() {
               <span className="font-['Syne'] font-bold text-xl tracking-widest" style={{ color: 'var(--accent)' }}>M·H</span>
             </div>
             <p className="font-['JetBrains_Mono'] text-xs mt-1.5" style={{ color: 'var(--text-muted)' }}>
-              © {new Date().getFullYear()} Muhammad Hammad · IT Infrastructure & Security Engineer · Germany
+              © {new Date().getFullYear()} Muhammad Hammad · AIOps Engineer · Germany
             </p>
           </div>
           <div className="flex items-center gap-4">

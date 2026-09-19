@@ -6,7 +6,7 @@ import { useMagneticTilt } from "@/hooks/use-magnetic-tilt"
 
 const experiences = [
   {
-    title: "IT Specialist",
+    title: "IT Engineer",
     company: "Kontinental Establishment",
     location: "Germany / United States · Remote",
     period: "Apr 2023 – Present",
@@ -18,6 +18,23 @@ const experiences = [
       "Cut device setup time by 75% by deploying 180+ macOS, Windows, and iOS endpoints via Intune, Jamf Pro, and Autopilot.",
       "Reduced manual ticket triaging by 40% with Jira Service Management automation and Slack-based routing.",
       "Enforced RBAC, MFA, and GDPR/ISO 27001-aligned controls, securing identity and access across all global locations.",
+    ],
+  },
+  {
+    title: "IT Engineer",
+    company: "TestSolutions GmbH",
+    location: "Frankfurt, Germany · Hybrid",
+    period: "Feb 2023 – Dec 2024",
+    shortPeriod: "2023–2024",
+    current: false,
+    type: "Contract",
+    highlights: [
+      "Partnered with IT, DevOps and network teams to build security solutions aligned with business needs.",
+      "Secured AWS and Azure cloud with encryption, access controls and hardened configurations.",
+      "Deployed antivirus and endpoint detection across all devices on the network.",
+      "Configured and monitored firewalls, VPNs and IDS/IPS to block external threats.",
+      "Ran regular compliance audits against industry standards and data protection regulations.",
+      "Implemented backup and disaster recovery strategies to guarantee business continuity.",
     ],
   },
   {

@@ -149,7 +149,7 @@ export function HeroName({ firstName, lastName, bootDone }: HeroNameProps) {
         className="eyebrow mb-4"
         style={{ color: "var(--lime)", letterSpacing: "0.08em" }}
       >
-        IT Specialist
+        AIOps Engineer
       </div>
 
       {/* Name — NordLayer H1 style: Inter 700, tight leading */}
