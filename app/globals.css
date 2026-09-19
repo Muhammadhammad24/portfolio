@@ -147,23 +147,17 @@ body::before {
   pointer-events: none; z-index: 9999; opacity: 0.06;
 }
 
-/* ── Scanline ── */
-@keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
-.scanline {
-  position: fixed; top: 0; left: 0; width: 100%; height: 2px;
-  background: linear-gradient(transparent, rgba(177,235,33,0.06), transparent);
-  animation: scanline 16s linear infinite;
-  pointer-events: none; z-index: 100;
-}
+/* ── Scanline — disabled (compositor cost not worth the subtle effect) ── */
+.scanline { display: none; }
 
-/* ── Gradient text — lime shimmer NordLayer exact ── */
+/* ── Gradient text — lime shimmer, slowed to reduce GPU paint frequency ── */
 .gradient-green {
   background: linear-gradient(135deg, #B1EB21 0%, #C2F343 40%, #9BD117 70%, #B1EB21 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% 200%;
-  animation: shimmer-lime 5s ease infinite;
+  animation: shimmer-lime 10s ease infinite;
   display: block;
   padding-bottom: 0.12em;
   overflow: visible;
@@ -319,6 +313,8 @@ body::before {
 
 /* ══════════════════════════════════════════════════════════════
    BACKGROUND SYSTEM
+   Orbs are static (no animation) — pure radial-gradient, zero
+   compositor cost. Corner glows are also static.
    ══════════════════════════════════════════════════════════════ */
 
 .bg-orbs {
@@ -327,56 +323,25 @@ body::before {
 }
 .bg-orb {
   position: absolute; border-radius: 50%;
-  opacity: 0.25;
-  will-change: transform;
+  opacity: 0.22;
+  /* No will-change, no animation — static gradients are free */
 }
 .bg-orb-1 {
   width: 600px; height: 600px; top: -15%; left: -10%;
   background: radial-gradient(circle, rgba(177,235,33,0.10) 0%, rgba(177,235,33,0.03) 50%, transparent 70%);
-  animation: orb-drift-1 40s ease-in-out infinite;
 }
 .bg-orb-2 {
   width: 400px; height: 400px; top: 30%; right: -8%;
   background: radial-gradient(circle, rgba(177,235,33,0.06) 0%, transparent 70%);
-  animation: orb-drift-2 50s ease-in-out infinite;
 }
 .bg-orb-3 {
   width: 300px; height: 300px; bottom: 5%; left: 20%;
   background: radial-gradient(circle, rgba(177,235,33,0.04) 0%, transparent 65%);
-  animation: orb-drift-3 35s ease-in-out infinite;
 }
 .bg-orb-4 { display: none; }
 
-@keyframes orb-drift-1 {
-  0%,100% { transform: translate(0,0) scale(1); }
-  25%      { transform: translate(40px,60px) scale(1.05); }
-  50%      { transform: translate(80px,20px) scale(0.95); }
-  75%      { transform: translate(20px,80px) scale(1.08); }
-}
-@keyframes orb-drift-2 {
-  0%,100% { transform: translate(0,0) scale(1); }
-  33%      { transform: translate(-60px,40px) scale(1.06); }
-  66%      { transform: translate(-20px,-50px) scale(0.94); }
-}
-@keyframes orb-drift-3 {
-  0%,100% { transform: translate(0,0) scale(1); }
-  50%      { transform: translate(-40px,-60px) scale(1.1); }
-}
-@keyframes orb-drift-4 {
-  0%,100% { transform: translate(0,0) scale(1); }
-  25%      { transform: translate(50px,-30px) scale(1.12); }
-  50%      { transform: translate(-30px,60px) scale(0.88); }
-  75%      { transform: translate(60px,30px) scale(1.05); }
-}
-
-.bg-mesh {
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 0;
-  background-image:
-    linear-gradient(135deg, rgba(177,235,33,0.025) 1px, transparent 1px),
-    linear-gradient(45deg, rgba(177,235,33,0.015) 1px, transparent 1px);
-  background-size: 80px 80px;
-}
+/* bg-mesh removed — two fixed full-screen background-image layers on every scroll repaint */
+.bg-mesh { display: none; }
 
 .bg-corner-glow {
   position: fixed; pointer-events: none; z-index: 0;

@@ -352,6 +352,75 @@ function NetworkTopology() {
   )
 }
 
+/* ── Mobile: single card (hook called at top level — no rules violation) ── */
+function TimelineCard({ exp, index }: { exp: typeof experiences[0]; index: number }) {
+  const { ref, rotateX, rotateY, onMouseMove, onMouseLeave } = useMagneticTilt(3)
+  return (
+    <motion.div key={index} className="relative pl-12"
+      initial={{ opacity: 0, x: -24 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.05 }}
+      viewport={{ once: true }}>
+
+      {/* Hexagon bullet on the timeline */}
+      <div className="absolute left-[6px] top-[18px]">
+        <svg width="18" height="18" viewBox="0 0 18 18">
+          <polygon
+            points="9,1 17,5 17,13 9,17 1,13 1,5"
+            fill="var(--bg-base)"
+            stroke="var(--lime)"
+            strokeWidth="1.8"
+            style={{ filter: "drop-shadow(0 0 5px rgba(177,235,33,0.45))" }}
+          />
+        </svg>
+      </div>
+
+      <motion.div ref={ref}
+        className="relative overflow-visible rounded-2xl bracket-card p-5 group"
+        style={{ background: "var(--bg-card)", border: "1px solid rgba(177,235,33,0.15)", rotateX, rotateY, transformPerspective: 1000, transformStyle: "preserve-3d" }}
+        onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}>
+        <div className="absolute top-0 left-0 right-0 h-px"
+          style={{ background: "linear-gradient(90deg, transparent, rgba(177,235,33,0.30), transparent)" }} />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
+          style={{ boxShadow: "inset 0 0 30px rgba(177,235,33,0.04)" }} />
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="font-bold text-base" style={{ color: "#ffffff", fontFamily: "Inter, sans-serif" }}>
+                {exp.title}
+              </h3>
+              {"type" in exp && exp.type && (
+                <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold"
+                  style={{ background: "rgba(177,235,33,0.12)", color: "var(--lime)", border: "1px solid rgba(177,235,33,0.25)", fontFamily: "Inter, sans-serif" }}>
+                  {exp.type}
+                </span>
+              )}
+            </div>
+            <p className="text-sm mt-0.5" style={{ color: "var(--lime)", fontFamily: "Inter, sans-serif" }}>
+              {exp.company}
+              <span style={{ color: "rgba(255,255,255,0.25)" }}> · </span>
+              <span style={{ color: "var(--text-on-dark-secondary)" }}>{exp.location}</span>
+            </p>
+          </div>
+          <span className="font-['JetBrains_Mono'] text-[10px] tracking-wider whitespace-nowrap h-fit px-2 py-1 rounded"
+            style={{ color: "var(--lime)", border: "1px solid rgba(177,235,33,0.25)", background: "rgba(177,235,33,0.06)" }}>
+            {exp.period}
+          </span>
+        </div>
+        <ul className="space-y-1.5">
+          {exp.highlights.map((item, i) => (
+            <li key={i} className="flex gap-2 text-sm leading-relaxed"
+              style={{ color: "var(--text-on-dark-secondary)", fontFamily: "Inter, sans-serif" }}>
+              <span className="shrink-0 rounded-full" style={{ background: "var(--lime)", minWidth: 4, minHeight: 4, width: 4, height: 4, marginTop: 8 }} />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 /* ── Mobile: vertical timeline with hexagon bullets ── */
 function VerticalTimeline() {
   return (
@@ -359,74 +428,9 @@ function VerticalTimeline() {
       <div className="absolute left-4 top-0 bottom-0 w-px"
         style={{ background: "linear-gradient(to bottom, transparent, rgba(177,235,33,0.20), transparent)" }} />
       <div className="space-y-8">
-        {experiences.map((exp, index) => {
-          // eslint-disable-next-line react-hooks/rules-of-hooks
-          const { ref, rotateX, rotateY, onMouseMove, onMouseLeave } = useMagneticTilt(3)
-          return (
-            <motion.div key={index} className="relative pl-12"
-              initial={{ opacity: 0, x: -24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
-              viewport={{ once: true }}>
-
-              {/* Hexagon bullet on the timeline */}
-              <div className="absolute left-[6px] top-[18px]">
-                <svg width="18" height="18" viewBox="0 0 18 18">
-                  <polygon
-                    points="9,1 17,5 17,13 9,17 1,13 1,5"
-                    fill="var(--bg-base)"
-                    stroke="var(--lime)"
-                    strokeWidth="1.8"
-                    style={{ filter: "drop-shadow(0 0 5px rgba(177,235,33,0.45))" }}
-                  />
-                </svg>
-              </div>
-
-              <motion.div ref={ref}
-                className="relative overflow-visible rounded-2xl bracket-card p-5 group"
-                style={{ background: "var(--bg-card)", border: "1px solid rgba(177,235,33,0.15)", rotateX, rotateY, transformPerspective: 1000, transformStyle: "preserve-3d" }}
-                onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}>
-                <div className="absolute top-0 left-0 right-0 h-px"
-                  style={{ background: "linear-gradient(90deg, transparent, rgba(177,235,33,0.30), transparent)" }} />
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
-                  style={{ boxShadow: "inset 0 0 30px rgba(177,235,33,0.04)" }} />
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
-                  <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-bold text-base" style={{ color: "#ffffff", fontFamily: "Inter, sans-serif" }}>
-                        {exp.title}
-                      </h3>
-                      {"type" in exp && exp.type && (
-                        <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold"
-                          style={{ background: "rgba(177,235,33,0.12)", color: "var(--lime)", border: "1px solid rgba(177,235,33,0.25)", fontFamily: "Inter, sans-serif" }}>
-                          {exp.type}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm mt-0.5" style={{ color: "var(--lime)", fontFamily: "Inter, sans-serif" }}>
-                      {exp.company}
-                      <span style={{ color: "rgba(255,255,255,0.25)" }}> · </span>
-                      <span style={{ color: "var(--text-on-dark-secondary)" }}>{exp.location}</span>
-                    </p>
-                  </div>
-                  <span className="font-['JetBrains_Mono'] text-[10px] tracking-wider whitespace-nowrap h-fit px-2 py-1 rounded"
-                    style={{ color: "var(--lime)", border: "1px solid rgba(177,235,33,0.25)", background: "rgba(177,235,33,0.06)" }}>
-                    {exp.period}
-                  </span>
-                </div>
-                <ul className="space-y-1.5">
-                  {exp.highlights.map((item, i) => (
-                    <li key={i} className="flex gap-2 text-sm leading-relaxed"
-                      style={{ color: "var(--text-on-dark-secondary)", fontFamily: "Inter, sans-serif" }}>
-                      <span className="shrink-0 rounded-full" style={{ background: "var(--lime)", minWidth: 4, minHeight: 4, width: 4, height: 4, marginTop: 8 }} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            </motion.div>
-          )
-        })}
+        {experiences.map((exp, index) => (
+          <TimelineCard key={index} exp={exp} index={index} />
+        ))}
       </div>
     </div>
   )

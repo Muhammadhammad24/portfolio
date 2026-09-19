@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Github, Linkedin, Mail, Terminal } from "lucide-react"
 import { CyberRoles } from "@/components/cyber-roles"
@@ -27,12 +28,12 @@ export function HeroSection() {
                 className="w-12 h-12 rounded-full overflow-hidden"
                 style={{ border: "2px solid rgba(255,255,255,0.4)", boxShadow: "0 0 14px rgba(177,235,33,0.25)" }}
               >
-                <img
+                <Image
                   src="/photo_hammad.jpg"
                   alt="Muhammad Hammad"
                   width={48}
                   height={48}
-                  decoding="async"
+                  priority
                   className="w-full h-full object-cover object-top"
                 />
               </div>

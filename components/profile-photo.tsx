@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { motion } from "framer-motion"
 
 export function ProfilePhoto() {
@@ -37,20 +38,18 @@ export function ProfilePhoto() {
         }}
       >
         {/* The actual photo — zero CSS filters, pure natural colors */}
-        <img
+        <Image
           src="/photo_hammad.jpg"
           alt="Muhammad Hammad"
           width={184}
           height={184}
-          loading="lazy"
-          decoding="async"
+          priority
           style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
             objectPosition: 'center 8%',
             display: 'block',
-            /* Force GPU layer, no filter whatsoever */
             transform: 'translateZ(0)',
             filter: 'none',
             WebkitFilter: 'none',

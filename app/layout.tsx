@@ -1,25 +1,17 @@
 import type { Metadata } from 'next'
-// Fonts are self-hosted (same families as before) so nothing blocks the first paint.
-import '@fontsource/inter/latin-300.css'
+// Only load weights actually used in the UI — cuts font CSS payload by ~60%
 import '@fontsource/inter/latin-400.css'
 import '@fontsource/inter/latin-500.css'
 import '@fontsource/inter/latin-600.css'
 import '@fontsource/inter/latin-700.css'
-import '@fontsource/inter/latin-800.css'
-import '@fontsource/space-grotesk/latin-300.css'
 import '@fontsource/space-grotesk/latin-400.css'
 import '@fontsource/space-grotesk/latin-500.css'
-import '@fontsource/space-grotesk/latin-600.css'
 import '@fontsource/space-grotesk/latin-700.css'
-import '@fontsource/syne/latin-400.css'
-import '@fontsource/syne/latin-500.css'
 import '@fontsource/syne/latin-600.css'
 import '@fontsource/syne/latin-700.css'
 import '@fontsource/syne/latin-800.css'
-import '@fontsource/jetbrains-mono/latin-300.css'
 import '@fontsource/jetbrains-mono/latin-400.css'
 import '@fontsource/jetbrains-mono/latin-500.css'
-import '@fontsource/jetbrains-mono/latin-700.css'
 import './globals.css'
 
 export const metadata: Metadata = {

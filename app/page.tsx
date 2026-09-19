@@ -1,20 +1,24 @@
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import { ArrowRight, Github, Linkedin, Mail, Phone, MapPin, Shield, Terminal } from "lucide-react"
-import { ProjectsExplorer } from "@/components/projects-explorer"
-import { Timeline } from "@/components/timeline"
-import { ContactForm } from "@/components/contact-form"
-import { FloatingNav } from "@/components/floating-nav"
-import { ScrollProgress } from "@/components/scroll-progress"
 import { SectionHeading } from "@/components/section-heading"
 import { GlassmorphicCard } from "@/components/glassmorphic-card"
-import { SpecCard } from "@/components/spec-card"
-import { SkillsHex } from "@/components/skills-hex"
-import { CertsHex } from "@/components/certs-hex"
-import { TechMarquee } from "@/components/tech-marquee"
-import { ProfilePhoto } from "@/components/profile-photo"
-import { HeroSection } from "@/components/hero-section"
-import { StatCounter } from "@/components/stat-counter"
 import { SectionReveal } from "@/components/section-reveal"
+
+// Above-the-fold: eager load
+import { HeroSection } from "@/components/hero-section"
+import { FloatingNav } from "@/components/floating-nav"
+import { ScrollProgress } from "@/components/scroll-progress"
+
+// Below-the-fold: lazy load — splits JS bundle, downloaded on demand
+const TechMarquee      = dynamic(() => import("@/components/tech-marquee").then(m => ({ default: m.TechMarquee })))
+const SpecCard         = dynamic(() => import("@/components/spec-card").then(m => ({ default: m.SpecCard })))
+const ProfilePhoto     = dynamic(() => import("@/components/profile-photo").then(m => ({ default: m.ProfilePhoto })))
+const SkillsHex        = dynamic(() => import("@/components/skills-hex").then(m => ({ default: m.SkillsHex })))
+const CertsHex         = dynamic(() => import("@/components/certs-hex").then(m => ({ default: m.CertsHex })))
+const ProjectsExplorer = dynamic(() => import("@/components/projects-explorer").then(m => ({ default: m.ProjectsExplorer })))
+const Timeline         = dynamic(() => import("@/components/timeline").then(m => ({ default: m.Timeline })))
+const ContactForm      = dynamic(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })))
 
 export default function Portfolio() {
   return (

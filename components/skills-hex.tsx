@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-// AnimatePresence kept for category switch animation
 
 const SKILL_CATEGORIES = [
   {
@@ -118,13 +117,19 @@ const SKILL_CATEGORIES = [
 ]
 
 function getLevelMeta(level: number) {
-  if (level >= 94) return { tier: "Expert",     dots: 5, glow: true  }
-  if (level >= 88) return { tier: "Advanced",   dots: 4, glow: false }
-  if (level >= 80) return { tier: "Proficient", dots: 3, glow: false }
-  return                   { tier: "Competent", dots: 2, glow: false }
+  if (level >= 94) return { tier: "Expert",     dots: 5 }
+  if (level >= 88) return { tier: "Advanced",   dots: 4 }
+  if (level >= 80) return { tier: "Proficient", dots: 3 }
+  return                   { tier: "Competent", dots: 2 }
 }
 
-/* ── Single hexagon cell ── */
+/*
+  HexCell — zero useState, zero Framer Motion per-cell.
+  All hover effects are pure CSS via the `group` pattern +
+  CSS custom properties injected on the element.
+  The entrance animation (scale-in) is handled by the
+  global `.hex-cell` keyframe already in globals.css.
+*/
 function HexCell({
   skill,
   color,
@@ -134,43 +139,53 @@ function HexCell({
   color: string
   index: number
 }) {
-  const [hovered, setHovered] = useState(false)
   const meta = getLevelMeta(skill.level)
-
-  // SVG hexagon: flat-top
   const hexClip = "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)"
 
   return (
-    <motion.div
-      className="flex flex-col items-center"
-      initial={{ opacity: 0, scale: 0.6 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.4, delay: index * 0.04, type: "spring", stiffness: 200 }}
-      viewport={{ once: true }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{ width: 180 }}
+    <div
+      className="hex-cell group flex flex-col items-center"
+      style={{
+        width: 180,
+        animationDelay: `${index * 0.05}s`,
+        /* CSS custom prop so child pseudo/transition can read accent colour */
+        ["--hc" as string]: color,
+      }}
     >
-      {/* Hex shape */}
-      <motion.div
-        className="relative flex items-center justify-center"
+      {/* Hex shape — scale on hover via CSS, no JS */}
+      <div
+        className="relative flex items-center justify-center transition-transform duration-200 group-hover:scale-[1.06]"
         style={{
           width: 168,
           height: 192,
           clipPath: hexClip,
-          background: hovered
-            ? `linear-gradient(145deg, ${color}22, ${color}0a)`
-            : "var(--card-bg)",
-          border: "none",
-          transition: "background 0.25s",
+          background: "var(--card-bg)",
+          transition: "background 0.22s",
         }}
-        animate={{
-          filter: hovered ? `drop-shadow(0 0 14px ${color}88)` : "none",
-        }}
-        transition={{ duration: 0.25 }}
-        whileHover={{ scale: 1.06 }}
       >
-        {/* Hex border via pseudo SVG overlay */}
+        {/* CSS-driven background on hover via inline style + group */}
+        <style>{`
+          .hex-cell:hover > div {
+            background: linear-gradient(145deg, ${color}22, ${color}0a) !important;
+            filter: drop-shadow(0 0 14px ${color}66);
+          }
+          .hex-cell:hover .hex-border-poly {
+            stroke: ${color};
+            stroke-width: 2;
+          }
+          .hex-cell:hover .hex-label {
+            color: ${color};
+          }
+          .hex-cell:hover .hex-tier {
+            color: ${color};
+            opacity: 1;
+          }
+          .hex-cell:hover .hex-dot-active {
+            box-shadow: 0 0 5px ${color};
+          }
+        `}</style>
+
+        {/* Hex border SVG */}
         <svg
           className="absolute inset-0 pointer-events-none"
           width="168" height="192"
@@ -178,11 +193,12 @@ function HexCell({
           style={{ overflow: "visible" }}
         >
           <polygon
+            className="hex-border-poly"
             points="84,4 164,44 164,148 84,188 4,148 4,44"
             fill="none"
-            stroke={hovered ? color : "var(--border)"}
-            strokeWidth={hovered ? "2" : "1.5"}
-            style={{ transition: "stroke 0.25s, stroke-width 0.2s" }}
+            stroke="var(--border)"
+            strokeWidth="1.5"
+            style={{ transition: "stroke 0.22s, stroke-width 0.18s" }}
           />
         </svg>
 
@@ -193,12 +209,11 @@ function HexCell({
             {Array.from({ length: 5 }).map((_, d) => (
               <div
                 key={d}
-                className="rounded-full transition-all duration-200"
+                className={d < meta.dots ? "hex-dot-active rounded-full" : "rounded-full"}
                 style={{
-                  width: 7,
-                  height: 7,
+                  width: 7, height: 7,
                   background: d < meta.dots ? color : "var(--border)",
-                  boxShadow: d < meta.dots && hovered ? `0 0 5px ${color}` : "none",
+                  transition: "box-shadow 0.2s",
                 }}
               />
             ))}
@@ -206,10 +221,10 @@ function HexCell({
 
           {/* Skill name */}
           <span
-            className="font-['JetBrains_Mono'] leading-tight text-center"
+            className="hex-label font-['JetBrains_Mono'] leading-tight text-center"
             style={{
               fontSize: "13px",
-              color: hovered ? color : "var(--text-dim)",
+              color: "var(--text-dim)",
               transition: "color 0.2s",
               wordBreak: "break-word",
               lineHeight: 1.35,
@@ -218,21 +233,21 @@ function HexCell({
             {skill.name}
           </span>
 
-          {/* Tier badge — always visible */}
+          {/* Tier badge */}
           <span
-            className="font-['JetBrains_Mono'] tracking-widest uppercase"
+            className="hex-tier font-['JetBrains_Mono'] tracking-widest uppercase"
             style={{
               fontSize: "10px",
-              color: hovered ? color : "var(--text-muted)",
-              opacity: hovered ? 1 : 0.6,
+              color: "var(--text-muted)",
+              opacity: 0.6,
               transition: "color 0.2s, opacity 0.2s",
             }}
           >
             {meta.tier}
           </span>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }
 
@@ -282,7 +297,7 @@ export function SkillsHex() {
         ))}
       </div>
 
-      {/* Hex grid */}
+      {/* Hex grid — AnimatePresence only for category switch, not per-cell */}
       <AnimatePresence mode="wait">
         <motion.div
           key={activeId}
@@ -303,20 +318,12 @@ export function SkillsHex() {
             <div className="h-px flex-1 max-w-[80px]" style={{ background: `linear-gradient(to left, transparent, ${active.color}55)` }} />
           </div>
 
-          {/*
-            Honeycomb layout:
-            Row 1: 3 hexagons centred
-            Row 2: 3 hexagons offset by half a hex width
-            — offset rows via negative margin-top to interlock
-          */}
           <div className="flex flex-col items-center gap-0">
-            {/* Row 1 — 3 cells */}
             <div className="flex gap-3" style={{ marginBottom: "-34px" }}>
               {active.skills.slice(0, 3).map((s, i) => (
                 <HexCell key={s.name} skill={s} color={active.color} index={i} />
               ))}
             </div>
-            {/* Row 2 — 3 cells offset */}
             <div className="flex gap-3" style={{ marginLeft: "92px", marginBottom: "-34px" }}>
               {active.skills.slice(3, 6).map((s, i) => (
                 <HexCell key={s.name} skill={s} color={active.color} index={i + 3} />
@@ -324,7 +331,7 @@ export function SkillsHex() {
             </div>
           </div>
 
-          {/* Progress bars below hex grid */}
+          {/* Progress bars — single motion.div parent, children use CSS transitions */}
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto">
             {active.skills.map((skill, i) => {
               const meta = getLevelMeta(skill.level)
