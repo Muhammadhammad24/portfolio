@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState } from "react"
 
 const ITEMS = [
   { label: "Windows",               icon: "Windows" },

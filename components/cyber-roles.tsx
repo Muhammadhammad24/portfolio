@@ -5,7 +5,6 @@ import { motion } from "framer-motion"
 import { Shield, Cloud, Network, Lock, Server, Headphones, ShieldCheck } from "lucide-react"
 
 const LIME = "#B1EB21"
-const LIME_DIM = "#9BD117"
 
 const ROLES = [
   { label: "DevSecOps",           icon: Lock,        desc: "Dev · Sec · Ops" },

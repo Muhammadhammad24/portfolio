@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, Github, Linkedin, Mail, Phone, MapPin, Shield, Terminal } from "lucide-react"
+import { Github, Linkedin, Mail, Phone, MapPin, Shield } from "lucide-react"
 import { ProjectCard } from "@/components/project-card"
 import { Timeline } from "@/components/timeline"
 import { ContactForm } from "@/components/contact-form"
@@ -13,7 +13,6 @@ import { CertCard } from "@/components/cert-card"
 import { TechMarquee } from "@/components/tech-marquee"
 import { ProfilePhoto } from "@/components/profile-photo"
 import { HeroSection } from "@/components/hero-section"
-import { StatCounter } from "@/components/stat-counter"
 import { SectionReveal } from "@/components/section-reveal"
 
 export default function Portfolio() {
@@ -289,7 +288,7 @@ export default function Portfolio() {
         <div className="container">
           <SectionHeading title="My Skills" subtitle="02 — Expertise" />
           <p className="text-center mt-4 text-sm max-w-2xl mx-auto" style={{ color: 'var(--text-dim)' }}>
-            I've worked with a variety of technologies throughout my career. Here's a breakdown of my technical skills and proficiency levels.
+            I&apos;ve worked with a variety of technologies throughout my career. Here&apos;s a breakdown of my technical skills and proficiency levels.
           </p>
           <SkillsHex />
         </div>
@@ -390,7 +389,7 @@ export default function Portfolio() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mt-16">
             <GlassmorphicCard>
               <h3 className="font-['Syne'] text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>
-                Let's Connect
+                Let&apos;s Connect
               </h3>
               <p className="text-sm mb-8 leading-relaxed" style={{ color: 'var(--text-dim)' }}>
                 Open to IT Engineer roles, consulting, and enterprise infrastructure projects in Germany and internationally.

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { CheckCircle, Shield, Cloud, Terminal, Server, Wifi, BookOpen, Network, Settings } from "lucide-react"
+import { CheckCircle, Shield, Cloud, Terminal, Server, BookOpen, Network, Settings } from "lucide-react"
 import { useMagneticTilt } from "@/hooks/use-magnetic-tilt"
 
 const CERT_ICONS: Record<string, typeof Shield> = {

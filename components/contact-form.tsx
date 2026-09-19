@@ -54,7 +54,7 @@ export function ContactForm() {
           >
             <CheckCircle className="w-12 h-12 mb-4" style={{ color: 'var(--accent)' }} />
             <p className="font-semibold text-lg" style={{ color: 'var(--accent)' }}>Message Sent!</p>
-            <p className="text-sm mt-1" style={{ color: 'var(--accent-mid)' }}>I'll get back to you shortly.</p>
+            <p className="text-sm mt-1" style={{ color: 'var(--accent-mid)' }}>I&apos;ll get back to you shortly.</p>
           </motion.div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
