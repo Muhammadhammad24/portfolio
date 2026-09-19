@@ -39,19 +39,16 @@ components/
   profile-photo.tsx    # Animated photo widget
   cyber-roles.tsx      # Orbital specializations diagram
   spec-card.tsx        # "What I Do Best" cards with SVG icons
-  skills-tabbed.tsx    # Tabbed skills with dot-matrix level system
   tech-marquee.tsx     # Scrolling tech stack bar (hover to pause)
-  cert-card.tsx        # Certification cards
   project-card.tsx     # Project showcase cards
   timeline.tsx         # Work experience timeline
   contact-form.tsx     # Contact form
   glassmorphic-card.tsx
   section-heading.tsx
-  mouse-follower.tsx
   scroll-progress.tsx
 
 public/
   photo_hammad.jpg   # Profile photo
   favicon.svg        # Shield favicon
-  icons/             # 100+ SVG tech stack icons
+  icons/             # SVG tech-stack icons
 ```
