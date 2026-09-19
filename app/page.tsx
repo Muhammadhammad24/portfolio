@@ -395,7 +395,7 @@ export default function Portfolio() {
               ]}
               tags={["Next.js", "TypeScript", "Tailwind CSS", "SEO", "Vercel"]}
               repoUrl="https://github.com/Muhammadhammad24/velqatechnologies"
-              demoUrl="https://velqatechnologies.com"
+              demoUrl="https://velqatechnologies.vercel.app"
             />
           </div>
         </div>
