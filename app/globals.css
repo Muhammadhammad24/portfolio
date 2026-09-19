@@ -393,9 +393,19 @@ img.photo-crisp {
 
 /* ══ Reduced motion ══ */
 @media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
   .marquee-inner { animation-duration: 200s !important; }
-  .animate-blob, .animate-float, .scanline,
-  .bg-scan-band, .bg-particle, .gradient-green { animation: none !important; }
+  .gradient-green { animation: none !important; }
+  .orbit-spin, .orbit-pulse { animation: none !important; }
+  .spin-slow, .dot-pulse, .blink-dot { animation: none !important; }
+  .hex-cell { animation: none !important; }
+  .hero-in { animation: none !important; }
+  .animate-blob, .animate-float { animation: none !important; }
 }
 
 /* ══ Data stream ══ */

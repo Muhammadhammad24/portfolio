@@ -138,9 +138,11 @@ export function HeroSection() {
                 key={label}
                 href={href}
                 target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
                 className="social-icon-btn w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
               >
-                <Icon className="h-4 w-4" />
+                <Icon className="h-4 w-4" aria-hidden="true" />
               </Link>
             ))}
             <span className="font-['JetBrains_Mono'] text-xs" style={{ color: "var(--text-muted)" }}>
