@@ -203,11 +203,14 @@ function NetworkTopology() {
 
           {/* Data packet */}
           {inView && (
-            <motion.circle r="3" fill="var(--lime)"
-              style={{ filter: "drop-shadow(0 0 4px var(--lime))" }}
-              animate={{ cx: nodes.map(n => n.x), cy: nodes.map(n => n.y) }}
-              transition={{ duration: 5, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
-            />
+            // SMIL keeps this loop off the main thread: 5 s of travel, then a 1 s pause.
+            <circle r="3" fill="var(--lime)" style={{ filter: "drop-shadow(0 0 4px var(--lime))" }}>
+              <animateMotion
+                dur="6s" repeatCount="indefinite" calcMode="linear"
+                keyPoints="0;1;1" keyTimes="0;0.8333;1"
+                path={"M " + nodes.map(n => `${n.x} ${n.y}`).join(" L ")}
+              />
+            </circle>
           )}
 
           {/* Nodes */}
@@ -218,11 +221,11 @@ function NetworkTopology() {
             return (
               <g key={i} onClick={() => setActiveIdx(i)} style={{ cursor: "pointer" }}>
                 {isActive && (
-                  <motion.circle cx={x} cy={y} r={nodeR + 8}
-                    fill="none" stroke="var(--lime)" strokeWidth="1" strokeOpacity="0.35"
-                    animate={{ r: [nodeR + 6, nodeR + 14, nodeR + 6], opacity: [0.5, 0, 0.5] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
+                  <circle cx={x} cy={y} r={nodeR + 8}
+                    fill="none" stroke="var(--lime)" strokeWidth="1" strokeOpacity="0.35">
+                    <animate attributeName="r" values={`${nodeR + 6};${nodeR + 14};${nodeR + 6}`} dur="2s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.5;0;0.5" dur="2s" repeatCount="indefinite" />
+                  </circle>
                 )}
                 <motion.circle cx={x} cy={y} r={nodeR}
                   fill={isActive ? "rgba(177,235,33,0.10)" : "var(--bg-card)"}
@@ -239,12 +242,10 @@ function NetworkTopology() {
                   {String(experiences.length - i).padStart(2, "0")}
                 </text>
                 {exp.current && (
-                  <motion.circle cx={x + nodeR - 4} cy={y - nodeR + 4} r="5"
-                    fill="var(--lime)"
-                    animate={{ opacity: [1, 0.4, 1] }}
-                    transition={{ duration: 1.4, repeat: Infinity }}
-                    style={{ filter: "drop-shadow(0 0 4px var(--lime))" }}
-                  />
+                  <circle cx={x + nodeR - 4} cy={y - nodeR + 4} r="5"
+                    fill="var(--lime)" style={{ filter: "drop-shadow(0 0 4px var(--lime))" }}>
+                    <animate attributeName="opacity" values="1;0.4;1" dur="1.4s" repeatCount="indefinite" />
+                  </circle>
                 )}
                 {/* Company name — two lines if needed */}
                 {exp.company.split(" ").length <= 2 ? (

@@ -172,10 +172,8 @@ export function SpecCard({ spec, index }: SpecCardProps) {
         {/* Metric badge */}
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full mb-4"
           style={{ background: "var(--lime-subtle)", border: "1px solid rgba(177,235,33,0.20)" }}>
-          <motion.div className="w-1.5 h-1.5 rounded-full shrink-0"
-            style={{ background: LIME, boxShadow: `0 0 6px rgba(177,235,33,0.60)` }}
-            animate={{ opacity: [1, 0.3, 1] }}
-            transition={{ duration: 1.6, repeat: Infinity }} />
+          <div className="blink-dot w-1.5 h-1.5 rounded-full shrink-0"
+            style={{ background: LIME, boxShadow: `0 0 6px rgba(177,235,33,0.60)` }} />
           <span className="font-['JetBrains_Mono'] text-[10px] tracking-wider font-bold" style={{ color: LIME }}>
             {spec.metric}
           </span>

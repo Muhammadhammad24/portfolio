@@ -9,8 +9,8 @@ interface ProjectCardProps {
   title: string
   description: string
   tags: string[]
-  demoUrl: string
-  repoUrl: string
+  demoUrl?: string
+  repoUrl?: string
   metric?: string
   metricLabel?: string
   features?: string[]
@@ -70,7 +70,7 @@ export function ProjectCard({
         {/* Active dot */}
         <div className="absolute top-4 right-4 flex items-center gap-1.5">
           <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--accent)', boxShadow: '0 0 6px var(--accent)' }} />
-          <span className="font-['JetBrains_Mono'] text-[9px] tracking-widest" style={{ color: 'var(--text-muted)' }}>LIVE</span>
+          <span className="font-['JetBrains_Mono'] text-[9px] tracking-widest" style={{ color: 'var(--text-muted)' }}>{demoUrl ? "LIVE" : "OPEN SOURCE"}</span>
         </div>
 
         <div className="p-6 flex flex-col h-full">
@@ -132,18 +132,22 @@ export function ProjectCard({
 
           {/* Actions */}
           <div className="flex gap-3 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
-            <Link href={repoUrl} target="_blank"
-              className="flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase transition-all duration-300 hover:scale-105"
-              style={{ color: 'var(--accent-mid)', fontFamily: 'JetBrains Mono, monospace' }}>
-              <Github className="h-3.5 w-3.5" />
-              View Code
-            </Link>
-            <Link href={demoUrl} target="_blank"
-              className="flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase transition-all duration-300 hover:scale-105 ml-auto"
-              style={{ color: 'var(--accent)', fontFamily: 'JetBrains Mono, monospace' }}>
-              Live Demo
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </Link>
+            {repoUrl && (
+              <Link href={repoUrl} target="_blank"
+                className="flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase transition-all duration-300 hover:scale-105"
+                style={{ color: 'var(--accent-mid)', fontFamily: 'JetBrains Mono, monospace' }}>
+                <Github className="h-3.5 w-3.5" />
+                View Code
+              </Link>
+            )}
+            {demoUrl && (
+              <Link href={demoUrl} target="_blank"
+                className="flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase transition-all duration-300 hover:scale-105 ml-auto"
+                style={{ color: 'var(--accent)', fontFamily: 'JetBrains Mono, monospace' }}>
+                Live Site
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
+            )}
           </div>
         </div>
       </div>

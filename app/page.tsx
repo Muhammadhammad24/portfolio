@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { ArrowRight, Github, Linkedin, Mail, Phone, MapPin, Shield, Terminal } from "lucide-react"
-import { ProjectCard } from "@/components/project-card"
+import { ProjectsExplorer } from "@/components/projects-explorer"
 import { Timeline } from "@/components/timeline"
 import { ContactForm } from "@/components/contact-form"
 import { FloatingNav } from "@/components/floating-nav"
@@ -329,43 +329,7 @@ export default function Portfolio() {
         <div className="container relative z-10">
           <SectionHeading title="Projects" subtitle="04 — Work" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16 max-w-5xl mx-auto">
-            {/* Project 1 */}
-            <ProjectCard
-              number="01"
-              title="InfoTech Wizard — AI-Powered IT Support Chatbot"
-              description="Full-stack RAG-based IT support chatbot. FastAPI backend with PyTorch, Sentence-Transformers, and FAISS vector search. React/TypeScript frontend with real-time chat interface, Docker containerization, and comprehensive security features."
-              metric="60% reduction"
-              metricLabel="in IT ticket volume"
-              features={[
-                "Retrieval-Augmented Generation (RAG) pipeline with FAISS vector search",
-                "Real-time chat interface with comprehensive security features",
-                "Docker containerization for seamless deployment",
-                "60% reduction in IT support ticket volume through intelligent automation",
-              ]}
-              tags={["FastAPI", "React", "TypeScript", "PyTorch", "Sentence-Transformers", "FAISS", "HuggingFace", "Docker", "RAG Architecture"]}
-              repoUrl="https://github.com/Muhammadhammad24/Infotech-Wizard"
-              demoUrl="https://github.com/Muhammadhammad24/Infotech-Wizard"
-            />
-
-            {/* Project 2 */}
-            <ProjectCard
-              number="02"
-              title="NNApprox — AI-Powered System Analytics & Optimization"
-              description="Python-based framework using PyTorch and JAX for intelligent system performance prediction and automated optimization. Custom neural network models with adaptive learning algorithms processing IT infrastructure metrics and system logs."
-              metric="92% prediction accuracy"
-              metricLabel="65% reduction in manual monitoring"
-              features={[
-                "Intelligent system performance prediction using custom neural network models",
-                "Adaptive learning algorithms for IT infrastructure metrics analysis",
-                "Automated analysis pipelines with comparative benchmarking",
-                "92% prediction accuracy with 65% reduction in manual monitoring efforts",
-              ]}
-              tags={["Python", "PyTorch", "JAX", "TensorFlow", "Neural Networks", "Adaptive Learning", "System Analytics", "Performance Optimization", "Predictive Modeling", "Automated Pipelines"]}
-              repoUrl="https://github.com/Muhammadhammad24/nnapprox"
-              demoUrl="https://github.com/Muhammadhammad24/nnapprox"
-            />
-          </div>
+          <ProjectsExplorer />
         </div>
       </SectionReveal>
 
