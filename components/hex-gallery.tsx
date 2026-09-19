@@ -56,20 +56,20 @@ function Hex({ item, active, onSelect, index }: { item: HexItem; active: boolean
           )}
           <span
             className="font-['JetBrains_Mono'] leading-tight transition-colors duration-200 group-hover:text-[#B1EB21]"
-            style={{ fontSize: "clamp(9px, 2.4vw, 11px)", color: active ? LIME : "var(--text-dim)", wordBreak: "break-word", lineHeight: 1.3 }}
+            style={{ fontSize: "clamp(10px, 2.6vw, 13px)", color: active ? LIME : "var(--text-dim)", wordBreak: "break-word", lineHeight: 1.3 }}
           >
             {item.title}
           </span>
           <span
             className="font-['JetBrains_Mono'] uppercase tracking-widest"
-            style={{ fontSize: "clamp(7px, 1.8vw, 8.5px)", color: active ? LIME : "var(--text-muted)", opacity: active ? 1 : 0.7 }}
+            style={{ fontSize: "clamp(8px, 2vw, 10px)", color: active ? LIME : "var(--text-muted)", opacity: active ? 1 : 0.7 }}
           >
             {item.sub}
           </span>
           {item.badge && (
             <span
               className="font-['JetBrains_Mono'] uppercase tracking-wider rounded-sm px-1.5 py-0.5"
-              style={{ fontSize: "clamp(7px, 1.7vw, 8px)", color: LIME, border: `1px solid ${LIME}44`, background: `${LIME}0d` }}
+              style={{ fontSize: "clamp(8px, 1.9vw, 9.5px)", color: LIME, border: `1px solid ${LIME}44`, background: `${LIME}0d` }}
             >
               {item.badge}
             </span>
@@ -100,7 +100,7 @@ export function HexGallery({
       role="tablist"
       aria-label={label}
       className="flex flex-col items-center"
-      style={{ ["--hw" as string]: "clamp(88px, 25vw, 136px)" }}
+      style={{ ["--hw" as string]: "clamp(110px, 28vw, 160px)" }}
     >
       {rows.map((row, r) => (
         <div

@@ -100,6 +100,15 @@ const experiences = [
   },
 ]
 
+/* ── SVG hexagon points helper (flat-top, centered at cx,cy) ── */
+function hexPoints(cx: number, cy: number, r: number): string {
+  // pointy-top hexagon: 6 vertices
+  return Array.from({ length: 6 }, (_, i) => {
+    const angle = (Math.PI / 180) * (60 * i - 30)
+    return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`
+  }).join(" ")
+}
+
 /* ── Detail card ── */
 function DetailCard({ exp }: { exp: typeof experiences[0] }) {
   const { ref, rotateX, rotateY, onMouseMove, onMouseLeave } = useMagneticTilt(3)
@@ -162,15 +171,15 @@ function DetailCard({ exp }: { exp: typeof experiences[0] }) {
   )
 }
 
-/* ── Desktop: network topology ── */
+/* ── Desktop: network topology with hexagon nodes ── */
 function NetworkTopology() {
   const [activeIdx, setActiveIdx] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: "-80px" })
 
   const W = 960
-  const H = 170
-  const nodeR = 22
+  const H = 180
+  const nodeR = 24          // hexagon circumradius
   const nodeSpacing = W / (experiences.length + 1)
   const nodes = experiences.map((_, i) => ({ x: nodeSpacing * (i + 1), y: H / 2 }))
 
@@ -203,7 +212,6 @@ function NetworkTopology() {
 
           {/* Data packet */}
           {inView && (
-            // SMIL keeps this loop off the main thread: 5 s of travel, then a 1 s pause.
             <circle r="3" fill="var(--lime)" style={{ filter: "drop-shadow(0 0 4px var(--lime))" }}>
               <animateMotion
                 dur="6s" repeatCount="indefinite" calcMode="linear"
@@ -213,41 +221,55 @@ function NetworkTopology() {
             </circle>
           )}
 
-          {/* Nodes */}
+          {/* Hexagon Nodes */}
           {experiences.map((exp, i) => {
             const { x, y } = nodes[i]
             const isActive = activeIdx === i
+            const pts = hexPoints(x, y, nodeR)
+            const ptsLarge = hexPoints(x, y, nodeR + 9)
 
             return (
               <g key={i} onClick={() => setActiveIdx(i)} style={{ cursor: "pointer" }}>
+
+                {/* Pulse ring (hexagon) when active */}
                 {isActive && (
-                  <circle cx={x} cy={y} r={nodeR + 8}
+                  <polygon points={ptsLarge}
                     fill="none" stroke="var(--lime)" strokeWidth="1" strokeOpacity="0.35">
-                    <animate attributeName="r" values={`${nodeR + 6};${nodeR + 14};${nodeR + 6}`} dur="2s" repeatCount="indefinite" />
                     <animate attributeName="opacity" values="0.5;0;0.5" dur="2s" repeatCount="indefinite" />
-                  </circle>
+                  </polygon>
                 )}
-                <motion.circle cx={x} cy={y} r={nodeR}
+
+                {/* Main hexagon body */}
+                <motion.polygon
+                  points={pts}
                   fill={isActive ? "rgba(177,235,33,0.10)" : "var(--bg-card)"}
-                  stroke={isActive ? "var(--lime)" : "rgba(177,235,33,0.20)"}
+                  stroke={isActive ? "var(--lime)" : "rgba(177,235,33,0.25)"}
                   strokeWidth={isActive ? "2" : "1.5"}
-                  animate={{ r: isActive ? nodeR + 2 : nodeR }}
+                  style={{ filter: isActive ? "drop-shadow(0 0 8px rgba(177,235,33,0.55))" : "none" }}
+                  animate={{ scale: isActive ? 1.08 : 1 }}
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  style={{ filter: isActive ? "drop-shadow(0 0 8px rgba(177,235,33,0.50))" : "none" }}
+                  transformOrigin={`${x}px ${y}px`}
                 />
-                <text x={x} y={y + 5} textAnchor="middle"
-                  fill={isActive ? "var(--lime)" : "rgba(177,235,33,0.45)"}
+
+                {/* Number label */}
+                <text x={x} y={y + 4} textAnchor="middle"
+                  fill={isActive ? "var(--lime)" : "rgba(177,235,33,0.50)"}
                   fontSize="11" fontFamily="JetBrains Mono, monospace" fontWeight="700"
                   style={{ pointerEvents: "none", userSelect: "none" }}>
                   {String(experiences.length - i).padStart(2, "0")}
                 </text>
+
+                {/* Live dot for current role */}
                 {exp.current && (
-                  <circle cx={x + nodeR - 4} cy={y - nodeR + 4} r="5"
-                    fill="var(--lime)" style={{ filter: "drop-shadow(0 0 4px var(--lime))" }}>
+                  <polygon
+                    points={hexPoints(x + nodeR - 2, y - nodeR + 2, 5)}
+                    fill="var(--lime)"
+                    style={{ filter: "drop-shadow(0 0 4px var(--lime))" }}>
                     <animate attributeName="opacity" values="1;0.4;1" dur="1.4s" repeatCount="indefinite" />
-                  </circle>
+                  </polygon>
                 )}
-                {/* Company name — two lines if needed */}
+
+                {/* Company name below */}
                 {exp.company.split(" ").length <= 2 ? (
                   <motion.text x={x} y={y + nodeR + 16} textAnchor="middle"
                     fill={isActive ? "var(--lime)" : "var(--text-on-dark-muted)"}
@@ -277,7 +299,8 @@ function NetworkTopology() {
                     </motion.text>
                   </>
                 )}
-                {/* Period above node */}
+
+                {/* Period above */}
                 <motion.text x={x} y={y - nodeR - 8} textAnchor="middle"
                   fill={isActive ? "rgba(177,235,33,0.80)" : "var(--text-on-dark-muted)"}
                   fontSize="8" fontFamily="JetBrains Mono, monospace"
@@ -303,14 +326,25 @@ function NetworkTopology() {
           style={{ color: "var(--text-on-dark-muted)" }}>
           Click node to inspect
         </span>
-        <div className="flex gap-1">
+        {/* Mini hexagon indicators */}
+        <div className="flex gap-1.5 items-center">
           {experiences.map((_, i) => (
-            <button key={i} onClick={() => setActiveIdx(i)}
-              className="w-1.5 h-1.5 rounded-full transition-all duration-200"
-              style={{
-                background: activeIdx === i ? "var(--lime)" : "rgba(177,235,33,0.20)",
-                boxShadow: activeIdx === i ? "0 0 5px rgba(177,235,33,0.60)" : "none",
-              }} />
+            <button
+              key={i}
+              onClick={() => setActiveIdx(i)}
+              aria-label={`Select experience ${i + 1}`}
+              style={{ width: 14, height: 14, background: "none", border: "none", padding: 0, cursor: "pointer" }}
+            >
+              <svg viewBox="0 0 14 14" width="14" height="14">
+                <polygon
+                  points="7,1 13,4 13,10 7,13 1,10 1,4"
+                  fill={activeIdx === i ? "rgba(177,235,33,0.20)" : "transparent"}
+                  stroke={activeIdx === i ? "var(--lime)" : "rgba(177,235,33,0.30)"}
+                  strokeWidth="1.5"
+                  style={{ filter: activeIdx === i ? "drop-shadow(0 0 3px rgba(177,235,33,0.60))" : "none" }}
+                />
+              </svg>
+            </button>
           ))}
         </div>
       </div>
@@ -318,7 +352,7 @@ function NetworkTopology() {
   )
 }
 
-/* ── Mobile: vertical timeline ── */
+/* ── Mobile: vertical timeline with hexagon bullets ── */
 function VerticalTimeline() {
   return (
     <div className="relative">
@@ -334,13 +368,20 @@ function VerticalTimeline() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
               viewport={{ once: true }}>
-              <div className="absolute left-2 top-5">
-                <motion.div className="w-3 h-3 rounded-full"
-                  style={{ border: "2px solid var(--lime)", background: "var(--bg-base)", boxShadow: "0 0 8px rgba(177,235,33,0.35)" }}
-                  whileInView={{ scale: [0, 1.4, 1] }}
-                  transition={{ duration: 0.4 }}
-                  viewport={{ once: true }} />
+
+              {/* Hexagon bullet on the timeline */}
+              <div className="absolute left-[6px] top-[18px]">
+                <svg width="18" height="18" viewBox="0 0 18 18">
+                  <polygon
+                    points="9,1 17,5 17,13 9,17 1,13 1,5"
+                    fill="var(--bg-base)"
+                    stroke="var(--lime)"
+                    strokeWidth="1.8"
+                    style={{ filter: "drop-shadow(0 0 5px rgba(177,235,33,0.45))" }}
+                  />
+                </svg>
               </div>
+
               <motion.div ref={ref}
                 className="relative overflow-visible rounded-2xl bracket-card p-5 group"
                 style={{ background: "var(--bg-card)", border: "1px solid rgba(177,235,33,0.15)", rotateX, rotateY, transformPerspective: 1000, transformStyle: "preserve-3d" }}

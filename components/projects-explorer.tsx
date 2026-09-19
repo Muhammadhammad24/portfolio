@@ -102,7 +102,7 @@ const PROJECTS: Project[] = [
     ],
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "Edge Deployment", "SEO", "Vercel"],
     repoUrl: "https://github.com/Muhammadhammad24/velqatechnologies",
-    demoUrl: "https://velqatechnologies.vercel.app",
+    demoUrl: "https://www.velqatechnologies.com",
   },
   {
     short: "nnapprox",
