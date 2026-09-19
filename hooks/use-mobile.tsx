@@ -6,21 +6,18 @@ export function useMobile() {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const checkIfMobile = () => setIsMobile(window.innerWidth < 768)
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    // Initial check
     checkIfMobile()
 
-    // Debounced resize — fires at most once every 150ms instead of every pixel
-    let timer: ReturnType<typeof setTimeout>
-    const handleResize = () => {
-      clearTimeout(timer)
-      timer = setTimeout(checkIfMobile, 150)
-    }
+    // Add event listener
+    window.addEventListener("resize", checkIfMobile)
 
-    window.addEventListener("resize", handleResize, { passive: true })
-    return () => {
-      clearTimeout(timer)
-      window.removeEventListener("resize", handleResize)
-    }
+    // Clean up
+    return () => window.removeEventListener("resize", checkIfMobile)
   }, [])
 
   return isMobile

@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Github, Linkedin, Mail, Terminal } from "lucide-react"
 import { CyberRoles } from "@/components/cyber-roles"
@@ -28,12 +27,12 @@ export function HeroSection() {
                 className="w-12 h-12 rounded-full overflow-hidden"
                 style={{ border: "2px solid rgba(255,255,255,0.4)", boxShadow: "0 0 14px rgba(177,235,33,0.25)" }}
               >
-                <Image
+                <img
                   src="/photo_hammad.jpg"
                   alt="Muhammad Hammad"
                   width={48}
                   height={48}
-                  priority
+                  decoding="async"
                   className="w-full h-full object-cover object-top"
                 />
               </div>
@@ -138,11 +137,9 @@ export function HeroSection() {
                 key={label}
                 href={href}
                 target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
                 className="social-icon-btn w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
               >
-                <Icon className="h-4 w-4" aria-hidden="true" />
+                <Icon className="h-4 w-4" />
               </Link>
             ))}
             <span className="font-['JetBrains_Mono'] text-xs" style={{ color: "var(--text-muted)" }}>

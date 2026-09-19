@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+import { useState, useRef } from "react"
 
 const ITEMS = [
   { label: "Windows",               icon: "Windows" },
@@ -75,75 +75,97 @@ const ITEMS = [
   { label: "VMware Workspace ONE",  icon: "VMware-Workspace-ONE" },
 ]
 
+// Double for seamless loop
+const ALL = [...ITEMS, ...ITEMS]
+
 export function TechMarquee() {
+  // hoveredLabel tracks which specific item is hovered
+  const [hoveredLabel, setHoveredLabel] = useState<string | null>(null)
+
   return (
     <div
       className="overflow-hidden py-3 select-none"
       style={{
-        borderTop: "1px solid var(--border)",
-        borderBottom: "1px solid var(--border)",
-        background: "var(--surface)",
+        borderTop: '1px solid var(--border)',
+        borderBottom: '1px solid var(--border)',
+        background: 'var(--surface)',
       }}
     >
-      {/*
-        CSS-only seamless loop:
-        - Two identical strips side by side, each 100% wide
-        - CSS translateX(-50%) over 90s moves the first strip fully off-screen
-          while the second strip takes its place — no JS, no state, no re-renders
-        - `group` on each item handles hover purely via CSS
-        - `will-change: transform` promotes to compositor layer
-      */}
       <div
-        className="marquee-inner flex items-center whitespace-nowrap"
-        style={{ width: "max-content", willChange: "transform" }}
+        className="flex items-center whitespace-nowrap"
+        style={{
+          width: 'max-content',
+          gap: '0px',
+          // Pause only when any item is hovered
+          animation: 'marquee 90s linear infinite',
+          animationPlayState: hoveredLabel !== null ? 'paused' : 'running',
+          willChange: 'transform',
+        }}
       >
-        {/* Two identical strips — duplication stays in markup, not in React state */}
-        {[0, 1].map((copy) => (
-          <div key={copy} className="flex items-center" aria-hidden={copy === 1 ? true : undefined}>
-            {ITEMS.map((item) => (
+        {ALL.map((item, i) => {
+          const isHovered = hoveredLabel === `${item.label}-${i}`
+          return (
+            <span
+              key={i}
+              className="inline-flex items-center cursor-default"
+              style={{
+                padding: '2px 10px 2px 10px',
+                borderRadius: 6,
+                transition: 'background 0.18s, box-shadow 0.18s',
+                background: isHovered ? 'var(--surface)' : 'transparent',
+                boxShadow: isHovered ? '0 0 12px var(--accent-glow)' : 'none',
+                gap: 7,
+              }}
+              onMouseEnter={() => setHoveredLabel(`${item.label}-${i}`)}
+              onMouseLeave={() => setHoveredLabel(null)}
+            >
+              {/* Icon */}
+              <img
+                src={`/icons/${item.icon}.svg`}
+                alt=""
+                aria-hidden
+                style={{
+                  width: 15,
+                  height: 15,
+                  objectFit: 'contain',
+                  flexShrink: 0,
+                  transition: 'filter 0.18s',
+                  filter: 'var(--icon-filter)',
+                }}
+              />
+
+              {/* Label — BOLD UPPERCASE, readable */}
               <span
-                key={item.label}
-                className="group inline-flex items-center cursor-default"
-                style={{ padding: "2px 10px", borderRadius: 6, gap: 7 }}
+                style={{
+                  fontFamily: 'JetBrains Mono, monospace',
+                  fontSize: 11,
+                  fontWeight: isHovered ? 700 : 500,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  color: isHovered ? 'var(--accent)' : 'var(--accent-mid)',
+                  transition: 'color 0.18s, font-weight 0.18s',
+                  whiteSpace: 'nowrap',
+                }}
               >
-                <Image
-                  src={`/icons/${item.icon}.svg`}
-                  alt=""
-                  aria-hidden
-                  width={15}
-                  height={15}
-                  style={{
-                    objectFit: "contain",
-                    flexShrink: 0,
-                    filter: "var(--icon-filter)",
-                  }}
-                />
-                <span
-                  className="font-['JetBrains_Mono'] uppercase whitespace-nowrap transition-colors duration-150"
-                  style={{
-                    fontSize: 11,
-                    fontWeight: 500,
-                    letterSpacing: "0.08em",
-                    color: "var(--accent-mid)",
-                  }}
-                >
-                  {item.label}
-                </span>
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: 3,
-                    height: 3,
-                    borderRadius: "50%",
-                    flexShrink: 0,
-                    marginLeft: 8,
-                    background: "var(--border)",
-                  }}
-                />
+                {item.label}
               </span>
-            ))}
-          </div>
-        ))}
+
+              {/* Separator dot */}
+              <span
+                style={{
+                  display: 'inline-block',
+                  width: 3,
+                  height: 3,
+                  borderRadius: '50%',
+                  flexShrink: 0,
+                  marginLeft: 8,
+                  background: isHovered ? 'var(--border-hot)' : 'var(--border)',
+                  transition: 'background 0.18s',
+                }}
+              />
+            </span>
+          )
+        })}
       </div>
     </div>
   )

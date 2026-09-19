@@ -1,24 +1,20 @@
-import dynamic from "next/dynamic"
 import Link from "next/link"
 import { ArrowRight, Github, Linkedin, Mail, Phone, MapPin, Shield, Terminal } from "lucide-react"
-import { SectionHeading } from "@/components/section-heading"
-import { GlassmorphicCard } from "@/components/glassmorphic-card"
-import { SectionReveal } from "@/components/section-reveal"
-
-// Above-the-fold: eager load
-import { HeroSection } from "@/components/hero-section"
+import { ProjectsExplorer } from "@/components/projects-explorer"
+import { Timeline } from "@/components/timeline"
+import { ContactForm } from "@/components/contact-form"
 import { FloatingNav } from "@/components/floating-nav"
 import { ScrollProgress } from "@/components/scroll-progress"
-
-// Below-the-fold: lazy load — splits JS bundle, downloaded on demand
-const TechMarquee      = dynamic(() => import("@/components/tech-marquee").then(m => ({ default: m.TechMarquee })))
-const SpecCard         = dynamic(() => import("@/components/spec-card").then(m => ({ default: m.SpecCard })))
-const ProfilePhoto     = dynamic(() => import("@/components/profile-photo").then(m => ({ default: m.ProfilePhoto })))
-const SkillsHex        = dynamic(() => import("@/components/skills-hex").then(m => ({ default: m.SkillsHex })))
-const CertsHex         = dynamic(() => import("@/components/certs-hex").then(m => ({ default: m.CertsHex })))
-const ProjectsExplorer = dynamic(() => import("@/components/projects-explorer").then(m => ({ default: m.ProjectsExplorer })))
-const Timeline         = dynamic(() => import("@/components/timeline").then(m => ({ default: m.Timeline })))
-const ContactForm      = dynamic(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })))
+import { SectionHeading } from "@/components/section-heading"
+import { GlassmorphicCard } from "@/components/glassmorphic-card"
+import { SpecCard } from "@/components/spec-card"
+import { SkillsHex } from "@/components/skills-hex"
+import { CertsHex } from "@/components/certs-hex"
+import { TechMarquee } from "@/components/tech-marquee"
+import { ProfilePhoto } from "@/components/profile-photo"
+import { HeroSection } from "@/components/hero-section"
+import { StatCounter } from "@/components/stat-counter"
+import { SectionReveal } from "@/components/section-reveal"
 
 export default function Portfolio() {
   return (
@@ -353,14 +349,14 @@ export default function Portfolio() {
 
               <div className="space-y-4 mb-8">
                 {[
-                  { icon: Mail,     label: "Email",    value: "muhammad24997@gmail.com",      href: "mailto:muhammad24997@gmail.com" },
-                  { icon: Phone,    label: "Phone",    value: "+49 176 8733 3721",            href: "tel:+4917687333721" },
-                  { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/mhammad24",   href: "https://www.linkedin.com/in/mhammad24/" },
-                  { icon: Github,   label: "GitHub",   value: "github.com/Muhammadhammad24", href: "https://github.com/Muhammadhammad24" },
+                  { icon: Mail, label: "Email", value: "muhammad24997@gmail.com", href: "mailto:muhammad24997@gmail.com" },
+                  { icon: Phone, label: "Phone", value: "+49 176 8733 3721", href: "tel:+4917687333721" },
+                  { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/mhammad24", href: "https://www.linkedin.com/in/mhammad24/" },
+                  { icon: Github, label: "GitHub", value: "github.com/Muhammadhammad24", href: "https://github.com/Muhammadhammad24" },
                 ].map(({ icon: Icon, label, value, href }) => (
-                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label}: ${value}`} className="flex items-center gap-4 group">
+                  <a key={label} href={href} target="_blank" className="flex items-center gap-4 group">
                     <div className="contact-icon-btn w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300">
-                      <Icon className="h-4 w-4" style={{ color: 'var(--accent-dim)' }} aria-hidden="true" />
+                      <Icon className="h-4 w-4" style={{ color: 'var(--accent-dim)' }} />
                     </div>
                     <div>
                       <div className="font-['JetBrains_Mono'] text-[10px] tracking-wider uppercase" style={{ color: 'var(--text-muted)' }}>{label}</div>
@@ -397,15 +393,14 @@ export default function Portfolio() {
           </div>
           <div className="flex items-center gap-4">
             {[
-              { icon: Github,   href: "https://github.com/Muhammadhammad24",    label: "GitHub" },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/mhammad24/", label: "LinkedIn" },
-              { icon: Mail,     href: "mailto:muhammad24997@gmail.com",          label: "Email" },
-            ].map(({ icon: Icon, href, label }) => (
-              <Link key={href} href={href} target="_blank" rel="noopener noreferrer"
-                aria-label={label}
+              { icon: Github, href: "https://github.com/Muhammadhammad24" },
+              { icon: Linkedin, href: "https://www.linkedin.com/in/mhammad24/" },
+              { icon: Mail, href: "mailto:muhammad24997@gmail.com" },
+            ].map(({ icon: Icon, href }) => (
+              <Link key={href} href={href} target="_blank"
                 className="social-icon-btn w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
               >
-                <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                <Icon className="h-3.5 w-3.5" />
               </Link>
             ))}
           </div>
