@@ -8,6 +8,7 @@ const experiences = [
     company: "Kontinental Establishment",
     location: "Germany / United States · Remote",
     period: "Apr 2023 – Present",
+    duration: "3 yr 6 mo",
     shortPeriod: "2023–Now",
     current: true,
     type: "Full-time",
@@ -24,6 +25,7 @@ const experiences = [
     company: "The University of Göttingen",
     location: "Göttingen, Germany · On-site",
     period: "Apr 2024 – Sep 2024",
+    duration: "6 mo",
     shortPeriod: "2024",
     current: false,
     type: "Internship",
@@ -40,6 +42,7 @@ const experiences = [
     company: "Liberty Books Pvt Ltd.",
     location: "Karachi, Pakistan · On-site",
     period: "Jun 2022 – Oct 2022",
+    duration: "5 mo",
     shortPeriod: "2022",
     current: false,
     type: "Full-time",
@@ -57,6 +60,7 @@ const experiences = [
     company: "KTDMC",
     location: "Karachi, Pakistan · On-site",
     period: "Oct 2021 – May 2022",
+    duration: "8 mo",
     shortPeriod: "2021–22",
     current: false,
     type: "Full-time",
@@ -72,6 +76,7 @@ const experiences = [
     company: "Target Logistics International (Pvt.) Ltd",
     location: "Karachi, Pakistan · On-site",
     period: "Jul 2020 – Sep 2021",
+    duration: "1 yr 3 mo",
     shortPeriod: "2020–21",
     current: false,
     type: "Full-time",
@@ -89,6 +94,7 @@ const experiences = [
     company: "The Active Solutions",
     location: "Karachi, Pakistan · On-site",
     period: "Apr 2019 – Mar 2020",
+    duration: "1 yr",
     shortPeriod: "2019–20",
     current: false,
     type: "Full-time",
@@ -147,6 +153,7 @@ function TimelineEntry({ exp, index }: { exp: typeof experiences[0]; index: numb
           </div>
           <span className="shrink-0 text-xs whitespace-nowrap" style={{ color: "var(--text-muted)" }}>
             {exp.period}
+            {exp.duration && <span style={{ color: "var(--border-dark)" }}> · {exp.duration}</span>}
           </span>
         </div>
 

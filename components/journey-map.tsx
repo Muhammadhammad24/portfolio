@@ -76,7 +76,7 @@ const STEPS: Step[] = [
     year: "2024",
     place: "Göttingen, Germany",
     title: "DevSecOps at the university",
-    line: "Scientific computing: ML infrastructure, scanning in the pipeline, deployments down from four hours to thirty-five minutes.",
+    line: "A six-month internship in scientific computing, April to September: ML infrastructure, scanning in the pipeline, deployments down from four hours to thirty-five minutes.",
   },
   {
     year: "Now",
