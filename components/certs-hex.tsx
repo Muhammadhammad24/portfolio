@@ -152,7 +152,7 @@ export function CertsHex() {
           <a
             href={c.verify}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium"
             style={{ color: "var(--accent)" }}
           >

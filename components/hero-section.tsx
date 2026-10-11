@@ -96,7 +96,7 @@ export function HeroSection() {
               <Link
                 key={label}
                 href={href}
-                target="_blank"
+                target="_blank" rel="noopener noreferrer"
                 aria-label={label}
                 className="social-icon-btn flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200"
               >

@@ -196,7 +196,7 @@ export async function GitHubPanel() {
           <a
             href={`https://github.com/${USER}`}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="truncate text-sm font-medium hover:underline"
             style={{ color: "var(--text)" }}
           >

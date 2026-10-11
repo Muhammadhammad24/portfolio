@@ -233,7 +233,7 @@ export default function Portfolio() {
                   { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/mhammad24", href: "https://www.linkedin.com/in/mhammad24/" },
                   { icon: Github, label: "GitHub", value: "github.com/Muhammadhammad24", href: "https://github.com/Muhammadhammad24" },
                 ].map(({ icon: Icon, label, value, href }) => (
-                  <a key={label} href={href} target="_blank" className="flex items-center gap-4 group">
+                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
                     <Icon className="h-4 w-4 shrink-0" style={{ color: 'var(--text-muted)' }} />
                     <div>
                       <div className="text-[11px] tracking-wider uppercase" style={{ color: 'var(--text-muted)' }}>{label}</div>
@@ -271,7 +271,7 @@ export default function Portfolio() {
               { icon: Linkedin, href: "https://www.linkedin.com/in/mhammad24/" },
               { icon: Mail, href: "mailto:muhammad24997@gmail.com" },
             ].map(({ icon: Icon, href }) => (
-              <Link key={href} href={href} target="_blank"
+              <Link key={href} href={href} target="_blank" rel="noopener noreferrer"
                 className="social-icon-btn w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
               >
                 <Icon className="h-3.5 w-3.5" />

@@ -77,7 +77,7 @@ export function ProjectCard({
           {repoUrl && (
             <Link
               href={repoUrl}
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-[13px] font-medium"
               style={{ color: "var(--text-dim)" }}
             >
@@ -88,7 +88,7 @@ export function ProjectCard({
           {demoUrl && (
             <Link
               href={demoUrl}
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
               className="ml-auto flex items-center gap-1.5 text-[13px] font-medium"
               style={{ color: "var(--accent)" }}
             >
