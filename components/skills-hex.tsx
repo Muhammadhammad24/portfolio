@@ -1,190 +1,198 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-// AnimatePresence kept for category switch animation
 
-const SKILL_CATEGORIES = [
+/**
+ * Skills grouped under the same six layers the hero stack uses, so the two
+ * read as one idea. No percentages and no Expert/Advanced ladder: what counts
+ * is how often a tool is actually in my hands, which is what the weight shows.
+ */
+
+type Use = "daily" | "regular" | "working"
+
+type Group = {
+  id: string
+  layer: string
+  note: string
+  tools: { name: string; use: Use }[]
+}
+
+const GROUPS: Group[] = [
   {
-    id: "os", label: "OS & Platforms", color: "#5B8DEF",
-    skills: [
-      { name: "Windows 10/11",               level: 95 },
-      { name: "Windows Server",              level: 95 },
-      { name: "macOS",                       level: 88 },
-      { name: "Linux / RHEL",               level: 90 },
-      { name: "VMware ESXi",                level: 92 },
-      { name: "iOS / Android",               level: 85 },
+    id: "security",
+    layer: "Security & Compliance",
+    note: "Access, detection, and the audits that follow",
+    tools: [
+      { name: "Zero Trust access", use: "daily" },
+      { name: "Okta MFA / SSO", use: "daily" },
+      { name: "Conditional Access", use: "daily" },
+      { name: "RBAC", use: "daily" },
+      { name: "GDPR / ISO 27001", use: "daily" },
+      { name: "Microsoft Defender", use: "daily" },
+      { name: "Microsoft Sentinel", use: "regular" },
+      { name: "CrowdStrike", use: "regular" },
+      { name: "Palo Alto", use: "regular" },
+      { name: "Splunk SIEM", use: "regular" },
+      { name: "Vulnerability mgmt", use: "regular" },
     ],
   },
   {
-    id: "support", label: "IT Support", color: "#5B8DEF",
-    skills: [
-      { name: "L1/L2/L3 Support",            level: 98 },
-      { name: "Remote Tools",                level: 95 },
-      { name: "Incident Resolution",         level: 95 },
-      { name: "ITIL Framework",              level: 95 },
-      { name: "SLA Management",              level: 93 },
-      { name: "Documentation",               level: 92 },
+    id: "devsecops",
+    layer: "DevSecOps & Automation",
+    note: "The repetitive parts, turned into code",
+    tools: [
+      { name: "PowerShell", use: "daily" },
+      { name: "Python", use: "daily" },
+      { name: "Power Automate", use: "daily" },
+      { name: "Git", use: "daily" },
+      { name: "Bash", use: "regular" },
+      { name: "Terraform", use: "regular" },
+      { name: "Ansible", use: "regular" },
+      { name: "GitHub Actions", use: "regular" },
+      { name: "YAML / IaC", use: "regular" },
+      { name: "Checkov", use: "working" },
     ],
   },
   {
-    id: "sysadmin", label: "Sys Admin", color: "#5B8DEF",
-    skills: [
-      { name: "Active Directory",            level: 97 },
-      { name: "Azure AD / Entra",           level: 95 },
-      { name: "Group Policy",               level: 95 },
-      { name: "Exchange Online",            level: 90 },
-      { name: "LDAP / WSUS",               level: 88 },
-      { name: "Account Management",         level: 96 },
+    id: "cloud",
+    layer: "Cloud",
+    note: "Where most of the estate now lives",
+    tools: [
+      { name: "Microsoft Azure", use: "daily" },
+      { name: "Azure Virtual Desktop", use: "daily" },
+      { name: "Microsoft 365", use: "daily" },
+      { name: "AWS", use: "regular" },
+      { name: "Hyper-V", use: "regular" },
+      { name: "Docker", use: "regular" },
+      { name: "Google Cloud", use: "working" },
+      { name: "Kubernetes", use: "working" },
     ],
   },
   {
-    id: "network", label: "Networking", color: "#5B8DEF",
-    skills: [
-      { name: "TCP/IP · VLAN",              level: 95 },
-      { name: "Cisco / Juniper",            level: 88 },
-      { name: "Meraki · Wi-Fi 6/7",        level: 87 },
-      { name: "pfSense / Fortinet",        level: 90 },
-      { name: "VPN Config",                level: 93 },
-      { name: "SNMP Monitoring",           level: 88 },
+    id: "network",
+    layer: "Network",
+    note: "Routing, segmentation, and keeping strangers out",
+    tools: [
+      { name: "TCP/IP · VLAN", use: "daily" },
+      { name: "DNS / DHCP", use: "daily" },
+      { name: "VPN", use: "daily" },
+      { name: "pfSense", use: "regular" },
+      { name: "Fortinet", use: "regular" },
+      { name: "Cisco Meraki", use: "regular" },
+      { name: "Cisco / Juniper", use: "regular" },
+      { name: "Wi-Fi 6/7", use: "regular" },
+      { name: "Wireshark", use: "regular" },
+      { name: "SNMP", use: "working" },
     ],
   },
   {
-    id: "security", label: "Security", color: "#5B8DEF",
-    skills: [
-      { name: "CrowdStrike / Palo Alto",   level: 90 },
-      { name: "Okta MFA / SSO",           level: 93 },
-      { name: "Splunk SIEM",              level: 88 },
-      { name: "Zero Trust",              level: 88 },
-      { name: "Vulnerability Mgmt",      level: 87 },
-      { name: "GDPR / HIPAA",            level: 92 },
+    id: "servers",
+    layer: "Servers & Infrastructure",
+    note: "Identity, hosts, and the backups behind them",
+    tools: [
+      { name: "Active Directory", use: "daily" },
+      { name: "Entra ID / Azure AD", use: "daily" },
+      { name: "Group Policy", use: "daily" },
+      { name: "Windows Server", use: "daily" },
+      { name: "Exchange Online", use: "regular" },
+      { name: "VMware ESXi", use: "regular" },
+      { name: "Linux / RHEL", use: "regular" },
+      { name: "WSUS", use: "regular" },
+      { name: "Veeam backup", use: "regular" },
+      { name: "SQL Server", use: "working" },
     ],
   },
   {
-    id: "cloud", label: "Cloud", color: "#5B8DEF",
-    skills: [
-      { name: "Microsoft Azure",         level: 95 },
-      { name: "AWS",                    level: 88 },
-      { name: "Google Cloud",           level: 82 },
-      { name: "Docker & Kubernetes",    level: 85 },
-      { name: "Hyper-V",               level: 90 },
-      { name: "Azure Virtual Desktop",  level: 92 },
-    ],
-  },
-  {
-    id: "itsm", label: "ITSM", color: "#5B8DEF",
-    skills: [
-      { name: "ServiceNow",            level: 92 },
-      { name: "Jira SM / Zendesk",    level: 88 },
-      { name: "Freshservice",         level: 90 },
-      { name: "ITIL Framework",       level: 95 },
-      { name: "Asset Lifecycle",      level: 90 },
-      { name: "Change Management",    level: 88 },
-    ],
-  },
-  {
-    id: "automation", label: "Automation", color: "#5B8DEF",
-    skills: [
-      { name: "PowerShell",           level: 95 },
-      { name: "Python",              level: 88 },
-      { name: "Ansible / Terraform", level: 85 },
-      { name: "Power Automate",      level: 90 },
-      { name: "Bash / Batch",       level: 87 },
-      { name: "YAML / IaC",        level: 85 },
-    ],
-  },
-  {
-    id: "device", label: "Device Mgmt", color: "#5B8DEF",
-    skills: [
-      { name: "Intune / Autopilot",   level: 95 },
-      { name: "Jamf Pro / Kandji",   level: 90 },
-      { name: "Apple Bus. Manager", level: 88 },
-      { name: "Workspace ONE",      level: 87 },
-      { name: "MDM / MDT",         level: 90 },
-      { name: "TeamViewer",        level: 95 },
-    ],
-  },
-  {
-    id: "monitoring", label: "Monitoring", color: "#5B8DEF",
-    skills: [
-      { name: "PRTG / SolarWinds",  level: 90 },
-      { name: "Datadog / New Relic",level: 87 },
-      { name: "Splunk Enterprise",  level: 88 },
-      { name: "Wireshark / SNMP",  level: 88 },
-      { name: "Veeam / Backup",    level: 92 },
-      { name: "Perf Monitor",     level: 90 },
+    id: "endpoints",
+    layer: "Endpoints & Support",
+    note: "The machines people actually sit in front of",
+    tools: [
+      { name: "Microsoft Intune", use: "daily" },
+      { name: "Windows 10/11", use: "daily" },
+      { name: "Autopilot", use: "daily" },
+      { name: "ServiceNow", use: "daily" },
+      { name: "Jira Service Mgmt", use: "daily" },
+      { name: "ITIL", use: "daily" },
+      { name: "TeamViewer", use: "daily" },
+      { name: "macOS", use: "regular" },
+      { name: "Jamf Pro", use: "regular" },
+      { name: "iOS / Android", use: "regular" },
+      { name: "Zendesk", use: "regular" },
+      { name: "Freshservice", use: "regular" },
     ],
   },
 ]
 
-
-function tierOf(level: number) {
-  if (level >= 94) return 'Expert'
-  if (level >= 88) return 'Advanced'
-  if (level >= 80) return 'Proficient'
-  return 'Competent'
+const STYLES: Record<Use, { bg: string; border: string; color: string }> = {
+  daily: { bg: "rgba(91,141,239,0.12)", border: "rgba(91,141,239,0.45)", color: "var(--accent)" },
+  regular: { bg: "transparent", border: "var(--border-dark)", color: "var(--text-dim)" },
+  working: { bg: "transparent", border: "var(--border)", color: "var(--text-muted)" },
 }
 
+const LEGEND: { use: Use; label: string }[] = [
+  { use: "daily", label: "in my hands most days" },
+  { use: "regular", label: "regularly, in production" },
+  { use: "working", label: "working knowledge" },
+]
+
 export function SkillsHex() {
-  const [activeId, setActiveId] = useState('os')
-  const active = SKILL_CATEGORIES.find((c) => c.id === activeId)!
+  const [active, setActive] = useState<string | null>(null)
 
   return (
     <div className="mt-12">
-      {/* Category tabs */}
-      <div className="mb-10 flex flex-wrap justify-center gap-2">
-        {SKILL_CATEGORIES.map((cat) => {
-          const on = cat.id === activeId
+      <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2.5">
+        {LEGEND.map(({ use, label }) => (
+          <span key={use} className="flex items-center gap-2 text-[12.5px]" style={{ color: "var(--text-muted)" }}>
+            <span
+              className="h-3.5 w-3.5 rounded"
+              style={{ background: STYLES[use].bg, border: `1px solid ${STYLES[use].border}` }}
+            />
+            {label}
+          </span>
+        ))}
+      </div>
+
+      <div className="space-y-px overflow-hidden rounded-2xl" style={{ background: "var(--border)" }}>
+        {GROUPS.map((g) => {
+          const on = active === g.id
           return (
-            <button
-              key={cat.id}
-              onClick={() => setActiveId(cat.id)}
-              className="rounded-full px-3.5 py-1.5 text-[13px] transition-colors duration-200"
-              style={{
-                background: on ? 'rgba(91,141,239,0.1)' : 'transparent',
-                border: `1px solid ${on ? 'rgba(91,141,239,0.4)' : 'var(--border)'}`,
-                color: on ? 'var(--accent)' : 'var(--text-muted)',
-              }}
+            <div
+              key={g.id}
+              onMouseEnter={() => setActive(g.id)}
+              onMouseLeave={() => setActive(null)}
+              className="grid grid-cols-1 gap-4 p-5 transition-colors duration-200 sm:grid-cols-[210px_1fr] sm:gap-6 sm:p-6"
+              style={{ background: on ? "rgba(91,141,239,0.04)" : "var(--card-bg)" }}
             >
-              {cat.label}
-            </button>
+              <div>
+                <h3
+                  className="font-medium transition-colors duration-200"
+                  style={{ fontSize: 15, color: on ? "var(--accent)" : "var(--text)" }}
+                >
+                  {g.layer}
+                </h3>
+                <p className="mt-1 text-[12.5px] leading-snug" style={{ color: "var(--text-muted)" }}>
+                  {g.note}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5 self-center">
+                {g.tools.map((t) => {
+                  const s = STYLES[t.use]
+                  return (
+                    <span
+                      key={t.name}
+                      className="rounded-md px-2.5 py-1 text-[12.5px]"
+                      style={{ background: s.bg, border: `1px solid ${s.border}`, color: s.color }}
+                    >
+                      {t.name}
+                    </span>
+                  )
+                })}
+              </div>
+            </div>
           )
         })}
       </div>
-
-      {/* Skill meters */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeId}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.2 }}
-          className="mx-auto grid max-w-3xl grid-cols-1 gap-x-10 gap-y-6 sm:grid-cols-2"
-        >
-          {active.skills.map((skill, i) => (
-            <div key={skill.name}>
-              <div className="mb-2 flex items-baseline justify-between gap-3">
-                <span className="text-sm" style={{ color: 'var(--text)' }}>
-                  {skill.name}
-                </span>
-                <span className="text-[11px]" style={{ color: 'var(--text-muted)' }}>
-                  {tierOf(skill.level)}
-                </span>
-              </div>
-              <div className="h-[3px] w-full overflow-hidden rounded-full" style={{ background: 'var(--border-dark)' }}>
-                <motion.div
-                  className="h-full rounded-full"
-                  style={{ background: 'var(--accent)' }}
-                  initial={{ width: 0 }}
-                  animate={{ width: `${skill.level}%` }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.04 }}
-                />
-              </div>
-            </div>
-          ))}
-        </motion.div>
-      </AnimatePresence>
     </div>
   )
 }

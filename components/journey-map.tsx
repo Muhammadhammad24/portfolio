@@ -38,43 +38,43 @@ type Step = {
 const STEPS: Step[] = [
   {
     year: "2016",
-    place: "Karachi",
+    place: "Karachi, Pakistan",
     title: "B.Sc. Computer Science",
     line: "University of Karachi. Networks and databases were the parts that stuck.",
   },
   {
     year: "2019",
-    place: "Karachi",
+    place: "Karachi, Pakistan",
     title: "First job: IT Engineer",
     line: "The Active Solutions. Helpdesk, servers, SQL databases. I learned that every ticket is a person who cannot work.",
   },
   {
     year: "2020",
-    place: "Karachi",
+    place: "Karachi, Pakistan",
     title: "Running the helpdesk",
     line: "Target Logistics. Firewalls, VPNs and Active Directory across departments, and a 40% faster resolution time.",
   },
   {
     year: "2021",
-    place: "Karachi",
+    place: "Karachi, Pakistan",
     title: "265 government endpoints",
     line: "KTDMC. Intune at scale, 100% patch compliance, provisioning cut from two hours to twenty minutes.",
   },
   {
     year: "2022",
-    place: "Karachi",
+    place: "Karachi, Pakistan",
     title: "Multi-site infrastructure",
     line: "Liberty Books. Windows, Linux and macOS across locations, plus the ticketing workflows behind them.",
   },
   {
     year: "2023",
-    place: "Göttingen",
+    place: "Göttingen, Germany",
     title: "Moved 5,617 km",
     line: "Started the M.Sc. in Göttingen and took on cloud and on-prem infrastructure at Kontinental Establishment.",
   },
   {
     year: "2024",
-    place: "Göttingen",
+    place: "Göttingen, Germany",
     title: "DevSecOps at the university",
     line: "Scientific computing: ML infrastructure, scanning in the pipeline, deployments down from four hours to thirty-five minutes.",
   },
@@ -141,7 +141,7 @@ export function JourneyMap() {
           {/* Origin */}
           <circle cx={A.x} cy={A.y} r="0.55" fill="var(--text-muted)" />
           <text x={A.x} y={A.y + 2.4} textAnchor="middle" fontSize="1.5" fill="var(--text-dim)">
-            {KARACHI.label}
+            Karachi, Pakistan
           </text>
           <text x={A.x} y={A.y + 4.1} textAnchor="middle" fontSize="1.1" fill="var(--text-muted)">
             {KARACHI.lat.toFixed(2)}°N {KARACHI.lon.toFixed(2)}°E
@@ -151,7 +151,7 @@ export function JourneyMap() {
           <circle cx={B.x} cy={B.y} r="1.5" fill="rgba(91,141,239,0.18)" />
           <circle cx={B.x} cy={B.y} r="0.6" fill="var(--accent)" />
           <text x={B.x} y={B.y - 2.6} textAnchor="middle" fontSize="1.5" fill="var(--text)">
-            {GOTTINGEN.label}
+            Göttingen, Germany
           </text>
           <text x={B.x} y={B.y - 1.1} textAnchor="middle" fontSize="1.1" fill="var(--text-muted)">
             {GOTTINGEN.lat.toFixed(2)}°N {GOTTINGEN.lon.toFixed(2)}°E

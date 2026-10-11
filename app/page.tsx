@@ -163,7 +163,7 @@ export default function Portfolio() {
         <div className="container">
           <SectionHeading title="Skills" subtitle="Expertise" align="left" />
           <p className="text-center mt-4 text-sm max-w-2xl mx-auto" style={{ color: 'var(--text-dim)' }}>
-            Grouped the way I actually use them. Anything marked Expert is something I have run day to day in production, not just read about.
+            Grouped by the same six layers as the stack above. Instead of percentages nobody can verify, each tool is marked by how often it is actually in my hands.
           </p>
           <SkillsHex />
         </div>
