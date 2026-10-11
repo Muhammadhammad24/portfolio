@@ -47,8 +47,8 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
-        <meta name="theme-color" content="#000027" />
-        <meta name="msapplication-TileColor" content="#0a0f1e" />
+        <meta name="theme-color" content="#09090B" />
+        <meta name="msapplication-TileColor" content="#09090B" />
       </head>
       <body className="antialiased overflow-x-hidden" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
         <div className="scanline" />

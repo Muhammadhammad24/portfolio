@@ -3,91 +3,100 @@
 import type React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Send, CheckCircle } from "lucide-react"
+import { Send } from "lucide-react"
+
+const EMAIL = "muhammad24997@gmail.com"
 
 export function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
+  const [sent, setSent] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // No backend here, so the message is handed to the visitor's mail client
+  // addressed to me — that way nothing silently disappears.
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setIsSubmitting(true)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsSubmitting(false)
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 4000)
-    e.currentTarget.reset()
+    const form = e.currentTarget
+    const data = new FormData(form)
+    const name = String(data.get("name") ?? "")
+    const email = String(data.get("email") ?? "")
+    const subject = String(data.get("subject") ?? "")
+    const message = String(data.get("message") ?? "")
+
+    const body = `${message}\n\n—\n${name}\n${email}`
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+
+    setSent(true)
+    form.reset()
+    window.setTimeout(() => setSent(false), 6000)
   }
 
-  const inputStyle = {
-    width: '100%',
-    background: 'var(--input-bg)',
-    border: '1px solid var(--border)',
-    borderRadius: '0.75rem',
-    padding: '0.75rem 1rem',
-    fontSize: '0.875rem',
-    color: 'var(--text)',
-    outline: 'none',
-    fontFamily: 'Space Grotesk, sans-serif',
-    transition: 'all 0.3s',
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    background: "var(--input-bg)",
+    border: "1px solid var(--border)",
+    borderRadius: "0.6rem",
+    padding: "0.8rem 1rem",
+    fontSize: "0.9rem",
+    color: "var(--text)",
+    outline: "none",
+    transition: "border-color 0.2s",
   }
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }} viewport={{ once: true }}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      viewport={{ once: true, margin: "0px 0px -60px 0px" }}
+      className="rounded-2xl p-6"
+      style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}
     >
-      <div className="relative overflow-hidden rounded-2xl bracket-card" style={{
-        background: 'var(--card-bg)', border: '1px solid var(--border)', padding: '1.75rem',
-      }}>
-        <div className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, var(--border-hot), transparent)' }} />
+      <h3 className="mb-6 text-xl font-semibold" style={{ color: "var(--text)" }}>
+        Send a message
+      </h3>
 
-        <h3 className="font-['Syne'] text-2xl font-bold mb-6" style={{ color: 'var(--text)' }}>
-          Send a Message
-        </h3>
+      <form onSubmit={handleSubmit} className="space-y-3.5">
+        {[
+          { name: "name", type: "text", placeholder: "Your name" },
+          { name: "email", type: "email", placeholder: "Email address" },
+          { name: "subject", type: "text", placeholder: "Subject" },
+        ].map((field) => (
+          <input
+            key={field.name}
+            name={field.name}
+            type={field.type}
+            placeholder={field.placeholder}
+            aria-label={field.placeholder}
+            required
+            style={inputStyle}
+            onFocus={(e) => (e.target.style.borderColor = "rgba(91,141,239,0.5)")}
+            onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
+          />
+        ))}
 
-        {submitted ? (
-          <motion.div
-            className="flex flex-col items-center justify-center py-12 text-center"
-            initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
-          >
-            <CheckCircle className="w-12 h-12 mb-4" style={{ color: 'var(--accent)' }} />
-            <p className="font-semibold text-lg" style={{ color: 'var(--accent)' }}>Message Sent!</p>
-            <p className="text-sm mt-1" style={{ color: 'var(--accent-mid)' }}>I'll get back to you shortly.</p>
-          </motion.div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {[
-              { type: "text", placeholder: "Your Name" },
-              { type: "email", placeholder: "Email Address" },
-              { type: "text", placeholder: "Subject" },
-            ].map((field, i) => (
-              <input key={i} type={field.type} placeholder={field.placeholder} required style={inputStyle}
-                onFocus={(e) => { e.target.style.borderColor = 'var(--border-hot)'; e.target.style.boxShadow = '0 0 15px var(--accent-glow)' }}
-                onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.boxShadow = 'none' }}
-              />
-            ))}
-            <textarea placeholder="Your Message" rows={5} required style={{ ...inputStyle, resize: 'none' }}
-              onFocus={(e) => { e.target.style.borderColor = 'var(--border-hot)'; e.target.style.boxShadow = '0 0 15px var(--accent-glow)' }}
-              onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.boxShadow = 'none' }}
-            />
-            <button type="submit" disabled={isSubmitting}
-              className="btn-cyber-fill w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold tracking-widest uppercase disabled:opacity-50"
-            >
-              {isSubmitting ? (
-                <span className="flex items-center gap-2">
-                  <motion.div className="w-4 h-4 rounded-full border-2 border-black/30 border-t-black"
-                    animate={{ rotate: 360 }} transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }} />
-                  Sending...
-                </span>
-              ) : (
-                <><Send className="h-4 w-4" /> Send Message</>
-              )}
-            </button>
-          </form>
-        )}
-      </div>
+        <textarea
+          name="message"
+          placeholder="Your message"
+          aria-label="Your message"
+          rows={5}
+          required
+          style={{ ...inputStyle, resize: "none" }}
+          onFocus={(e) => (e.target.style.borderColor = "rgba(91,141,239,0.5)")}
+          onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
+        />
+
+        <button
+          type="submit"
+          className="flex w-full items-center justify-center gap-2 rounded-full py-3 text-sm font-medium transition-colors duration-200"
+          style={{ background: "var(--accent)", color: "#fff", border: "none", cursor: "pointer" }}
+        >
+          <Send className="h-4 w-4" />
+          Send message
+        </button>
+
+        <p className="pt-1 text-center text-[12.5px]" style={{ color: "var(--text-muted)" }}>
+          {sent ? "Opening your mail app…" : `Opens your mail app · or write to ${EMAIL}`}
+        </p>
+      </form>
     </motion.div>
   )
 }

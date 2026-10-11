@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 
 const SKILL_CATEGORIES = [
   {
-    id: "os", label: "OS & Platforms", color: "#B1EB21",
+    id: "os", label: "OS & Platforms", color: "#5B8DEF",
     skills: [
       { name: "Windows 10/11",               level: 95 },
       { name: "Windows Server",              level: 95 },
@@ -17,7 +17,7 @@ const SKILL_CATEGORIES = [
     ],
   },
   {
-    id: "support", label: "IT Support", color: "#B1EB21",
+    id: "support", label: "IT Support", color: "#5B8DEF",
     skills: [
       { name: "L1/L2/L3 Support",            level: 98 },
       { name: "Remote Tools",                level: 95 },
@@ -28,7 +28,7 @@ const SKILL_CATEGORIES = [
     ],
   },
   {
-    id: "sysadmin", label: "Sys Admin", color: "#B1EB21",
+    id: "sysadmin", label: "Sys Admin", color: "#5B8DEF",
     skills: [
       { name: "Active Directory",            level: 97 },
       { name: "Azure AD / Entra",           level: 95 },
@@ -39,7 +39,7 @@ const SKILL_CATEGORIES = [
     ],
   },
   {
-    id: "network", label: "Networking", color: "#B1EB21",
+    id: "network", label: "Networking", color: "#5B8DEF",
     skills: [
       { name: "TCP/IP · VLAN",              level: 95 },
       { name: "Cisco / Juniper",            level: 88 },
@@ -50,7 +50,7 @@ const SKILL_CATEGORIES = [
     ],
   },
   {
-    id: "security", label: "Security", color: "#B1EB21",
+    id: "security", label: "Security", color: "#5B8DEF",
     skills: [
       { name: "CrowdStrike / Palo Alto",   level: 90 },
       { name: "Okta MFA / SSO",           level: 93 },
@@ -61,7 +61,7 @@ const SKILL_CATEGORIES = [
     ],
   },
   {
-    id: "cloud", label: "Cloud", color: "#B1EB21",
+    id: "cloud", label: "Cloud", color: "#5B8DEF",
     skills: [
       { name: "Microsoft Azure",         level: 95 },
       { name: "AWS",                    level: 88 },
@@ -72,7 +72,7 @@ const SKILL_CATEGORIES = [
     ],
   },
   {
-    id: "itsm", label: "ITSM", color: "#B1EB21",
+    id: "itsm", label: "ITSM", color: "#5B8DEF",
     skills: [
       { name: "ServiceNow",            level: 92 },
       { name: "Jira SM / Zendesk",    level: 88 },
@@ -83,7 +83,7 @@ const SKILL_CATEGORIES = [
     ],
   },
   {
-    id: "automation", label: "Automation", color: "#B1EB21",
+    id: "automation", label: "Automation", color: "#5B8DEF",
     skills: [
       { name: "PowerShell",           level: 95 },
       { name: "Python",              level: 88 },
@@ -94,7 +94,7 @@ const SKILL_CATEGORIES = [
     ],
   },
   {
-    id: "device", label: "Device Mgmt", color: "#B1EB21",
+    id: "device", label: "Device Mgmt", color: "#5B8DEF",
     skills: [
       { name: "Intune / Autopilot",   level: 95 },
       { name: "Jamf Pro / Kandji",   level: 90 },
@@ -105,7 +105,7 @@ const SKILL_CATEGORIES = [
     ],
   },
   {
-    id: "monitoring", label: "Monitoring", color: "#B1EB21",
+    id: "monitoring", label: "Monitoring", color: "#5B8DEF",
     skills: [
       { name: "PRTG / SolarWinds",  level: 90 },
       { name: "Datadog / New Relic",level: 87 },
@@ -117,286 +117,74 @@ const SKILL_CATEGORIES = [
   },
 ]
 
-function getLevelMeta(level: number) {
-  if (level >= 94) return { tier: "Expert",     dots: 5, glow: true  }
-  if (level >= 88) return { tier: "Advanced",   dots: 4, glow: false }
-  if (level >= 80) return { tier: "Proficient", dots: 3, glow: false }
-  return                   { tier: "Competent", dots: 2, glow: false }
-}
 
-/* ── Single hexagon cell ── */
-function HexCell({
-  skill,
-  color,
-  index,
-}: {
-  skill: { name: string; level: number }
-  color: string
-  index: number
-}) {
-  const [hovered, setHovered] = useState(false)
-  const meta = getLevelMeta(skill.level)
-
-  // SVG hexagon: flat-top
-  const hexClip = "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)"
-
-  return (
-    <motion.div
-      className="flex flex-col items-center"
-      initial={{ opacity: 0, scale: 0.6 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.4, delay: index * 0.04, type: "spring", stiffness: 200 }}
-      viewport={{ once: true }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{ width: 180 }}
-    >
-      {/* Hex shape */}
-      <motion.div
-        className="relative flex items-center justify-center"
-        style={{
-          width: 168,
-          height: 192,
-          clipPath: hexClip,
-          background: hovered
-            ? `linear-gradient(145deg, ${color}22, ${color}0a)`
-            : "var(--card-bg)",
-          border: "none",
-          transition: "background 0.25s",
-        }}
-        animate={{
-          filter: hovered ? `drop-shadow(0 0 14px ${color}88)` : "none",
-        }}
-        transition={{ duration: 0.25 }}
-        whileHover={{ scale: 1.06 }}
-      >
-        {/* Hex border via pseudo SVG overlay */}
-        <svg
-          className="absolute inset-0 pointer-events-none"
-          width="168" height="192"
-          viewBox="0 0 168 192"
-          style={{ overflow: "visible" }}
-        >
-          <polygon
-            points="84,4 164,44 164,148 84,188 4,148 4,44"
-            fill="none"
-            stroke={hovered ? color : "var(--border)"}
-            strokeWidth={hovered ? "2" : "1.5"}
-            style={{ transition: "stroke 0.25s, stroke-width 0.2s" }}
-          />
-        </svg>
-
-        {/* Content */}
-        <div className="flex flex-col items-center justify-center px-5 text-center gap-2.5 z-10">
-          {/* Proficiency dots */}
-          <div className="flex gap-1.5">
-            {Array.from({ length: 5 }).map((_, d) => (
-              <div
-                key={d}
-                className="rounded-full transition-all duration-200"
-                style={{
-                  width: 7,
-                  height: 7,
-                  background: d < meta.dots ? color : "var(--border)",
-                  boxShadow: d < meta.dots && hovered ? `0 0 5px ${color}` : "none",
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Skill name */}
-          <span
-            className="font-['JetBrains_Mono'] leading-tight text-center"
-            style={{
-              fontSize: "13px",
-              color: hovered ? color : "var(--text-dim)",
-              transition: "color 0.2s",
-              wordBreak: "break-word",
-              lineHeight: 1.35,
-            }}
-          >
-            {skill.name}
-          </span>
-
-          {/* Tier badge — always visible */}
-          <span
-            className="font-['JetBrains_Mono'] tracking-widest uppercase"
-            style={{
-              fontSize: "10px",
-              color: hovered ? color : "var(--text-muted)",
-              opacity: hovered ? 1 : 0.6,
-              transition: "color 0.2s, opacity 0.2s",
-            }}
-          >
-            {meta.tier}
-          </span>
-        </div>
-      </motion.div>
-    </motion.div>
-  )
-}
-
-/* ── Category selector ── */
-function CategoryTab({
-  cat,
-  active,
-  onClick,
-}: {
-  cat: (typeof SKILL_CATEGORIES)[0]
-  active: boolean
-  onClick: () => void
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="px-3 py-1.5 rounded-lg text-[11px] font-medium tracking-wider transition-all duration-200"
-      style={{
-        fontFamily: "JetBrains Mono, monospace",
-        background: active ? "var(--surface)" : "var(--card-bg)",
-        border: active ? `1px solid ${cat.color}55` : "1px solid var(--border)",
-        color: active ? cat.color : "var(--text-muted)",
-        boxShadow: active ? `0 0 14px ${cat.color}22` : "none",
-        cursor: "pointer",
-      }}
-    >
-      {cat.label}
-    </button>
-  )
+function tierOf(level: number) {
+  if (level >= 94) return 'Expert'
+  if (level >= 88) return 'Advanced'
+  if (level >= 80) return 'Proficient'
+  return 'Competent'
 }
 
 export function SkillsHex() {
-  const [activeId, setActiveId] = useState("os")
+  const [activeId, setActiveId] = useState('os')
   const active = SKILL_CATEGORIES.find((c) => c.id === activeId)!
 
   return (
-    <div className="mt-10">
+    <div className="mt-12">
       {/* Category tabs */}
-      <div className="flex flex-wrap gap-2 mb-10 justify-center">
-        {SKILL_CATEGORIES.map((cat) => (
-          <CategoryTab
-            key={cat.id}
-            cat={cat}
-            active={activeId === cat.id}
-            onClick={() => setActiveId(cat.id)}
-          />
-        ))}
+      <div className="mb-10 flex flex-wrap justify-center gap-2">
+        {SKILL_CATEGORIES.map((cat) => {
+          const on = cat.id === activeId
+          return (
+            <button
+              key={cat.id}
+              onClick={() => setActiveId(cat.id)}
+              className="rounded-full px-3.5 py-1.5 text-[13px] transition-colors duration-200"
+              style={{
+                background: on ? 'rgba(91,141,239,0.1)' : 'transparent',
+                border: `1px solid ${on ? 'rgba(91,141,239,0.4)' : 'var(--border)'}`,
+                color: on ? 'var(--accent)' : 'var(--text-muted)',
+              }}
+            >
+              {cat.label}
+            </button>
+          )
+        })}
       </div>
 
-      {/* Hex grid */}
+      {/* Skill meters */}
       <AnimatePresence mode="wait">
         <motion.div
           key={activeId}
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.22 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.2 }}
+          className="mx-auto grid max-w-3xl grid-cols-1 gap-x-10 gap-y-6 sm:grid-cols-2"
         >
-          {/* Label row */}
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="h-px flex-1 max-w-[80px]" style={{ background: `linear-gradient(to right, transparent, ${active.color}55)` }} />
-            <span
-              className="font-['JetBrains_Mono'] text-[10px] tracking-[0.35em] uppercase px-3 py-1 rounded-sm"
-              style={{ color: active.color, border: `1px solid ${active.color}33`, background: `${active.color}08` }}
-            >
-              {active.label}
-            </span>
-            <div className="h-px flex-1 max-w-[80px]" style={{ background: `linear-gradient(to left, transparent, ${active.color}55)` }} />
-          </div>
-
-          {/*
-            Honeycomb layout:
-            Row 1: 3 hexagons centred
-            Row 2: 3 hexagons offset by half a hex width
-            — offset rows via negative margin-top to interlock
-          */}
-          <div className="flex flex-col items-center gap-0">
-            {/* Row 1 — 3 cells */}
-            <div className="flex gap-3" style={{ marginBottom: "-34px" }}>
-              {active.skills.slice(0, 3).map((s, i) => (
-                <HexCell key={s.name} skill={s} color={active.color} index={i} />
-              ))}
-            </div>
-            {/* Row 2 — 3 cells offset */}
-            <div className="flex gap-3" style={{ marginLeft: "92px", marginBottom: "-34px" }}>
-              {active.skills.slice(3, 6).map((s, i) => (
-                <HexCell key={s.name} skill={s} color={active.color} index={i + 3} />
-              ))}
-            </div>
-          </div>
-
-          {/* Progress bars below hex grid */}
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto">
-            {active.skills.map((skill, i) => {
-              const meta = getLevelMeta(skill.level)
-              return (
+          {active.skills.map((skill, i) => (
+            <div key={skill.name}>
+              <div className="mb-2 flex items-baseline justify-between gap-3">
+                <span className="text-sm" style={{ color: 'var(--text)' }}>
+                  {skill.name}
+                </span>
+                <span className="text-[11px]" style={{ color: 'var(--text-muted)' }}>
+                  {tierOf(skill.level)}
+                </span>
+              </div>
+              <div className="h-[3px] w-full overflow-hidden rounded-full" style={{ background: 'var(--border-dark)' }}>
                 <motion.div
-                  key={skill.name}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.06, duration: 0.25 }}
-                  className="flex items-center gap-3"
-                >
-                  <span
-                    className="font-['JetBrains_Mono'] text-[10px] w-36 shrink-0 truncate"
-                    style={{ color: "var(--text-dim)" }}
-                  >
-                    {skill.name}
-                  </span>
-                  <div
-                    className="flex-1 h-1 rounded-full overflow-hidden"
-                    style={{ background: "var(--surface)" }}
-                  >
-                    <motion.div
-                      className="h-full rounded-full"
-                      style={{
-                        background: `linear-gradient(90deg, ${active.color}88, ${active.color})`,
-                        boxShadow: `0 0 6px ${active.color}55`,
-                      }}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${skill.level}%` }}
-                      transition={{ duration: 0.9, ease: "easeOut", delay: i * 0.06 }}
-                    />
-                  </div>
-                  <span
-                    className="font-['JetBrains_Mono'] text-[9px] w-14 text-right shrink-0"
-                    style={{ color: active.color }}
-                  >
-                    {meta.tier}
-                  </span>
-                </motion.div>
-              )
-            })}
-          </div>
+                  className="h-full rounded-full"
+                  style={{ background: 'var(--accent)' }}
+                  initial={{ width: 0 }}
+                  animate={{ width: `${skill.level}%` }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.04 }}
+                />
+              </div>
+            </div>
+          ))}
         </motion.div>
       </AnimatePresence>
-
-      {/* Legend */}
-      <div className="flex items-center justify-center gap-6 mt-10 flex-wrap">
-        {[
-          { tier: "Expert",     dots: 5, color: "#B1EB21" },
-          { tier: "Advanced",   dots: 4, color: "#C2F343" },
-          { tier: "Proficient", dots: 3, color: "#9BD117" },
-          { tier: "Competent",  dots: 2, color: "#7AA312" },
-        ].map((l) => (
-          <div key={l.tier} className="flex items-center gap-2">
-            <div className="flex gap-0.5">
-              {Array.from({ length: 5 }).map((_, d) => (
-                <div
-                  key={d}
-                  className="w-2 h-2 rounded-full"
-                  style={{ background: d < l.dots ? l.color : "var(--border)" }}
-                />
-              ))}
-            </div>
-            <span
-              className="font-['JetBrains_Mono'] text-[9px] tracking-widest uppercase"
-              style={{ color: "var(--text-muted)" }}
-            >
-              {l.tier}
-            </span>
-          </div>
-        ))}
-      </div>
     </div>
   )
 }

@@ -1,9 +1,8 @@
 "use client"
 
-import { useState, useRef } from "react"
 import Link from "next/link"
-import { ArrowUpRight, Github, Zap } from "lucide-react"
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion"
+import { ArrowUpRight, Github } from "lucide-react"
+import { motion } from "framer-motion"
 
 interface ProjectCardProps {
   title: string
@@ -18,137 +17,85 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({
-  title, description, tags, demoUrl, repoUrl, metric, metricLabel, features, number
+  title, description, tags, demoUrl, repoUrl, metric, metricLabel, features, number,
 }: ProjectCardProps) {
-  const [hovered, setHovered] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [5, -5]), { stiffness: 300, damping: 30 })
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-5, 5]), { stiffness: 300, damping: 30 })
-
-  const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return
-    const rect = ref.current.getBoundingClientRect()
-    x.set((e.clientX - rect.left) / rect.width - 0.5)
-    y.set((e.clientY - rect.top) / rect.height - 0.5)
-  }
-
   return (
     <motion.div
-      ref={ref}
-      style={{ rotateX, rotateY, transformPerspective: 900, transformStyle: "preserve-3d" }}
-      onMouseMove={handleMouse}
-      onMouseLeave={() => { x.set(0); y.set(0); setHovered(false) }}
-      onMouseEnter={() => setHovered(true)}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      className="bracket-card"
+      transition={{ duration: 0.4 }}
+      viewport={{ once: true, margin: "0px 0px -60px 0px" }}
+      className="panel flex h-full flex-col p-6 pl-7"
     >
-      <div
-        className="relative h-full overflow-visible rounded-2xl transition-all duration-500"
-        style={{
-          background: hovered ? 'var(--surface)' : 'var(--card-bg)',
-          border: hovered ? '1px solid var(--border-hot)' : '1px solid var(--border)',
-          boxShadow: hovered ? '0 0 40px var(--border), inset 0 0 40px var(--card-bg)' : 'none',
-        }}
-      >
-        {/* Top glow line */}
-        <div className="absolute top-0 left-0 right-0 h-px transition-opacity duration-500"
-          style={{ background: 'linear-gradient(90deg, transparent, var(--accent-mid), transparent)', opacity: hovered ? 1 : 0.3 }} />
-
-        {/* Number */}
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <span className="text-[12.5px]" style={{ color: "var(--text-muted)" }}>
+          {demoUrl ? "Live" : "Open source"}
+        </span>
         {number && (
-          <div className="absolute top-4 left-4 font-['JetBrains_Mono'] text-[10px] tracking-widest"
-            style={{ color: 'var(--border-hot)' }}>
+          <span className="text-xs tabular-nums" style={{ color: "var(--border-dark)" }}>
             {number}
-          </div>
+          </span>
         )}
+      </div>
 
-        {/* Active dot */}
-        <div className="absolute top-4 right-4 flex items-center gap-1.5">
-          <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--accent)', boxShadow: '0 0 6px var(--accent)' }} />
-          <span className="font-['JetBrains_Mono'] text-[9px] tracking-widest" style={{ color: 'var(--text-muted)' }}>{demoUrl ? "LIVE" : "OPEN SOURCE"}</span>
+      <h3 className="mb-3 font-semibold leading-snug" style={{ fontSize: 19, color: "var(--text)" }}>
+        {title}
+      </h3>
+
+      <p className="mb-5 text-sm" style={{ lineHeight: 1.65, color: "var(--text-dim)" }}>
+        {description}
+      </p>
+
+      {metric && (
+        <div className="mb-5 text-sm font-medium" style={{ color: "var(--accent)" }}>
+          {metric}
+          {metricLabel && (
+            <span className="ml-2 font-normal" style={{ color: "var(--text-muted)" }}>
+              {metricLabel}
+            </span>
+          )}
+        </div>
+      )}
+
+      {features && features.length > 0 && (
+        <ul className="mb-6 space-y-2">
+          {features.map((f) => (
+            <li key={f} className="flex gap-2.5 text-[13px] leading-relaxed" style={{ color: "var(--text-dim)" }}>
+              <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full" style={{ background: "var(--accent)" }} />
+              {f}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className="mt-auto">
+        <div className="mb-5 text-[12.5px] leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          {tags.join(" · ")}
         </div>
 
-        <div className="p-6 flex flex-col h-full">
-          {/* Title */}
-          <h3 className="font-['Syne'] text-xl font-bold mt-4 mb-3 leading-tight transition-colors"
-            style={{ color: hovered ? 'var(--accent)' : 'var(--text)' }}>
-            {title}
-          </h3>
-
-          {/* Description */}
-          <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-dim)' }}>
-            {description}
-          </p>
-
-          {/* Metric highlight */}
-          {metric && (
-            <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-lg"
-              style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-              <Zap className="h-3.5 w-3.5 shrink-0" style={{ color: 'var(--accent)' }} />
-              <span className="font-['JetBrains_Mono'] text-xs font-bold" style={{ color: 'var(--accent)' }}>
-                {metric}
-              </span>
-              {metricLabel && (
-                <span className="text-xs" style={{ color: 'var(--accent-mid)' }}>{metricLabel}</span>
-              )}
-            </div>
+        <div className="flex items-center gap-5 pt-4" style={{ borderTop: "1px solid var(--border)" }}>
+          {repoUrl && (
+            <Link
+              href={repoUrl}
+              target="_blank"
+              className="flex items-center gap-1.5 text-[13px] font-medium"
+              style={{ color: "var(--text-dim)" }}
+            >
+              <Github className="h-4 w-4" />
+              View code
+            </Link>
           )}
-
-          {/* Key Features */}
-          {features && features.length > 0 && (
-            <div className="mb-5">
-              <p className="font-['JetBrains_Mono'] text-[10px] tracking-widest uppercase mb-2"
-                style={{ color: 'var(--border-hot)' }}>Key Features</p>
-              <ul className="space-y-1.5">
-                {features.map((f, i) => (
-                  <li key={i} className="flex gap-2 text-xs" style={{ color: 'var(--text-dim)' }}>
-                    <span style={{ color: 'var(--accent)' }} className="shrink-0 mt-0.5">▸</span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {demoUrl && (
+            <Link
+              href={demoUrl}
+              target="_blank"
+              className="ml-auto flex items-center gap-1.5 text-[13px] font-medium"
+              style={{ color: "var(--accent)" }}
+            >
+              Live site
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           )}
-
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1.5 mt-auto mb-5">
-            {tags.map((tag, i) => (
-              <span key={i}
-                className="font-['JetBrains_Mono'] text-[10px] tracking-wider px-2 py-0.5 rounded-sm transition-all duration-300"
-                style={{
-                  background: hovered ? 'var(--border)' : 'var(--card-bg)',
-                  border: '1px solid var(--border)',
-                  color: hovered ? 'var(--accent)' : 'var(--accent-mid)',
-                }}>
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          {/* Actions */}
-          <div className="flex gap-3 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
-            {repoUrl && (
-              <Link href={repoUrl} target="_blank"
-                className="flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase transition-all duration-300 hover:scale-105"
-                style={{ color: 'var(--accent-mid)', fontFamily: 'JetBrains Mono, monospace' }}>
-                <Github className="h-3.5 w-3.5" />
-                View Code
-              </Link>
-            )}
-            {demoUrl && (
-              <Link href={demoUrl} target="_blank"
-                className="flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase transition-all duration-300 hover:scale-105 ml-auto"
-                style={{ color: 'var(--accent)', fontFamily: 'JetBrains Mono, monospace' }}>
-                Live Site
-                <ArrowUpRight className="h-3.5 w-3.5" />
-              </Link>
-            )}
-          </div>
         </div>
       </div>
     </motion.div>

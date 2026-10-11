@@ -10,39 +10,36 @@ interface SectionHeadingProps {
 
 export function SectionHeading({ title, subtitle, align = "center" }: SectionHeadingProps) {
   const isCenter = align === "center"
-  return (
-    <div className={`space-y-4 ${isCenter ? "text-center" : "text-left"}`}>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }} viewport={{ once: true }}
-      >
-        <span
-          className="inline-block font-['JetBrains_Mono'] text-xs tracking-[0.35em] uppercase px-3 py-1 rounded-sm"
-          style={{ color: 'var(--accent)', border: '1px solid var(--border)', background: 'var(--surface)' }}
-        >
-          {subtitle}
-        </span>
-      </motion.div>
 
-      <motion.h2
-        className="font-['Syne'] text-4xl md:text-6xl font-bold leading-tight pb-2"
-        style={{ color: 'var(--text)' }}
-        initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }}
+  // "01 — Background" → just "Background"
+  const label = subtitle.replace(/^\s*\d+\s*[—–-]\s*/, "")
+
+  return (
+    <motion.div
+      className={isCenter ? "text-center" : "text-left"}
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      viewport={{ once: true, margin: "0px 0px -60px 0px" }}
+    >
+      <span
+        className="text-[13px] font-medium uppercase"
+        style={{ color: "var(--accent)", letterSpacing: "0.12em" }}
+      >
+        {label}
+      </span>
+
+      <h2
+        className="mt-3 font-semibold"
+        style={{
+          fontSize: "clamp(32px, 4.5vw, 50px)",
+          lineHeight: 1.12,
+          letterSpacing: "-0.025em",
+          color: "var(--text)",
+        }}
       >
         {title}
-      </motion.h2>
-
-      <motion.div
-        className={`flex items-center gap-3 pt-2 ${isCenter ? "justify-center" : "justify-start"}`}
-        initial={{ opacity: 0, scaleX: 0 }} whileInView={{ opacity: 1, scaleX: 1 }}
-        transition={{ duration: 0.6, delay: 0.3 }} viewport={{ once: true }}
-        style={{ transformOrigin: isCenter ? "center" : "left" }}
-      >
-        <div className="h-px w-10" style={{ background: 'var(--accent)' }} />
-        <div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--accent)', boxShadow: '0 0 8px var(--accent)' }} />
-        <div className="h-px w-20" style={{ background: 'var(--border)' }} />
-      </motion.div>
-    </div>
+      </h2>
+    </motion.div>
   )
 }

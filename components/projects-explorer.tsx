@@ -142,17 +142,17 @@ export function ProjectsExplorer() {
       <HexGallery items={items} activeId={String(active)} onSelect={(id) => setActive(Number(id))} label="Projects" />
 
       <div className="flex items-center justify-center gap-3 mt-12 mb-6" aria-hidden="true">
-        <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to right, transparent, rgba(177,235,33,0.35))" }} />
+        <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to right, transparent, rgba(91,141,239,0.35))" }} />
         <span
-          className="font-['JetBrains_Mono'] text-[10px] tracking-[0.35em] uppercase px-3 py-1 rounded-sm"
-          style={{ color: "var(--lime)", border: "1px solid rgba(177,235,33,0.2)", background: "rgba(177,235,33,0.03)" }}
+          className="text-[11px] tracking-wide uppercase px-3 py-1 rounded-sm"
+          style={{ color: "var(--lime)", border: "1px solid rgba(91,141,239,0.2)", background: "rgba(91,141,239,0.03)" }}
         >
           {String(active + 1).padStart(2, "0")} / {String(PROJECTS.length).padStart(2, "0")}
         </span>
-        <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to left, transparent, rgba(177,235,33,0.35))" }} />
+        <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to left, transparent, rgba(91,141,239,0.35))" }} />
       </div>
 
-      <div id="project-panel" role="tabpanel" key={active} className="orbit-fade max-w-3xl mx-auto">
+      <div id="project-panel" role="tabpanel" key={active} className="max-w-3xl mx-auto">
         <ProjectCard
           number={String(active + 1).padStart(2, "0")}
           title={p.title}
