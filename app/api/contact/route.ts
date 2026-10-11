@@ -60,8 +60,16 @@ export async function POST(request: Request) {
       }),
     })
 
-    if (!res.ok) {
-      return NextResponse.json({ error: "Could not send right now." }, { status: 502 })
+    const payload = await res.json().catch(() => ({}) as { success?: boolean; message?: string })
+
+    if (!res.ok || payload.success === false) {
+      // Surface the provider's own reason: it is about form configuration,
+      // never about the key, and it is the only way to debug a live failure.
+      console.error("contact: provider rejected", res.status, payload.message)
+      return NextResponse.json(
+        { error: "Could not send right now.", reason: payload.message ?? `HTTP ${res.status}` },
+        { status: 502 },
+      )
     }
 
     return NextResponse.json({ ok: true })
