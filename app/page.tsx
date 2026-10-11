@@ -44,8 +44,8 @@ export default function Portfolio() {
           <p className="mt-6 max-w-2xl" style={{ fontSize: 17, lineHeight: 1.7, color: 'var(--text-dim)' }}>
             Those six layers are not a wish list. I have run them for a government body in
             Karachi, a logistics firm, a bookstore chain and now a company spread over twelve
-            countries. On the left is what that work produced. On the right is my GitHub,
-            read straight from their API, so you can check it yourself.
+            countries. Below are the numbers that work produced, alongside my GitHub read
+            straight from their API, so you can check that half yourself.
           </p>
 
           <div className="mt-12 grid grid-cols-1 items-start gap-5 lg:grid-cols-2">

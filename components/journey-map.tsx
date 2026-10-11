@@ -150,10 +150,10 @@ export function JourneyMap() {
           {/* Destination */}
           <circle cx={B.x} cy={B.y} r="1.5" fill="rgba(91,141,239,0.18)" />
           <circle cx={B.x} cy={B.y} r="0.6" fill="var(--accent)" />
-          <text x={B.x} y={B.y - 2.6} textAnchor="middle" fontSize="1.5" fill="var(--text)">
+          <text x={B.x} y={B.y - 4.2} textAnchor="middle" fontSize="1.5" fill="var(--text)">
             Göttingen, Germany
           </text>
-          <text x={B.x} y={B.y - 1.1} textAnchor="middle" fontSize="1.1" fill="var(--text-muted)">
+          <text x={B.x} y={B.y - 2.7} textAnchor="middle" fontSize="1.1" fill="var(--text-muted)">
             {GOTTINGEN.lat.toFixed(2)}°N {GOTTINGEN.lon.toFixed(2)}°E
           </text>
         </svg>

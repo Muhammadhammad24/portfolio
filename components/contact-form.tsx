@@ -3,30 +3,44 @@
 import type React from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Send } from "lucide-react"
+import { Check, Send } from "lucide-react"
 
 const EMAIL = "muhammad24997@gmail.com"
 
-export function ContactForm() {
-  const [sent, setSent] = useState(false)
+type State = "idle" | "sending" | "sent" | "error"
 
-  // No backend here, so the message is handed to the visitor's mail client
-  // addressed to me — that way nothing silently disappears.
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+export function ContactForm() {
+  const [state, setState] = useState<State>("idle")
+  const [error, setError] = useState("")
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const form = e.currentTarget
-    const data = new FormData(form)
-    const name = String(data.get("name") ?? "")
-    const email = String(data.get("email") ?? "")
-    const subject = String(data.get("subject") ?? "")
-    const message = String(data.get("message") ?? "")
+    const data = Object.fromEntries(new FormData(form))
 
-    const body = `${message}\n\n—\n${name}\n${email}`
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    setState("sending")
+    setError("")
 
-    setSent(true)
-    form.reset()
-    window.setTimeout(() => setSent(false), 6000)
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+
+      if (!res.ok) {
+        const payload = await res.json().catch(() => ({}))
+        setError(payload.error ?? "Could not send right now.")
+        setState("error")
+        return
+      }
+
+      form.reset()
+      setState("sent")
+    } catch {
+      setError("Could not send right now.")
+      setState("error")
+    }
   }
 
   const inputStyle: React.CSSProperties = {
@@ -54,49 +68,77 @@ export function ContactForm() {
         Send a message
       </h3>
 
-      <form onSubmit={handleSubmit} className="space-y-3.5">
-        {[
-          { name: "name", type: "text", placeholder: "Your name" },
-          { name: "email", type: "email", placeholder: "Email address" },
-          { name: "subject", type: "text", placeholder: "Subject" },
-        ].map((field) => (
-          <input
-            key={field.name}
-            name={field.name}
-            type={field.type}
-            placeholder={field.placeholder}
-            aria-label={field.placeholder}
+      {state === "sent" ? (
+        <div className="flex flex-col items-center gap-3 py-10 text-center">
+          <span
+            className="flex h-11 w-11 items-center justify-center rounded-full"
+            style={{ background: "rgba(91,141,239,0.12)", border: "1px solid rgba(91,141,239,0.45)" }}
+          >
+            <Check className="h-5 w-5" style={{ color: "var(--accent)" }} />
+          </span>
+          <p className="font-medium" style={{ color: "var(--text)" }}>
+            Thank you for your message.
+          </p>
+          <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+            It has reached my inbox. I will get back to you shortly.
+          </p>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-3.5">
+          {[
+            { name: "name", type: "text", placeholder: "Your name" },
+            { name: "email", type: "email", placeholder: "Email address" },
+            { name: "subject", type: "text", placeholder: "Subject" },
+          ].map((field) => (
+            <input
+              key={field.name}
+              name={field.name}
+              type={field.type}
+              placeholder={field.placeholder}
+              aria-label={field.placeholder}
+              required={field.name !== "subject"}
+              style={inputStyle}
+              onFocus={(e) => (e.target.style.borderColor = "rgba(91,141,239,0.5)")}
+              onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
+            />
+          ))}
+
+          <textarea
+            name="message"
+            placeholder="Your message"
+            aria-label="Your message"
+            rows={5}
             required
-            style={inputStyle}
+            style={{ ...inputStyle, resize: "none" }}
             onFocus={(e) => (e.target.style.borderColor = "rgba(91,141,239,0.5)")}
             onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
           />
-        ))}
 
-        <textarea
-          name="message"
-          placeholder="Your message"
-          aria-label="Your message"
-          rows={5}
-          required
-          style={{ ...inputStyle, resize: "none" }}
-          onFocus={(e) => (e.target.style.borderColor = "rgba(91,141,239,0.5)")}
-          onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
-        />
+          {/* Spam trap: hidden from people, tempting to bots */}
+          <input
+            type="text"
+            name="company"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+          />
 
-        <button
-          type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-full py-3 text-sm font-medium transition-colors duration-200"
-          style={{ background: "var(--accent)", color: "#fff", border: "none", cursor: "pointer" }}
-        >
-          <Send className="h-4 w-4" />
-          Send message
-        </button>
+          <button
+            type="submit"
+            disabled={state === "sending"}
+            className="flex w-full items-center justify-center gap-2 rounded-full py-3 text-sm font-medium transition-opacity duration-200 disabled:opacity-60"
+            style={{ background: "var(--accent)", color: "#fff", border: "none", cursor: "pointer" }}
+          >
+            <Send className="h-4 w-4" />
+            {state === "sending" ? "Sending…" : "Send message"}
+          </button>
 
-        <p className="pt-1 text-center text-[12.5px]" style={{ color: "var(--text-muted)" }}>
-          {sent ? "Opening your mail app…" : `Opens your mail app · or write to ${EMAIL}`}
-        </p>
-      </form>
+          <p className="pt-1 text-center text-[12.5px]" style={{ color: state === "error" ? "#E5484D" : "var(--text-muted)" }}>
+            {state === "error" ? `${error} You can email me at ${EMAIL}.` : `Or email me directly at ${EMAIL}`}
+          </p>
+        </form>
+      )}
     </motion.div>
   )
 }

@@ -80,8 +80,12 @@ export function StackDiagram() {
               onMouseLeave={() => setActive(null)}
               onFocus={() => setActive(layer.id)}
               onBlur={() => setActive(null)}
+              // Touch has no hover, so a tap toggles the layer open instead.
+              onClick={() => setActive((cur) => (cur === layer.id ? null : layer.id))}
+              role="button"
+              aria-expanded={on}
               tabIndex={0}
-              className="group relative mb-[6px] cursor-default rounded-lg outline-none transition-all duration-300"
+              className="group relative mb-[6px] cursor-pointer rounded-lg outline-none transition-all duration-300"
               style={{
                 background: on ? "rgba(91,141,239,0.08)" : "var(--card-bg)",
                 border: `1px solid ${on ? "rgba(91,141,239,0.45)" : "var(--border)"}`,
@@ -131,7 +135,7 @@ export function StackDiagram() {
       </div>
 
       <p className="mt-4 text-[12.5px]" style={{ color: "var(--text-muted)" }}>
-        Hover a layer to see what sits inside it. I have worked every one of these.
+        Open a layer to see what sits inside it. I have worked every one of these.
       </p>
     </div>
   )
