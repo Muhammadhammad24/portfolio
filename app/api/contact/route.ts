@@ -48,7 +48,13 @@ export async function POST(request: Request) {
   try {
     const res = await fetch(ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // Requests from a serverless IP with no user agent trip the
+        // provider's bot protection.
+        "User-Agent": "muhammadhammad.vercel.app contact form",
+      },
       body: JSON.stringify({
         access_key: key,
         subject: subject ? `${TO_SUBJECT}: ${subject}` : TO_SUBJECT,
