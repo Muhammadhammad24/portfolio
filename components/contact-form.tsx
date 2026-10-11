@@ -7,6 +7,11 @@ import { Check, Send } from "lucide-react"
 
 const EMAIL = "muhammad24997@gmail.com"
 
+// Web3Forms access keys are public by design — their own docs put them in
+// client-side HTML. The browser posts directly because their bot protection
+// rejects calls coming from a serverless IP.
+const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
+
 type State = "idle" | "sending" | "sent" | "error"
 
 export function ContactForm() {
@@ -18,19 +23,40 @@ export function ContactForm() {
     const form = e.currentTarget
     const data = Object.fromEntries(new FormData(form))
 
+    if (!ACCESS_KEY) {
+      setError("Email delivery is not configured yet.")
+      setState("error")
+      return
+    }
+
+    // A bot filling the hidden field gets a thank-you and nothing is sent.
+    if (String(data.company ?? "").trim()) {
+      form.reset()
+      setState("sent")
+      return
+    }
+
     setState("sending")
     setError("")
 
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: ACCESS_KEY,
+          subject: data.subject ? `Portfolio: ${data.subject}` : "Portfolio contact form",
+          from_name: data.name,
+          replyto: data.email,
+          name: data.name,
+          email: data.email,
+          message: data.message,
+        }),
       })
+      const payload = await res.json().catch(() => ({}))
 
-      if (!res.ok) {
-        const payload = await res.json().catch(() => ({}))
-        setError(payload.error ?? "Could not send right now.")
+      if (!res.ok || payload.success === false) {
+        setError("Could not send right now.")
         setState("error")
         return
       }
