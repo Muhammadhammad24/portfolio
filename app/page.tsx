@@ -162,7 +162,7 @@ export default function Portfolio() {
       <SectionReveal id="skills" className="py-28 relative">
         <div className="container">
           <SectionHeading title="Skills" subtitle="Expertise" align="left" />
-          <p className="text-center mt-4 text-sm max-w-2xl mx-auto" style={{ color: 'var(--text-dim)' }}>
+          <p className="mt-6 max-w-2xl" style={{ fontSize: 17, lineHeight: 1.7, color: 'var(--text-dim)' }}>
             Grouped by the same six layers as the stack above, and kept to what I actually reach for.
           </p>
           <SkillsHex />
@@ -173,7 +173,7 @@ export default function Portfolio() {
       <SectionReveal id="certifications" className="py-28 relative">
         <div className="container">
           <SectionHeading title="Certifications" subtitle="Credentials" align="left" />
-          <p className="text-center mt-4 text-sm max-w-2xl mx-auto mb-12" style={{ color: 'var(--text-dim)' }}>
+          <p className="mt-6 max-w-2xl" style={{ fontSize: 17, lineHeight: 1.7, color: 'var(--text-dim)' }}>
             Pick one to read what it covered. The Coursera ones link out so you can check them yourself rather than take my word for it.
           </p>
           <CertsHex />
