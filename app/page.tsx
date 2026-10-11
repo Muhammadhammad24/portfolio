@@ -163,7 +163,7 @@ export default function Portfolio() {
         <div className="container">
           <SectionHeading title="Skills" subtitle="Expertise" align="left" />
           <p className="text-center mt-4 text-sm max-w-2xl mx-auto" style={{ color: 'var(--text-dim)' }}>
-            Grouped by the same six layers as the stack above. Instead of percentages nobody can verify, each tool is marked by how often it is actually in my hands.
+            Grouped by the same six layers as the stack above, and kept to what I actually reach for.
           </p>
           <SkillsHex />
         </div>
