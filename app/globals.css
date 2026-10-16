@@ -27,74 +27,40 @@
   --accent-rgb:        255 255 255;
 
   /* ── Dark theme layers ── */
-  --bg-base:           #040405;
-  --bg-elevated:       #0C0C0E;
-  --bg-card:           #121214;
-  --bg-card-hover:     #1B1B1F;
-  --border-dark:       #2C2C31;
-  --border-dark-soft:  rgba(255,255,255,0.085);
+  --bg-base:           #000000;
+  --bg-elevated:       #070709;
+  --bg-card:           #0B0B0D;
+  --bg-card-hover:     #151519;
+  --border-dark:       #4A4A55;
+  --border-dark-soft:  rgba(255,255,255,0.17);
 
   /* ── Text on dark ── */
-  --text-on-dark:           #E4E5E9;
-  --text-on-dark-secondary: #989AA2;
-  --text-on-dark-muted:     #6A6C74;
+  --text-on-dark:           #F7F8FA;
+  --text-on-dark-secondary: #ACAEB8;
+  --text-on-dark-muted:     #777982;
 
   /* ── Semantic ── */
-  --success:           #2ECC71;
-  --warning:           #F5A623;
   --danger:            #E5484D;
-  --info:              #C9CBD2;
-
-  /* ── Gradients ── */
-  --grad-hero:   linear-gradient(160deg, #040405 0%, #0C0C0E 55%, #121214 100%);
-  --grad-accent: linear-gradient(90deg, var(--accent) 0%, var(--accent-bright) 100%);
-  --grad-glow:   radial-gradient(circle at 50% 0%, rgb(var(--accent-rgb) / 0.14) 0%, transparent 62%);
 
   /* ── Shadows ── */
-  --shadow-sm:   0 1px 2px rgba(0,0,0,0.16);
-  --shadow-md:   0 4px 16px rgba(0,0,0,0.22);
-  --shadow-lg:   0 16px 48px rgba(0,0,0,0.32);
-  --shadow-lime: 0 8px 28px rgb(var(--accent-rgb) / 0.22);
 
   /* ── Radii ── */
-  --radius-sm:   6px;
-  --radius-md:   10px;
-  --radius-lg:   16px;
-  --radius-xl:   24px;
   --radius-pill: 999px;
 
   /* ── Names the components use ── */
   --accent:       rgb(var(--accent-rgb));
   --accent-bright:#FFFFFF;
   --accent-dim:   #8E9097;
-  --accent-mid:   rgb(var(--accent-rgb) / 0.70);
-  --accent-glow:  rgb(var(--accent-rgb) / 0.20);
-  --accent-glow2: rgb(var(--accent-rgb) / 0.08);
   --bg:           var(--bg-base);
-  --bg-2:         var(--bg-elevated);
-  --surface:      rgb(var(--accent-rgb) / 0.12);
-  --surface-2:    rgb(var(--accent-rgb) / 0.16);
   --border:       var(--border-dark-soft);
-  --border-hot:   rgb(var(--accent-rgb) / 0.50);
   --text:         var(--text-on-dark);
   --text-dim:     var(--text-on-dark-secondary);
   --text-muted:   var(--text-on-dark-muted);
-  --nav-bg:       rgba(4,4,5,0.88);
+  --nav-bg:       rgba(0,0,0,0.86);
   --card-bg:      var(--bg-card);
-  --card-border:  var(--border-dark-soft);
   --input-bg:     rgba(255,255,255,0.04);
-  --scrollbar-thumb: var(--accent-dim);
-  --icon-filter:  brightness(0) saturate(100%) invert(92%);
   /* Legacy aliases a few components still reference. */
-  --lime:         var(--accent);
-  --lime-hover:   var(--accent-bright);
-  --lime-active:  var(--accent-dim);
-  --lime-subtle:  rgb(var(--accent-rgb) / 0.12);
-  --lime-ring:    rgb(var(--accent-rgb) / 0.40);
-  --on-lime:      #040405;
-  --brand-dark:   var(--bg-base);
-  --surface-dark: var(--bg-card);
-  --white:        #FFFFFF;
+  --on-accent:    #000000;
 
   /* ── Tailwind/shadcn tokens ── */
   --background:           240 10% 4%;
@@ -109,11 +75,9 @@
   --secondary-foreground: 0 0% 100%;
   --muted:                225 8% 12%;
   --muted-foreground:     220 8% 58%;
-  --accent-var:           225 8% 14%;
   --accent-foreground:    0 0% 100%;
   --destructive:          0 62.8% 30.6%;
   --destructive-foreground: 0 0% 98%;
-  --border-var:           225 8% 18%;
   --input:                225 8% 12%;
   --ring:                 0 0% 80%;
   --radius:               0.625rem;
@@ -121,6 +85,11 @@
 
 @layer base {
   * { @apply border-border; }
+  html {
+    /* The nav floats at top:20px and is about 44px tall. Without this, every
+       anchor lands with its heading tucked underneath it. */
+    scroll-padding-top: 96px;
+  }
   body {
     background-color: var(--bg-base);
     color: var(--text-on-dark);
@@ -140,29 +109,29 @@
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg-base); }
-::-webkit-scrollbar-thumb { background: var(--lime); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--lime-hover); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-bright); }
 
 /* ── Native cursor restored ── */
 
-/* ── PRIMARY button — lime fill, dark text ── */
+/* ── PRIMARY button — accent fill, dark text ── */
 .btn-cyber-fill {
-  background: var(--lime);
-  color: var(--on-lime);
+  background: var(--accent);
+  color: var(--on-accent);
   font-weight: 700;
-  border: 1px solid var(--lime);
+  border: 1px solid var(--accent);
   border-radius: var(--radius-pill);
   transition: all 0.22s ease;
   font-family: 'IBM Plex Sans', sans-serif;
   letter-spacing: 0.01em;
 }
 .btn-cyber-fill:hover {
-  background: var(--lime-hover);
+  background: var(--accent-bright);
   transform: translateY(-1px);
-  box-shadow: var(--shadow-lime);
+  box-shadow: 0 8px 28px rgb(var(--accent-rgb) / 0.22);
 }
 .btn-cyber-fill:active {
-  background: var(--lime-active);
+  background: var(--accent-dim);
   transform: translateY(0);
 }
 
@@ -183,9 +152,37 @@
   background: rgba(255,255,255,0.06);
 }
 
+/* The arrow rides in its own disc at the end of a pill, and steps forward
+   on hover. One shape, used on both buttons, so they read as a pair. */
+.btn-chev {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--bg-base);
+  color: var(--text);
+  flex-shrink: 0;
+  transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* The nav runs at a smaller scale than the hero. */
+.btn-chev-sm {
+  width: 24px;
+  height: 24px;
+}
+
+.btn-chev-outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.28);
+}
+.group:hover .btn-chev { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .btn-chev { transform: none; }
+}
+
 /* ── Focus ring ── */
 *:focus-visible {
-  outline: 2px solid var(--lime);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -196,8 +193,8 @@
   transition: all 0.22s;
 }
 .social-icon-btn:hover {
-  border-color: var(--lime);
-  color: var(--lime);
+  border-color: var(--accent);
+  color: var(--accent);
   box-shadow: 0 0 10px rgb(var(--accent-rgb) / 0.25);
 }
 
@@ -250,11 +247,11 @@
 .measure-wide { width: 100%; }
 
 /* One vertical step between sections, so the scroll has a pulse. */
-.section      { padding-block: clamp(104px, 11vw, 172px); position: relative; z-index: 1; }
+.section      { padding-block: clamp(72px, 6.5vw, 104px); position: relative; z-index: 1; }
 /* The body of a section always starts the same distance below its heading. */
-.section-body { margin-top: clamp(48px, 5.5vw, 72px); }
+.section-body { margin-top: clamp(36px, 3.6vw, 52px); }
 /* Intro paragraph under a heading, on the reading measure. */
-.section-lede { margin-top: 20px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: var(--text-dim); }
+.section-lede { margin-top: 18px; max-width: 62ch; font-size: 17px; line-height: 1.7; color: var(--text-dim); }
 
 /* A small label above a sub-block: the only heading style below h2. */
 /* Labels are chrome, not content, so they are grey. The accent is spent
@@ -293,7 +290,7 @@
      this is what makes a card read as a raised surface instead of a slightly
      different black, and it costs one gradient. */
   background:
-    linear-gradient(to bottom, rgba(255,255,255,0.035), rgba(255,255,255,0) 120px),
+    linear-gradient(to bottom, rgba(255,255,255,0.09), rgba(255,255,255,0) 110px),
     var(--card-bg);
   border: 1px solid var(--border);
   border-radius: var(--card-r);
@@ -336,32 +333,8 @@
 }
 .card[data-active="true"]::after { transform: scaleX(1); }
 
-/* A card that is only a container — no drawn edge, no hover. */
-.card-plain::after { content: none; }
-.card-plain:hover { border-color: var(--border); }
-
 @media (prefers-reduced-motion: reduce) {
   .card, .card::after { transition: none; }
-}
-
-/* ── The sheet itself ─────────────────────────────────────────
-   A blueprint grid under everything, far too faint to read as a
-   pattern but enough that the page feels ruled rather than blank.
-   Fixed, so it stays put while the content travels over it. */
-.sheet-grid {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.016) 1px, transparent 1px),
-    linear-gradient(rgba(255,255,255,0.032) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.032) 1px, transparent 1px);
-  background-size: 28px 28px, 28px 28px, 140px 140px, 140px 140px;
-  /* Fades out at the edges so it never fights the content. */
-  mask-image: radial-gradient(ellipse 85% 70% at 50% 42%, #000 35%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 42%, #000 35%, transparent 100%);
 }
 
 /* ── Dimension rule ───────────────────────────────────────────
@@ -438,49 +411,7 @@ body { counter-reset: plate; }
   .section > .container::after { content: none; }
 }
 
-/* ── Fold ──────────────────────────────────────────────────────
-   A disclosure built from the same marks as everything else: a
-   monospace count, a label, and a rule running out to the edge.
-   Closed, it is one quiet line; open, it is the detail. The card
-   is readable either way, which is the point. */
-.detail-fold > summary {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  list-style: none;
-  padding: 10px 0;
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  border-top: 1px solid var(--border);
-  transition: color 0.2s ease;
-}
-.detail-fold > summary::-webkit-details-marker { display: none; }
-.detail-fold > summary:hover { color: var(--text); }
-
-.detail-rule {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, var(--border), transparent);
-}
-
-/* A chevron drawn from two rules, so it matches the page's line work. */
-.detail-chev {
-  width: 7px;
-  height: 7px;
-  border-right: 1px solid currentColor;
-  border-bottom: 1px solid currentColor;
-  transform: translateY(-2px) rotate(45deg);
-  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.detail-fold[open] > summary .detail-chev {
-  transform: translateY(1px) rotate(225deg);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .detail-chev { transition: none; }
 }
 
 /* Hero entrance runs from the first paint instead of waiting for hydration. */

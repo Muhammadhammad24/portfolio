@@ -1,14 +1,9 @@
 "use client"
 
-import { motion } from "framer-motion"
 
 export function ProfilePhoto() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
+    <div
       className="relative mx-auto flex items-center justify-center"
       style={{ width: 220, height: 220 }}
     >
@@ -69,6 +64,6 @@ export function ProfilePhoto() {
           boxShadow: '0 0 8px var(--accent), 0 0 16px var(--accent-glow)',
         }}
       />
-    </motion.div>
+    </div>
   )
 }

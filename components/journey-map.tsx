@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { Globe, type Marker } from "./globe"
 
 /**
@@ -9,16 +8,19 @@ import { Globe, type Marker } from "./globe"
  * circle, which is why it bows north rather than running straight across.
  */
 
+const KARACHI = { lat: 24.8607, lon: 67.0011 }
+const GOTTINGEN = { lat: 51.5413, lon: 9.9158 }
+
 const MARKERS: Marker[] = [
-  { label: "Karachi", lat: 24.8607, lon: 67.0011, kind: "origin" },
-  { label: "Göttingen", lat: 51.5413, lon: 9.9158, kind: "home" },
+  { label: "Karachi, Pakistan", ...KARACHI, kind: "origin" },
+  { label: "Göttingen, Germany", ...GOTTINGEN, kind: "home" },
 ]
 
 const FACTS = [
   { k: "Distance", v: "5,617 km" },
   { k: "Karachi", v: "24.86°N 67.00°E" },
   { k: "Göttingen", v: "51.54°N 9.92°E" },
-  { k: "Elapsed", v: "2016 → now" },
+  { k: "Elapsed", v: "2019 → now" },
 ]
 
 type Step = {
@@ -65,19 +67,19 @@ const STEPS: Step[] = [
     year: "2023",
     place: "Göttingen, Germany",
     title: "Moved 5,617 km",
-    line: "Started the M.Sc. in Göttingen and took on cloud and on-prem infrastructure at Kontinental Establishment.",
+    line: "Started the M.Sc. in Göttingen and took on cloud and on-prem infrastructure for TestSolutions, on contract out of Frankfurt.",
   },
   {
     year: "2024",
     place: "Göttingen, Germany",
-    title: "DevSecOps at the university",
+    title: "DevOps at the university",
     line: "A six-month internship in scientific computing, April to September: ML infrastructure, scanning in the pipeline, deployments down from four hours to thirty-five minutes.",
   },
   {
     year: "Now",
     place: "Germany",
-    title: "180 people, 12 countries",
-    line: "Azure and AWS, 500+ endpoints, Zero Trust access, and 25 hours a week of manual work automated away.",
+    title: "Securing the estate",
+    line: "Kontinental Establishment since January 2025: AWS and Azure hardened, firewalls and IDS/IPS watched, endpoint detection everywhere, and backups that have been restored from.",
     now: true,
   },
   {
@@ -112,7 +114,7 @@ export function JourneyMap() {
               One career, carried 5,617 km
             </h3>
             <p className="mt-3 text-sm" style={{ lineHeight: 1.7, color: "var(--text-dim)" }}>
-              Nine years that started on a helpdesk in Karachi and now run cloud
+              Seven years that started on a helpdesk in Karachi and now run cloud
               infrastructure out of Germany. Same job, longer reach.
             </p>
 
@@ -141,13 +143,9 @@ export function JourneyMap() {
 
         <div className="space-y-7">
           {STEPS.map((s, i) => (
-            <motion.div
+            <div
               key={s.year + s.title}
               className="relative pl-7 sm:pl-24"
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px 0px -60px 0px" }}
-              transition={{ duration: 0.35, delay: Math.min(i, 4) * 0.04 }}
             >
               {/* Year, on the rail */}
               <span
@@ -183,7 +181,7 @@ export function JourneyMap() {
                   {s.line}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

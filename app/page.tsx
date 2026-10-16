@@ -19,8 +19,6 @@ import { CommandPalette } from "@/components/command-palette"
 export default function Portfolio() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
-      {/* The ruled sheet everything is drawn on */}
-      <div className="sheet-grid" aria-hidden="true" />
       <ScrollProgress />
       <FloatingNav />
       <CommandPalette />
@@ -31,7 +29,7 @@ export default function Portfolio() {
       {/* ═══════════ TRACK RECORD ═══════════ */}
       <SectionReveal className="section">
         <div className="container">
-          <SectionHeading title="Six years, zero breaches" subtitle="Track record" />
+          <SectionHeading title="Seven years, zero breaches" subtitle="Track record" />
           <p className="section-lede">
             Those six layers are not a wish list. I have run them for a government body in
             Karachi, a logistics firm, a bookstore chain and now a company spread over twelve
@@ -78,18 +76,18 @@ export default function Portfolio() {
                   ticket there is a person who cannot do their job right now.
                 </p>
                 <p style={{ fontSize: 17, lineHeight: 1.75, color: 'var(--text-dim)' }}>
-                  Six years and five companies later the numbers are bigger.{" "}
+                  Seven years and seven employers later the numbers are bigger.{" "}
                   <span style={{ color: 'var(--text)' }}>265 government endpoints</span> at KTDMC.{" "}
                   <span style={{ color: 'var(--text)' }}>180 people across 12 countries</span> at
-                  Kontinental. Azure and AWS, Active Directory, firewalls, a few hundred devices that
-                  all have to wake up working on Monday. The job never really changed. Keep it
+                  TestSolutions. Azure and AWS, Active Directory, firewalls, a few hundred devices
+                  that all have to wake up working on Monday. The job never really changed. Keep it
                   running, keep it locked, make sure nobody has to think about it.
                 </p>
                 <p style={{ fontSize: 17, lineHeight: 1.75, color: 'var(--text-dim)' }}>
                   What I actually enjoy is deleting work. If something gets done by hand twice, I
                   would rather lose a week automating it than do it a third time — that is how{" "}
                   <span style={{ color: 'var(--text)' }}>25 hours a week</span> of manual onboarding
-                  and patching disappeared at my current job. The best compliment my work gets is
+                  and patching disappeared at TestSolutions. The best compliment my work gets is
                   silence: no outage, no breach, no ticket.
                 </p>
               </div>
@@ -185,7 +183,7 @@ export default function Portfolio() {
         <div className="container">
           <SectionHeading title="How I got here" subtitle="The road" />
           <p className="section-lede">
-            Nine years, two countries, six employers. It started on a helpdesk in Karachi
+            Seven years, two countries, seven employers. It started on a helpdesk in Karachi
             and it has been the same job ever since, only the number of people depending
             on it keeps going up.
           </p>

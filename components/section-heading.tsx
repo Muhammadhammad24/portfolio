@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 
 interface SectionHeadingProps {
   title: string
@@ -19,11 +18,7 @@ export function SectionHeading({ title, subtitle }: SectionHeadingProps) {
   const label = subtitle.replace(/^\s*\d+\s*[—–-]\s*/, "")
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      viewport={{ once: true, margin: "0px 0px -60px 0px" }}
+    <div
     >
       <div className="flex items-center gap-4">
         <span className="eyebrow shrink-0">{label}</span>
@@ -41,6 +36,6 @@ export function SectionHeading({ title, subtitle }: SectionHeadingProps) {
       >
         {title}
       </h2>
-    </motion.div>
+    </div>
   )
 }

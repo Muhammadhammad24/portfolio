@@ -133,6 +133,12 @@ const COMMANDS: Command[] = [
 ]
 
 export function CommandPalette() {
+  // Held so a second copy cancels the first, and unmounting cancels both.
+  const copyTimer = useRef<number | null>(null)
+  useEffect(() => () => {
+    if (copyTimer.current) window.clearTimeout(copyTimer.current)
+  }, [])
+
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState("")
   const [cursor, setCursor] = useState(0)
@@ -143,7 +149,8 @@ export function CommandPalette() {
   const close = useCallback(() => setOpen(false), [])
   const markCopied = useCallback((id: string) => {
     setCopied(id)
-    window.setTimeout(() => setCopied(null), 1400)
+    if (copyTimer.current) window.clearTimeout(copyTimer.current)
+    copyTimer.current = window.setTimeout(() => setCopied(null), 1400)
   }, [])
 
   const results = useMemo(() => {

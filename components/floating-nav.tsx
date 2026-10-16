@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { ArrowRight, Menu, X } from "lucide-react"
 import { useMobile } from "@/hooks/use-mobile"
 
 const NAV_ITEMS = [
@@ -103,15 +103,18 @@ export function FloatingNav() {
 
               <button
                 onClick={() => goTo("contact")}
-                className="ml-2 rounded-full px-4 py-1.5 text-[13px] font-medium transition-colors duration-200"
+                className="group ml-2 flex items-center gap-2 rounded-full py-1 pl-4 pr-1 text-[13px] font-medium transition-colors duration-200"
                 style={{
                   background: "var(--accent)",
-                  color: "var(--on-lime)",
+                  color: "var(--on-accent)",
                   border: "none",
                   cursor: "pointer",
                 }}
               >
                 Contact
+                <span className="btn-chev btn-chev-sm">
+                  <ArrowRight className="h-3 w-3" />
+                </span>
               </button>
             </div>
           )}

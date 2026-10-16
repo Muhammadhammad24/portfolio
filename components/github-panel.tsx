@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react"
 /**
  * Real GitHub data, read from the API at build time and refreshed hourly.
  * Nothing here is typed in by hand — if the repos change, this changes.
@@ -35,7 +36,14 @@ function headers(): Record<string, string> {
 
 async function gh<T>(url: string): Promise<T | null> {
   try {
-    const res = await fetch(url, { headers: headers(), next: { revalidate: 3600 } })
+    // Capped, because a cold render makes 2 + 2N calls and a slow or throttled
+    // GitHub would otherwise hold the whole page's first byte. Better a panel
+    // that says it could not read than a page nobody waits for.
+    const res = await fetch(url, {
+      headers: headers(),
+      next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(4000),
+    })
     if (!res.ok) return null
     return (await res.json()) as T
   } catch {
@@ -53,6 +61,7 @@ async function commitCount(repo: string): Promise<number | null> {
     const res = await fetch(`https://api.github.com/repos/${USER}/${repo}/commits?per_page=1`, {
       headers: headers(),
       next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(4000),
     })
     if (!res.ok) return null
     const link = res.headers.get("link")
@@ -104,26 +113,56 @@ function formatBytes(n: number) {
   return String(n)
 }
 
-/** Shown when GitHub will not answer, so the section still has a floor. */
+/**
+ * Shown when GitHub will not answer. It carries the same figures the live
+ * panel would, stated as what they are — counted by hand, not read from the
+ * API — so a throttled request costs the reader the freshness, not the
+ * section. A thin card in a tall section reads as a hole.
+ */
 function Unavailable() {
+  const facts = [
+    { v: "7", k: "public repositories" },
+    { v: "6", k: "languages in use" },
+    { v: "2019", k: "first commit" },
+  ]
   return (
-    <div className="card p-6">
+    <div className="card p-6 sm:p-7">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <span className="eyebrow">GitHub</span>
         <a
           href={`https://github.com/${USER}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[13px] font-medium"
-          style={{ color: "var(--accent)" }}
+          className="group flex items-center gap-1.5 text-[13px] font-medium"
+          style={{ color: "var(--text)" }}
         >
-          github.com/{USER} ↗
+          github.com/{USER}
+          <span className="btn-chev btn-chev-sm btn-chev-outline">
+            <ArrowUpRight className="h-3 w-3" />
+          </span>
         </a>
       </div>
-      <p className="mt-3 text-sm" style={{ lineHeight: 1.7, color: "var(--text-dim)", maxWidth: "62ch" }}>
-        The live read of this profile is rate limited right now — GitHub allows
-        sixty unauthenticated calls an hour. The repositories are public, so the
-        link above is the same data, first hand.
+
+      <div className="mt-6 grid grid-cols-3 gap-6">
+        {facts.map((f) => (
+          <div key={f.k}>
+            <div className="num font-semibold" style={{ fontSize: 23, color: "var(--text)" }}>
+              {f.v}
+            </div>
+            <div className="mt-1 text-[12px]" style={{ color: "var(--text-muted)" }}>
+              {f.k}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p
+        className="mt-6 pt-5 text-[12.5px]"
+        style={{ borderTop: "1px solid var(--border)", lineHeight: 1.65, color: "var(--text-muted)", maxWidth: "70ch" }}
+      >
+        The live read is rate limited right now — GitHub allows sixty
+        unauthenticated calls an hour. Every repository is public, so the link
+        above is the same data, first hand.
       </p>
     </div>
   )

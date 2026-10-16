@@ -2,7 +2,6 @@
 
 import type React from "react"
 import { useState } from "react"
-import { motion } from "framer-motion"
 import { Check, Send } from "lucide-react"
 
 const EMAIL = "muhammad24997@gmail.com"
@@ -82,11 +81,7 @@ export function ContactForm() {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      viewport={{ once: true, margin: "0px 0px -60px 0px" }}
+    <div
       className="card p-6"
     >
       <h3 className="mb-6 text-xl font-semibold" style={{ color: "var(--text)" }}>
@@ -153,17 +148,17 @@ export function ContactForm() {
             type="submit"
             disabled={state === "sending"}
             className="flex w-full items-center justify-center gap-2 rounded-full py-3 text-sm font-medium transition-opacity duration-200 disabled:opacity-60"
-            style={{ background: "var(--accent)", color: "var(--on-lime)", border: "none", cursor: "pointer" }}
+            style={{ background: "var(--accent)", color: "var(--on-accent)", border: "none", cursor: "pointer" }}
           >
             <Send className="h-4 w-4" />
             {state === "sending" ? "Sending…" : "Send message"}
           </button>
 
-          <p className="pt-1 text-center text-[12.5px]" style={{ color: state === "error" ? "#E5484D" : "var(--text-muted)" }}>
+          <p className="pt-1 text-center text-[12.5px]" style={{ color: state === "error" ? "var(--danger)" : "var(--text-muted)" }}>
             {state === "error" ? `${error} You can email me at ${EMAIL}.` : `Or email me directly at ${EMAIL}`}
           </p>
         </form>
       )}
-    </motion.div>
+    </div>
   )
 }

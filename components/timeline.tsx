@@ -1,17 +1,34 @@
 "use client"
 
-import { motion } from "framer-motion"
 
 const experiences = [
   {
-    title: "IT Specialist",
+    title: "IT Engineer",
     company: "Kontinental Establishment",
-    location: "Germany / United States · Remote",
-    period: "Apr 2023 – Present",
-    duration: "3 yr 6 mo",
-    shortPeriod: "2023–Now",
+    location: "Germany / United States · Hybrid",
+    period: "Jan 2025 – Present",
+    duration: "1 yr 10 mo",
+    shortPeriod: "2025–Now",
     current: true,
     type: "Full-time",
+    highlights: [
+      "Partnered with IT, DevOps, and network teams to build security solutions aligned with business needs.",
+      "Secured AWS and Azure cloud with encryption, access controls, and hardened configurations.",
+      "Deployed antivirus and endpoint detection to protect all devices on the network.",
+      "Configured and monitored firewalls, VPNs, and IDS/IPS to block external threats.",
+      "Ensured compliance with industry standards and data protection regulations through regular audits.",
+      "Implemented backup and disaster recovery strategies to guarantee business continuity.",
+    ],
+  },
+  {
+    title: "IT Engineer",
+    company: "TestSolutions GmbH",
+    location: "Frankfurt, Hesse, Germany · Hybrid",
+    period: "Feb 2023 – Dec 2024",
+    duration: "1 yr 11 mo",
+    shortPeriod: "2023–24",
+    current: false,
+    type: "Contract",
     highlights: [
       "Managed cloud (Azure, AWS) and on-prem infrastructure for 180+ employees across 12 global locations with zero unauthorized access incidents.",
       "Automated onboarding, provisioning, and patching (Power Automate, PowerShell, Python), eliminating 25 hrs/week of manual work across a $2.3M+ SaaS stack.",
@@ -21,9 +38,9 @@ const experiences = [
     ],
   },
   {
-    title: "DevSecOps Engineer",
+    title: "DevOps Engineer",
     company: "The University of Göttingen",
-    location: "Göttingen, Germany · On-site",
+    location: "Göttingen, Lower Saxony, Germany · On-site",
     period: "Apr 2024 – Sep 2024",
     duration: "6 mo",
     shortPeriod: "2024",
@@ -40,7 +57,7 @@ const experiences = [
   {
     title: "IT Specialist",
     company: "Liberty Books Pvt Ltd.",
-    location: "Karachi, Pakistan · On-site",
+    location: "Karāchi, Sindh, Pakistan · On-site",
     period: "Jun 2022 – Oct 2022",
     duration: "5 mo",
     shortPeriod: "2022",
@@ -57,8 +74,8 @@ const experiences = [
   },
   {
     title: "IT Specialist",
-    company: "KTDMC",
-    location: "Karachi, Pakistan · On-site",
+    company: "Karachi Tools, Dies & Moulds Centre (KTDMC)",
+    location: "Karāchi, Sindh, Pakistan · On-site",
     period: "Oct 2021 – May 2022",
     duration: "8 mo",
     shortPeriod: "2021–22",
@@ -74,7 +91,7 @@ const experiences = [
   {
     title: "IT Specialist",
     company: "Target Logistics International (Pvt.) Ltd",
-    location: "Karachi, Pakistan · On-site",
+    location: "Karāchi, Sindh, Pakistan · On-site",
     period: "Jul 2020 – Sep 2021",
     duration: "1 yr 3 mo",
     shortPeriod: "2020–21",
@@ -83,6 +100,7 @@ const experiences = [
     highlights: [
       "Managed IT infrastructure, network security, and technical support across multiple departments.",
       "Improved ticket resolution and remote support efficiency by 40% by leading IT helpdesk operations.",
+      "Installed, configured, and maintained Windows systems and enterprise applications.",
       "Managed firewalls, VPNs, and network infrastructure (DNS, DHCP, Wi-Fi optimization) for seamless connectivity.",
       "Administered Active Directory accounts, group policies, and security permissions in line with security standards.",
       "Implemented GDPR-aligned security policies with endpoint protection and multi-factor authentication (MFA).",
@@ -92,7 +110,7 @@ const experiences = [
   {
     title: "IT Engineer",
     company: "The Active Solutions",
-    location: "Karachi, Pakistan · On-site",
+    location: "Karāchi, Sindh, Pakistan · On-site",
     period: "Apr 2019 – Mar 2020",
     duration: "1 yr",
     shortPeriod: "2019–20",
@@ -112,12 +130,8 @@ const experiences = [
 /* ── One role on the vertical timeline ── */
 function TimelineEntry({ exp, index }: { exp: (typeof experiences)[0]; index: number }) {
   return (
-    <motion.div
+    <div
       className="relative pl-10 sm:pl-14"
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: Math.min(index, 3) * 0.05 }}
-      viewport={{ once: true, margin: "0px 0px -80px 0px" }}
     >
       {/* Marker on the rail */}
       <span
@@ -175,7 +189,7 @@ function TimelineEntry({ exp, index }: { exp: (typeof experiences)[0]; index: nu
           ))}
         </ul>
       </div>
-    </motion.div>
+    </div>
   )
 }
 

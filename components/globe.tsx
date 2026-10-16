@@ -305,7 +305,7 @@ export function Globe({ markers, className = "" }: { markers: Marker[]; classNam
               r="2"
               fill="#FFFFFF"
               filter="url(#f-glow)"
-              opacity={Math.sin(t * Math.PI) * 0.9 + 0.1}
+              opacity={(Math.sin(t * Math.PI) * 0.9 + 0.1).toFixed(3)}
             />
           )
         })()}

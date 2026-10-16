@@ -1,35 +1,13 @@
 "use client"
 
 import Link from "next/link"
-import { useRef } from "react"
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
-import { StackDiagram } from "@/components/stack-diagram"
+import { ProductionEnv } from "@/components/production-env"
 
 export function HeroSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const spotlightRef = useRef<HTMLDivElement>(null)
-
-  // Cursor-tracked spotlight — written straight to the DOM (no React state)
-  // so it costs nothing beyond a single style write per pointer move.
-  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
-    const el = sectionRef.current
-    const glow = spotlightRef.current
-    if (!el || !glow) return
-    const rect = el.getBoundingClientRect()
-    const x = ((e.clientX - rect.left) / rect.width) * 100
-    const y = ((e.clientY - rect.top) / rect.height) * 100
-    glow.style.background = `radial-gradient(600px circle at ${x}% ${y}%, rgb(var(--accent-rgb) / 0.06), transparent 60%)`
-  }
-
   return (
-    <section
-      ref={sectionRef}
-      onMouseMove={handleMouseMove}
-      className="relative flex min-h-screen items-center overflow-hidden"
-    >
-      <div ref={spotlightRef} className="pointer-events-none absolute inset-0 hidden sm:block" />
-
-      <div className="container relative z-10 grid grid-cols-1 items-center gap-14 px-4 pb-16 pt-32 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+    <section className="relative flex min-h-screen items-center overflow-hidden">
+      <div className="container relative z-10 grid grid-cols-1 items-center gap-14 px-4 pb-10 pt-28 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
         {/* ── Left: identity ── */}
         <div className="hero-in">
           <div className="mb-7 flex items-center gap-3">
@@ -77,13 +55,23 @@ export function HeroSection() {
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <a
               href="#contact"
-              className="btn-cyber-fill flex items-center gap-2 px-6 py-3"
+              className="btn-cyber-fill group flex items-center gap-3 py-2 pl-6 pr-2"
               style={{ fontSize: 15 }}
             >
-              Get in touch <ArrowRight className="h-4 w-4" />
+              Get in touch
+              <span className="btn-chev">
+                <ArrowRight className="h-4 w-4" />
+              </span>
             </a>
-            <a href="#projects" className="btn-cyber flex items-center px-6 py-3" style={{ fontSize: 15 }}>
+            <a
+              href="#projects"
+              className="btn-cyber group flex items-center gap-3 py-2 pl-6 pr-2"
+              style={{ fontSize: 15 }}
+            >
               View projects
+              <span className="btn-chev btn-chev-outline">
+                <ArrowRight className="h-4 w-4" />
+              </span>
             </a>
           </div>
 
@@ -108,7 +96,7 @@ export function HeroSection() {
 
         {/* ── Right: proof ── */}
         <div className="hero-in" style={{ animationDelay: "0.12s" }}>
-          <StackDiagram />
+          <ProductionEnv />
         </div>
       </div>
     </section>
