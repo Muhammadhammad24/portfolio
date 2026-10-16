@@ -1,11 +1,15 @@
 import type { Metadata } from 'next'
-// Inter is self-hosted so nothing blocks the first paint.
-import '@fontsource/inter/latin-300.css'
-import '@fontsource/inter/latin-400.css'
-import '@fontsource/inter/latin-500.css'
-import '@fontsource/inter/latin-600.css'
-import '@fontsource/inter/latin-700.css'
-import '@fontsource/inter/latin-800.css'
+// IBM Plex, self-hosted so nothing blocks the first paint. Plex was drawn for
+// engineering and technical documentation, and its sans and mono are one
+// family — which matters on a page that sets every measured figure in mono
+// next to the prose that explains it.
+import '@fontsource/ibm-plex-sans/latin-400.css'
+import '@fontsource/ibm-plex-sans/latin-500.css'
+import '@fontsource/ibm-plex-sans/latin-600.css'
+import '@fontsource/ibm-plex-sans/latin-700.css'
+import '@fontsource/ibm-plex-mono/latin-400.css'
+import '@fontsource/ibm-plex-mono/latin-500.css'
+import '@fontsource/ibm-plex-mono/latin-600.css'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -33,8 +37,8 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
-        <meta name="theme-color" content="#09090B" />
-        <meta name="msapplication-TileColor" content="#09090B" />
+        <meta name="theme-color" content="#040405" />
+        <meta name="msapplication-TileColor" content="#040405" />
       </head>
       <body className="antialiased overflow-x-hidden" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
         {children}

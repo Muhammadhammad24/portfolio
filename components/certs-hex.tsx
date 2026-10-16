@@ -120,7 +120,7 @@ export function CertsHex() {
   }))
 
   return (
-    <div className="mt-12">
+    <div className="section-body measure-wide">
       <HexGallery
         items={items}
         activeId={String(active)}
@@ -132,10 +132,9 @@ export function CertsHex() {
       <div
         role="tabpanel"
         key={active}
-        className="mt-6 rounded-2xl p-6"
-        style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}
+        className="card mt-6 p-6"
       >
-        <p className="text-[12px] uppercase" style={{ color: "var(--accent)", letterSpacing: "0.1em" }}>
+        <p className="eyebrow">
           {c.area} · {c.year}
         </p>
         <h3 className="mt-2 font-semibold" style={{ fontSize: 18, color: "var(--text)" }}>

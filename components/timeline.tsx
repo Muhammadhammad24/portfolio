@@ -110,7 +110,7 @@ const experiences = [
 ]
 
 /* ── One role on the vertical timeline ── */
-function TimelineEntry({ exp, index }: { exp: typeof experiences[0]; index: number }) {
+function TimelineEntry({ exp, index }: { exp: (typeof experiences)[0]; index: number }) {
   return (
     <motion.div
       className="relative pl-10 sm:pl-14"
@@ -129,32 +129,34 @@ function TimelineEntry({ exp, index }: { exp: typeof experiences[0]; index: numb
       />
 
       <div
-        className="panel p-5 pl-6"
+        className="card p-5 pl-6"
       >
-        <div className="mb-4 flex flex-col gap-1.5 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-          <div>
-            <div className="flex flex-wrap items-center gap-2">
-              <h3 className="text-base font-semibold" style={{ color: "var(--text)" }}>
-                {exp.title}
-              </h3>
-              {"type" in exp && exp.type && (
-                <span
-                  className="rounded-full px-2 py-0.5 text-[10px] font-medium"
-                  style={{ color: "var(--accent)", border: "1px solid rgba(91,141,239,0.3)" }}
-                >
-                  {exp.type}
-                </span>
-              )}
+        <div className="mb-4">
+          <div className="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="text-base font-semibold" style={{ color: "var(--text)" }}>
+                  {exp.title}
+                </h3>
+                {exp.type && (
+                  <span
+                    className="rounded-full px-2 py-0.5 text-[10px] font-medium"
+                    style={{ color: "var(--accent)", border: "1px solid rgb(var(--accent-rgb) / 0.3)" }}
+                  >
+                    {exp.type}
+                  </span>
+                )}
+              </div>
+              <p className="mt-1 text-sm" style={{ color: "var(--accent)" }}>
+                {exp.company}
+                <span style={{ color: "var(--text-muted)" }}> · {exp.location}</span>
+              </p>
             </div>
-            <p className="mt-1 text-sm" style={{ color: "var(--accent)" }}>
-              {exp.company}
-              <span style={{ color: "var(--text-muted)" }}> · {exp.location}</span>
-            </p>
+              <span className="shrink-0 text-xs whitespace-nowrap" style={{ color: "var(--text-muted)" }}>
+                {exp.period}
+                {exp.duration && <span style={{ color: "var(--text-muted)", opacity: 0.65 }}> · {exp.duration}</span>}
+              </span>
           </div>
-          <span className="shrink-0 text-xs whitespace-nowrap" style={{ color: "var(--text-muted)" }}>
-            {exp.period}
-            {exp.duration && <span style={{ color: "var(--border-dark)" }}> · {exp.duration}</span>}
-          </span>
         </div>
 
         <ul className="space-y-2">
@@ -179,7 +181,7 @@ function TimelineEntry({ exp, index }: { exp: typeof experiences[0]; index: numb
 
 export function Timeline() {
   return (
-    <div className="relative mx-auto max-w-3xl">
+    <div className="measure-wide relative">
       {/* Vertical rail */}
       <div
         className="absolute left-[15px] sm:left-[23px] top-2 bottom-2 w-px"

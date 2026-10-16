@@ -87,8 +87,7 @@ export function ContactForm() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
       viewport={{ once: true, margin: "0px 0px -60px 0px" }}
-      className="rounded-2xl p-6"
-      style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}
+      className="card p-6"
     >
       <h3 className="mb-6 text-xl font-semibold" style={{ color: "var(--text)" }}>
         Send a message
@@ -98,7 +97,7 @@ export function ContactForm() {
         <div className="flex flex-col items-center gap-3 py-10 text-center">
           <span
             className="flex h-11 w-11 items-center justify-center rounded-full"
-            style={{ background: "rgba(91,141,239,0.12)", border: "1px solid rgba(91,141,239,0.45)" }}
+            style={{ background: "rgb(var(--accent-rgb) / 0.12)", border: "1px solid rgb(var(--accent-rgb) / 0.45)" }}
           >
             <Check className="h-5 w-5" style={{ color: "var(--accent)" }} />
           </span>
@@ -124,7 +123,7 @@ export function ContactForm() {
               aria-label={field.placeholder}
               required={field.name !== "subject"}
               style={inputStyle}
-              onFocus={(e) => (e.target.style.borderColor = "rgba(91,141,239,0.5)")}
+              onFocus={(e) => (e.target.style.borderColor = "rgb(var(--accent-rgb) / 0.5)")}
               onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
             />
           ))}
@@ -136,7 +135,7 @@ export function ContactForm() {
             rows={5}
             required
             style={{ ...inputStyle, resize: "none" }}
-            onFocus={(e) => (e.target.style.borderColor = "rgba(91,141,239,0.5)")}
+            onFocus={(e) => (e.target.style.borderColor = "rgb(var(--accent-rgb) / 0.5)")}
             onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
           />
 
@@ -154,7 +153,7 @@ export function ContactForm() {
             type="submit"
             disabled={state === "sending"}
             className="flex w-full items-center justify-center gap-2 rounded-full py-3 text-sm font-medium transition-opacity duration-200 disabled:opacity-60"
-            style={{ background: "var(--accent)", color: "#fff", border: "none", cursor: "pointer" }}
+            style={{ background: "var(--accent)", color: "var(--on-lime)", border: "none", cursor: "pointer" }}
           >
             <Send className="h-4 w-4" />
             {state === "sending" ? "Sending…" : "Send message"}

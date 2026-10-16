@@ -12,8 +12,7 @@ interface GlassmorphicCardProps {
 export function GlassmorphicCard({ children, className = "" }: GlassmorphicCardProps) {
   return (
     <motion.div
-      className={`rounded-2xl p-6 ${className}`}
-      style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}
+      className={`card p-6 ${className}`}
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}

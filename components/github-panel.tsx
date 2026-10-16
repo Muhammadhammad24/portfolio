@@ -104,13 +104,41 @@ function formatBytes(n: number) {
   return String(n)
 }
 
+/** Shown when GitHub will not answer, so the section still has a floor. */
+function Unavailable() {
+  return (
+    <div className="card p-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <span className="eyebrow">GitHub</span>
+        <a
+          href={`https://github.com/${USER}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[13px] font-medium"
+          style={{ color: "var(--accent)" }}
+        >
+          github.com/{USER} ↗
+        </a>
+      </div>
+      <p className="mt-3 text-sm" style={{ lineHeight: 1.7, color: "var(--text-dim)", maxWidth: "62ch" }}>
+        The live read of this profile is rate limited right now — GitHub allows
+        sixty unauthenticated calls an hour. The repositories are public, so the
+        link above is the same data, first hand.
+      </p>
+    </div>
+  )
+}
+
 export async function GitHubPanel() {
   const [profile, repos] = await Promise.all([
     gh<Profile>(`https://api.github.com/users/${USER}`),
     gh<Repo[]>(`https://api.github.com/users/${USER}/repos?per_page=100&sort=pushed`),
   ])
 
-  if (!profile || !repos || repos.length === 0) return null
+  // Unauthenticated calls are capped at 60 an hour, so a rate limit is normal
+  // rather than exceptional. Returning null here blanked the whole section —
+  // heading, lede and all — which reads as a broken page. Say so instead.
+  if (!profile || !repos || repos.length === 0) return <Unavailable />
 
   const [langResults, commitCounts, days] = await Promise.all([
     Promise.all(repos.map((r) => gh<Record<string, number>>(r.languages_url))),
@@ -127,7 +155,7 @@ export async function GitHubPanel() {
   }
 
   const totalBytes = Object.values(totals).reduce((a, b) => a + b, 0)
-  if (totalBytes === 0) return null
+  if (totalBytes === 0) return <Unavailable />
 
   // An undercount looks like a fact but is a lie, so only show the total when
   // every repository reported in.
@@ -143,7 +171,7 @@ export async function GitHubPanel() {
   const otherPct = languages.slice(6).reduce((a, l) => a + l.pct, 0)
 
   // Tint steps of the accent so the chart matches the rest of the site.
-  const tint = (i: number) => `rgba(91,141,239,${(0.95 - i * 0.13).toFixed(2)})`
+  const tint = (i: number) => `rgb(var(--accent-rgb) / ${(0.95 - i * 0.13).toFixed(2)})`
 
   // Every tag below is one set on the repo itself; infrastructure, security
   // and AI tags are surfaced first because that is the work worth showing.
@@ -169,16 +197,15 @@ export async function GitHubPanel() {
   const level = (n: number) => {
     if (n === 0) return "var(--border-dark)"
     const ratio = n / maxDay
-    if (ratio > 0.66) return "rgba(91,141,239,0.95)"
-    if (ratio > 0.33) return "rgba(91,141,239,0.70)"
-    if (ratio > 0.12) return "rgba(91,141,239,0.45)"
-    return "rgba(91,141,239,0.25)"
+    if (ratio > 0.66) return "rgb(var(--accent-rgb) / 0.95)"
+    if (ratio > 0.33) return "rgb(var(--accent-rgb) / 0.70)"
+    if (ratio > 0.12) return "rgb(var(--accent-rgb) / 0.45)"
+    return "rgb(var(--accent-rgb) / 0.25)"
   }
 
   return (
     <div
-      className="overflow-hidden rounded-2xl"
-      style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}
+      className="card overflow-hidden"
     >
       {/* Header */}
       <div
@@ -186,13 +213,7 @@ export async function GitHubPanel() {
         style={{ borderBottom: "1px solid var(--border)" }}
       >
         <div className="flex min-w-0 items-center gap-2.5">
-          <span className="relative flex h-2 w-2 shrink-0">
-            <span
-              className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
-              style={{ background: "var(--accent)" }}
-            />
-            <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: "var(--accent)" }} />
-          </span>
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: "var(--accent)" }} />
           <a
             href={`https://github.com/${USER}`}
             target="_blank"
@@ -203,9 +224,7 @@ export async function GitHubPanel() {
             github.com/{USER}
           </a>
         </div>
-        <span className="shrink-0 text-xs" style={{ color: "var(--text-muted)" }}>
-          live from the API
-        </span>
+        <span className="eyebrow shrink-0">live from the API</span>
       </div>
 
       {/* Headline figures */}
@@ -222,7 +241,7 @@ export async function GitHubPanel() {
             className="px-5 py-3.5"
             style={{ borderLeft: i === 0 ? "none" : "1px solid var(--border)" }}
           >
-            <div className="font-semibold tabular-nums" style={{ fontSize: 24, color: "var(--accent)" }}>
+            <div className="num font-semibold" style={{ fontSize: 23, color: "var(--text)" }}>
               {s.value}
             </div>
             <div className="mt-0.5 text-[12px]" style={{ color: "var(--text-muted)" }}>
@@ -236,7 +255,10 @@ export async function GitHubPanel() {
       {days && days.length > 0 && (
         <div className="px-5 py-4" style={{ borderBottom: "1px solid var(--border)" }}>
           <div className="mb-2.5 text-[12.5px]" style={{ color: "var(--text-dim)" }}>
-            {days.reduce((a, d) => a + d.contributionCount, 0)} contributions this year
+            <span className="num" style={{ color: "var(--text)" }}>
+              {days.reduce((a, d) => a + d.contributionCount, 0)}
+            </span>{" "}
+            contributions this year
           </div>
           <div className="flex gap-[2px]">
             {Array.from({ length: Math.ceil(days.length / 7) }).map((_, w) => (
@@ -271,7 +293,7 @@ export async function GitHubPanel() {
             <span key={l.name} className="flex items-center gap-2 text-[12.5px]" style={{ color: "var(--text-dim)" }}>
               <span className="h-2 w-2 rounded-full" style={{ background: tint(i) }} />
               {l.name}
-              <span style={{ color: "var(--text-muted)" }}>{l.pct.toFixed(1)}%</span>
+              <span className="num" style={{ color: "var(--text-muted)" }}>{l.pct.toFixed(1)}%</span>
             </span>
           ))}
           {otherPct > 0 && (
@@ -304,13 +326,13 @@ export async function GitHubPanel() {
 
       <div
         className="flex items-center justify-between gap-3 px-5 py-3.5"
-        style={{ borderTop: "1px solid var(--border)", background: "var(--bg-elevated)" }}
+        style={{ borderTop: "1px solid var(--border)", background: "rgba(255,255,255,0.015)" }}
       >
         <span className="text-[12.5px]" style={{ color: "var(--text-muted)" }}>
-          Pushing code since {since}
+          Pushing code since <span className="num">{since}</span>
         </span>
         <span className="text-[12.5px]" style={{ color: "var(--text-muted)" }}>
-          last push {new Date(lastPush).toISOString().slice(0, 10)}
+          last push <span className="num">{new Date(lastPush).toISOString().slice(0, 10)}</span>
         </span>
       </div>
     </div>

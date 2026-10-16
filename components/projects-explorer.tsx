@@ -1,8 +1,4 @@
-"use client"
-
-import { useState } from "react"
-import { ProjectCard } from "@/components/project-card"
-import { HexGallery, type HexItem } from "@/components/hex-gallery"
+import { ArrowUpRight } from "lucide-react"
 
 type Project = {
   short: string
@@ -124,47 +120,70 @@ const PROJECTS: Project[] = [
 ]
 
 /**
- * Projects as a honeycomb, like the skills section: all six visible at once,
- * the selected one opens in full underneath.
+ * Six projects, six links.
+ *
+ * This used to open a full panel under the grid — a diagram, a description, a
+ * column of build notes. It was a lot of reading for something the visitor can
+ * simply go and look at, and it buried the one thing they actually want, which
+ * is the repository. So each card is the link now, and carries only what helps
+ * someone decide whether to click: what it is, and the one number it proved.
  */
 export function ProjectsExplorer() {
-  const [active, setActive] = useState(0)
-  const p = PROJECTS[active]
-  const items: HexItem[] = PROJECTS.map((proj, i) => ({
-    id: String(i),
-    title: proj.short,
-    sub: proj.category,
-    badge: proj.demoUrl ? "Live" : "Open source",
-  }))
-
   return (
-    <div className="mt-12 max-w-5xl mx-auto">
-      <HexGallery items={items} activeId={String(active)} onSelect={(id) => setActive(Number(id))} label="Projects" />
+    <div className="measure-wide section-body grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {PROJECTS.map((p) => {
+        const href = p.demoUrl ?? p.repoUrl
+        if (!href) return null
+        return (
+          <a
+            key={p.title}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="card group flex flex-col p-5"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <h3 className="font-semibold leading-snug" style={{ fontSize: 16, color: "var(--text)" }}>
+                {p.short}
+              </h3>
+              <ArrowUpRight
+                className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                style={{ color: "var(--text-muted)" }}
+                aria-hidden="true"
+              />
+            </div>
 
-      <div className="flex items-center justify-center gap-3 mt-12 mb-6" aria-hidden="true">
-        <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to right, transparent, rgba(91,141,239,0.35))" }} />
-        <span
-          className="text-[11px] tracking-wide uppercase px-3 py-1 rounded-sm"
-          style={{ color: "var(--lime)", border: "1px solid rgba(91,141,239,0.2)", background: "rgba(91,141,239,0.03)" }}
-        >
-          {String(active + 1).padStart(2, "0")} / {String(PROJECTS.length).padStart(2, "0")}
-        </span>
-        <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to left, transparent, rgba(91,141,239,0.35))" }} />
-      </div>
+            <p className="mt-1 text-[12.5px]" style={{ color: "var(--text-muted)" }}>
+              {p.category}
+            </p>
 
-      <div id="project-panel" role="tabpanel" key={active} className="max-w-3xl mx-auto">
-        <ProjectCard
-          number={String(active + 1).padStart(2, "0")}
-          title={p.title}
-          description={p.description}
-          metric={p.metric}
-          metricLabel={p.metricLabel}
-          features={p.features}
-          tags={p.tags}
-          repoUrl={p.repoUrl}
-          demoUrl={p.demoUrl}
-        />
-      </div>
+            {/* The single figure the project proved. */}
+            {p.metric && (
+              <div className="mt-5 flex items-baseline gap-2">
+                <span className="num text-[15px] font-semibold" style={{ color: "var(--text)" }}>
+                  {p.metric}
+                </span>
+                {p.metricLabel && (
+                  <span className="text-[11.5px]" style={{ color: "var(--text-muted)" }}>
+                    {p.metricLabel}
+                  </span>
+                )}
+              </div>
+            )}
+
+            <span
+              className="mt-4 self-start rounded-full px-2 py-0.5 text-[10px] font-medium uppercase"
+              style={{
+                letterSpacing: "0.08em",
+                color: "var(--text-muted)",
+                border: "1px solid var(--border)",
+              }}
+            >
+              {p.demoUrl ? "Live" : "Open source"}
+            </span>
+          </a>
+        )
+      })}
     </div>
   )
 }

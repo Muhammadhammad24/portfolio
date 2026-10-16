@@ -18,7 +18,7 @@ export function HeroSection() {
     const rect = el.getBoundingClientRect()
     const x = ((e.clientX - rect.left) / rect.width) * 100
     const y = ((e.clientY - rect.top) / rect.height) * 100
-    glow.style.background = `radial-gradient(600px circle at ${x}% ${y}%, rgba(91,141,239,0.06), transparent 60%)`
+    glow.style.background = `radial-gradient(600px circle at ${x}% ${y}%, rgb(var(--accent-rgb) / 0.06), transparent 60%)`
   }
 
   return (
@@ -56,7 +56,7 @@ export function HeroSection() {
             style={{
               fontSize: "clamp(44px, 6.5vw, 76px)",
               lineHeight: 1.05,
-              letterSpacing: "-0.03em",
+              letterSpacing: "-0.04em",
               color: "var(--text)",
             }}
           >

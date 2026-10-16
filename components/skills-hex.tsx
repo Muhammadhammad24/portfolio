@@ -54,18 +54,24 @@ const GROUPS: Group[] = [
 
 export function SkillsHex() {
   return (
-    <div className="mt-10">
-      <p className="mb-12 text-[13px]" style={{ color: "var(--text-muted)" }}>
+    <div className="section-body measure-wide">
+      <p className="mb-7 text-[13px]" style={{ color: "var(--text-muted)" }}>
         Brighter names are the ones in my hands most days.
       </p>
 
-      <div className="max-w-4xl">
+      {/* The six layers carry the hero's own L6→L1 index, so the stack up
+          there and the list down here are visibly the same six things. */}
+      <div className="card overflow-hidden">
         {GROUPS.map((g, i) => (
           <div
             key={g.layer}
-            className="grid grid-cols-1 gap-2 py-7 sm:grid-cols-[240px_1fr] sm:gap-10"
+            className="grid grid-cols-1 gap-2 px-5 py-6 sm:grid-cols-[32px_230px_1fr] sm:gap-6 sm:px-7"
             style={{ borderTop: i === 0 ? "none" : "1px solid var(--border)" }}
           >
+            <span className="num hidden pt-[3px] text-[11px] sm:block" style={{ color: "var(--text-muted)" }}>
+              L{GROUPS.length - i}
+            </span>
+
             <div>
               <h3 className="font-medium" style={{ fontSize: 15.5, color: "var(--text)" }}>
                 {g.layer}

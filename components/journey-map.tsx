@@ -1,30 +1,25 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { Globe, type Marker } from "./globe"
 
 /**
- * The route from Karachi to Göttingen, plotted on a bare lat/long graticule
- * rather than a drawn coastline: the two cities sit at their true projected
- * coordinates, so the geometry is honest and nothing is decorative invention.
+ * The route from Karachi to Göttingen on a real globe: both cities sit at
+ * their true coordinates and the line between them is the actual great
+ * circle, which is why it bows north rather than running straight across.
  */
 
-const W = 100
-const H = 50
+const MARKERS: Marker[] = [
+  { label: "Karachi", lat: 24.8607, lon: 67.0011, kind: "origin" },
+  { label: "Göttingen", lat: 51.5413, lon: 9.9158, kind: "home" },
+]
 
-// Equirectangular projection: x = (lon+180)/360, y = (90-lat)/180
-const KARACHI = { label: "Karachi", country: "Pakistan", lat: 24.8607, lon: 67.0011 }
-const GOTTINGEN = { label: "Göttingen", country: "Germany", lat: 51.5413, lon: 9.9158 }
-
-const project = (lat: number, lon: number) => ({
-  x: ((lon + 180) / 360) * W,
-  y: ((90 - lat) / 180) * H,
-})
-
-const A = project(KARACHI.lat, KARACHI.lon)
-const B = project(GOTTINGEN.lat, GOTTINGEN.lon)
-
-// Arc bowing north, the way a flight path looks on a flat map.
-const ARC = `M ${A.x} ${A.y} Q ${(A.x + B.x) / 2} ${Math.min(A.y, B.y) - 9} ${B.x} ${B.y}`
+const FACTS = [
+  { k: "Distance", v: "5,617 km" },
+  { k: "Karachi", v: "24.86°N 67.00°E" },
+  { k: "Göttingen", v: "51.54°N 9.92°E" },
+  { k: "Elapsed", v: "2016 → now" },
+]
 
 type Step = {
   year: string
@@ -97,66 +92,44 @@ const STEPS: Step[] = [
 export function JourneyMap() {
   return (
     <div className="space-y-10">
-      {/* ── The route ── */}
+      {/* ── The route, on the planet it was actually walked across ── */}
       <div
-        className="overflow-hidden rounded-2xl px-5 py-6 sm:px-8"
-        style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}
+        className="card overflow-hidden"
       >
-        <div className="mb-5 flex flex-wrap items-baseline justify-between gap-2">
-          <span
-            className="text-[13px] font-medium uppercase"
-            style={{ color: "var(--accent)", letterSpacing: "0.12em" }}
-          >
-            Karachi → Göttingen
-          </span>
-          <span className="text-[12.5px]" style={{ color: "var(--text-muted)" }}>
-            5,617 km · one career, carried across
-          </span>
+        <div className="grid grid-cols-1 items-center gap-2 p-5 sm:p-7 lg:grid-cols-[1.05fr_1fr] lg:gap-8">
+          {/* Globe */}
+          <div className="relative">
+            <Globe markers={MARKERS} className="mx-auto" />
+            <p className="mt-1 text-center text-[11.5px]" style={{ color: "var(--text-muted)" }}>
+              Drag to spin<span className="hidden sm:inline"> · hover to hold</span>
+            </p>
+          </div>
+
+          {/* The numbers beside it, on their own left edge */}
+          <div>
+            <span className="eyebrow">Karachi → Göttingen</span>
+            <h3 className="mt-3 font-semibold" style={{ fontSize: 26, lineHeight: 1.2, color: "var(--text)" }}>
+              One career, carried 5,617 km
+            </h3>
+            <p className="mt-3 text-sm" style={{ lineHeight: 1.7, color: "var(--text-dim)" }}>
+              Nine years that started on a helpdesk in Karachi and now run cloud
+              infrastructure out of Germany. Same job, longer reach.
+            </p>
+
+            <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5">
+              {FACTS.map((f) => (
+                <div key={f.k}>
+                  <dt className="text-[11px] uppercase" style={{ letterSpacing: "0.1em", color: "var(--text-muted)" }}>
+                    {f.k}
+                  </dt>
+                  <dd className="mt-1 text-[14.5px] tabular-nums" style={{ color: "var(--text)" }}>
+                    {f.v}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
-
-        <svg viewBox={`30 0 50 32`} className="w-full" style={{ maxHeight: 260 }} aria-label="Route from Karachi to Göttingen">
-          {/* Graticule: every 10° of latitude and longitude */}
-          <g stroke="var(--border-dark)" strokeWidth="0.08">
-            {Array.from({ length: 19 }).map((_, i) => (
-              <line key={`v${i}`} x1={(i * 10 * W) / 180} y1="0" x2={(i * 10 * W) / 180} y2={H} />
-            ))}
-            {Array.from({ length: 19 }).map((_, i) => (
-              <line key={`h${i}`} x1="0" y1={(i * 10 * H) / 180} x2={W} y2={(i * 10 * H) / 180} />
-            ))}
-          </g>
-
-          {/* The route itself */}
-          <motion.path
-            d={ARC}
-            fill="none"
-            stroke="var(--accent)"
-            strokeWidth="0.35"
-            strokeLinecap="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-          />
-
-          {/* Origin */}
-          <circle cx={A.x} cy={A.y} r="0.55" fill="var(--text-muted)" />
-          <text x={A.x} y={A.y + 2.4} textAnchor="middle" fontSize="1.5" fill="var(--text-dim)">
-            Karachi, Pakistan
-          </text>
-          <text x={A.x} y={A.y + 4.1} textAnchor="middle" fontSize="1.1" fill="var(--text-muted)">
-            {KARACHI.lat.toFixed(2)}°N {KARACHI.lon.toFixed(2)}°E
-          </text>
-
-          {/* Destination */}
-          <circle cx={B.x} cy={B.y} r="1.5" fill="rgba(91,141,239,0.18)" />
-          <circle cx={B.x} cy={B.y} r="0.6" fill="var(--accent)" />
-          <text x={B.x} y={B.y - 4.2} textAnchor="middle" fontSize="1.5" fill="var(--text)">
-            Göttingen, Germany
-          </text>
-          <text x={B.x} y={B.y - 2.7} textAnchor="middle" fontSize="1.1" fill="var(--text-muted)">
-            {GOTTINGEN.lat.toFixed(2)}°N {GOTTINGEN.lon.toFixed(2)}°E
-          </text>
-        </svg>
       </div>
 
       {/* ── Step by step ── */}

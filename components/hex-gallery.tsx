@@ -14,7 +14,7 @@ export type HexItem = {
   dots?: number
 }
 
-const ACCENT = "#5B8DEF"
+const ACCENT = "var(--accent)"
 
 function Card({ item, active, onSelect }: { item: HexItem; active: boolean; onSelect: () => void }) {
   return (
@@ -24,7 +24,7 @@ function Card({ item, active, onSelect }: { item: HexItem; active: boolean; onSe
       aria-selected={active}
       onClick={onSelect}
       data-active={active}
-      className="panel flex flex-col items-start gap-2 p-4 pl-5 text-left outline-none"
+      className="card flex flex-col items-start gap-2 p-4 pl-5 text-left outline-none"
     >
       {typeof item.dots === "number" && (
         <span className="flex gap-1" aria-hidden="true">
@@ -54,7 +54,7 @@ function Card({ item, active, onSelect }: { item: HexItem; active: boolean; onSe
               fontSize: 10,
               letterSpacing: "0.04em",
               color: active ? ACCENT : "var(--text-muted)",
-              border: `1px solid ${active ? "rgba(91,141,239,0.35)" : "var(--border)"}`,
+              border: `1px solid ${active ? "rgb(var(--accent-rgb) / 0.35)" : "var(--border)"}`,
             }}
           >
             {item.badge}

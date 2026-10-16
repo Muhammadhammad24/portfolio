@@ -106,7 +106,7 @@ export function FloatingNav() {
                 className="ml-2 rounded-full px-4 py-1.5 text-[13px] font-medium transition-colors duration-200"
                 style={{
                   background: "var(--accent)",
-                  color: "#fff",
+                  color: "var(--on-lime)",
                   border: "none",
                   cursor: "pointer",
                 }}

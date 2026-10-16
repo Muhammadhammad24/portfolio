@@ -8,7 +8,6 @@ import { FloatingNav } from "@/components/floating-nav"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { SectionHeading } from "@/components/section-heading"
 import { GlassmorphicCard } from "@/components/glassmorphic-card"
-import { StatusBoard } from "@/components/status-board"
 import { GitHubPanel } from "@/components/github-panel"
 import { SkillsHex } from "@/components/skills-hex"
 import { CertsHex } from "@/components/certs-hex"
@@ -20,16 +19,8 @@ import { CommandPalette } from "@/components/command-palette"
 export default function Portfolio() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
-      {/* ── Premium background system ── */}
-      {/* Ambient orbs — reduced for performance */}
-      <div className="bg-orbs">
-        <div className="bg-orb bg-orb-1" />
-        <div className="bg-orb bg-orb-2" />
-        <div className="bg-orb bg-orb-3" />
-      </div>
-      {/* Corner accent glows */}
-      <div className="bg-corner-glow bg-corner-tl" />
-      <div className="bg-corner-glow bg-corner-br" />
+      {/* The ruled sheet everything is drawn on */}
+      <div className="sheet-grid" aria-hidden="true" />
       <ScrollProgress />
       <FloatingNav />
       <CommandPalette />
@@ -38,29 +29,28 @@ export default function Portfolio() {
       <HeroSection />
 
       {/* ═══════════ TRACK RECORD ═══════════ */}
-      <SectionReveal className="py-28 relative">
+      <SectionReveal className="section">
         <div className="container">
-          <SectionHeading title="Six years, zero breaches" subtitle="Track record" align="left" />
-          <p className="mt-6 max-w-2xl" style={{ fontSize: 17, lineHeight: 1.7, color: 'var(--text-dim)' }}>
+          <SectionHeading title="Six years, zero breaches" subtitle="Track record" />
+          <p className="section-lede">
             Those six layers are not a wish list. I have run them for a government body in
             Karachi, a logistics firm, a bookstore chain and now a company spread over twelve
-            countries. Below are the numbers that work produced, alongside my GitHub read
-            straight from their API, so you can check that half yourself.
+            countries. Below is my GitHub, read live from their API — not a claim about my
+            work, just the work.
           </p>
 
-          <div className="mt-12 grid grid-cols-1 items-start gap-5 lg:grid-cols-2">
-            <StatusBoard />
+          <div className="section-body measure-wide">
             <GitHubPanel />
           </div>
         </div>
       </SectionReveal>
 
       {/* ═══════════ ABOUT ═══════════ */}
-      <SectionReveal id="about" className="py-28 relative">
+      <SectionReveal id="about" className="section">
         <div className="container">
-          <SectionHeading title="About me" subtitle="Background" align="left" />
+          <SectionHeading title="About me" subtitle="Background" />
 
-          <div className="mt-14 grid grid-cols-1 gap-14 lg:grid-cols-[1fr_1.4fr]">
+          <div className="section-body measure-wide grid grid-cols-1 gap-12 lg:grid-cols-[300px_1fr] lg:gap-16">
 
             {/* ── Left: portrait + contact ── */}
             <div>
@@ -106,7 +96,7 @@ export default function Portfolio() {
 
               {/* Education */}
               <div>
-                <h3 className="mb-5 text-[13px] font-medium uppercase" style={{ color: 'var(--accent)', letterSpacing: '0.12em' }}>
+                <h3 className="eyebrow mb-5">
                   Education
                 </h3>
                 <div className="space-y-5">
@@ -137,7 +127,7 @@ export default function Portfolio() {
 
               {/* Languages */}
               <div>
-                <h3 className="mb-5 text-[13px] font-medium uppercase" style={{ color: 'var(--accent)', letterSpacing: '0.12em' }}>
+                <h3 className="eyebrow mb-5">
                   Languages
                 </h3>
                 <div className="flex flex-wrap gap-x-10 gap-y-3">
@@ -159,10 +149,10 @@ export default function Portfolio() {
       </SectionReveal>
 
       {/* ═══════════ SKILLS — tabbed categories + circular rings ═══════════ */}
-      <SectionReveal id="skills" className="py-28 relative">
+      <SectionReveal id="skills" className="section">
         <div className="container">
-          <SectionHeading title="Skills" subtitle="Expertise" align="left" />
-          <p className="mt-6 max-w-2xl" style={{ fontSize: 17, lineHeight: 1.7, color: 'var(--text-dim)' }}>
+          <SectionHeading title="Skills" subtitle="Expertise" />
+          <p className="section-lede">
             Grouped by the same six layers as the stack above, and kept to what I actually reach for.
           </p>
           <SkillsHex />
@@ -170,10 +160,10 @@ export default function Portfolio() {
       </SectionReveal>
 
       {/* ═══════════ CERTIFICATIONS — live-site card style ═══════════ */}
-      <SectionReveal id="certifications" className="py-28 relative">
+      <SectionReveal id="certifications" className="section">
         <div className="container">
-          <SectionHeading title="Certifications" subtitle="Credentials" align="left" />
-          <p className="mt-6 max-w-2xl" style={{ fontSize: 17, lineHeight: 1.7, color: 'var(--text-dim)' }}>
+          <SectionHeading title="Certifications" subtitle="Credentials" />
+          <p className="section-lede">
             Pick one to read what it covered. The Coursera ones link out so you can check them yourself rather than take my word for it.
           </p>
           <CertsHex />
@@ -182,30 +172,30 @@ export default function Portfolio() {
         </div>
       </SectionReveal>
       {/* ═══════════ PROJECTS ═══════════ */}
-      <SectionReveal id="projects" className="py-28 relative">
+      <SectionReveal id="projects" className="section">
         <div className="container relative z-10">
-          <SectionHeading title="Projects" subtitle="Work" align="left" />
+          <SectionHeading title="Projects" subtitle="Work" />
 
           <ProjectsExplorer />
         </div>
       </SectionReveal>
 
       {/* ═══════════ EXPERIENCE ═══════════ */}
-      <SectionReveal id="experience" className="py-28 relative">
+      <SectionReveal id="experience" className="section">
         <div className="container">
-          <SectionHeading title="How I got here" subtitle="The road" align="left" />
-          <p className="mt-6 max-w-2xl" style={{ fontSize: 17, lineHeight: 1.7, color: 'var(--text-dim)' }}>
+          <SectionHeading title="How I got here" subtitle="The road" />
+          <p className="section-lede">
             Nine years, two countries, six employers. It started on a helpdesk in Karachi
             and it has been the same job ever since, only the number of people depending
             on it keeps going up.
           </p>
 
-          <div className="mt-12">
+          <div className="section-body measure-wide">
             <JourneyMap />
           </div>
 
-          <div className="mt-24">
-            <h3 className="mb-10 text-[13px] font-medium uppercase" style={{ color: 'var(--accent)', letterSpacing: '0.12em' }}>
+          <div className="mt-20">
+            <h3 className="eyebrow mb-10">
               The detail
             </h3>
             <Timeline />
@@ -214,10 +204,10 @@ export default function Portfolio() {
       </SectionReveal>
 
       {/* ═══════════ CONTACT ═══════════ */}
-      <SectionReveal id="contact" className="py-28 relative">
+      <SectionReveal id="contact" className="section">
         <div className="container relative z-10">
-          <SectionHeading title="Get in touch" subtitle="Contact" align="left" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mt-12">
+          <SectionHeading title="Get in touch" subtitle="Contact" />
+          <div className="section-body measure-wide grid grid-cols-1 gap-6 md:grid-cols-2 items-start">
             <GlassmorphicCard>
               <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--text)' }}>
                 Let's connect

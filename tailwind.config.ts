@@ -15,7 +15,9 @@ const config = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        // One page column. Everything — heading, prose, cards, diagrams —
+        // shares these exact edges, so nothing can drift left or right.
+        "2xl": "1240px",
       },
     },
     extend: {

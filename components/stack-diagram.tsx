@@ -60,7 +60,7 @@ export function StackDiagram() {
   return (
     <div className="w-full">
       <div className="mb-5 flex items-baseline justify-between gap-4">
-        <span className="text-[13px] font-medium uppercase" style={{ color: "var(--accent)", letterSpacing: "0.12em" }}>
+        <span className="eyebrow">
           What I run
         </span>
         <span className="text-[12.5px]" style={{ color: "var(--text-muted)" }}>
@@ -87,13 +87,13 @@ export function StackDiagram() {
               tabIndex={0}
               className="group relative mb-[6px] cursor-pointer rounded-lg outline-none transition-all duration-300"
               style={{
-                background: on ? "rgba(91,141,239,0.08)" : "var(--card-bg)",
-                border: `1px solid ${on ? "rgba(91,141,239,0.45)" : "var(--border)"}`,
+                background: on ? "rgb(var(--accent-rgb) / 0.08)" : "var(--card-bg)",
+                border: `1px solid ${on ? "rgb(var(--accent-rgb) / 0.45)" : "var(--border)"}`,
                 transform: on ? "translateX(10px)" : "none",
                 opacity: dimmed ? 0.45 : 1,
                 // fake slab thickness so the layers read as a physical stack
                 boxShadow: on
-                  ? "0 6px 18px rgba(0,0,0,0.45), 0 2px 0 0 rgba(91,141,239,0.25)"
+                  ? "0 6px 18px rgba(0,0,0,0.45), 0 2px 0 0 rgb(var(--accent-rgb) / 0.25)"
                   : "0 2px 0 0 rgba(255,255,255,0.03)",
               }}
             >
