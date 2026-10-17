@@ -36,7 +36,7 @@ const STEPS: Step[] = [
   {
     year: "2016",
     place: "Karachi, Pakistan",
-    title: "B.Sc. Computer Science",
+    title: "B.Sc. Computational Mathematics",
     line: "University of Karachi. Networks and databases were the parts that stuck.",
   },
   {
