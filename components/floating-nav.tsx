@@ -41,11 +41,16 @@ export function FloatingNav() {
   }, [])
 
   // The pill lands on the destination straight away, then the observer is
-  // let back in once the travel is over.
-  function goTo(id: string) {
+  // let back in once the travel is over. Called from a real anchor, so a
+  // click still reaches the section if this handler never runs.
+  function goTo(e: React.MouseEvent, id: string) {
+    // Let the browser handle a modified click (new tab, new window).
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
+    e.preventDefault()
     travelling.current = true
     setActive(id)
     scrollToSection(id)
+    history.replaceState(null, "", `#${id}`)
     window.setTimeout(() => {
       travelling.current = false
     }, 700)
@@ -85,10 +90,11 @@ export function FloatingNav() {
               </button>
 
               {NAV_ITEMS.map((item) => (
-                <button
+                <a
                   key={item.id}
-                  onClick={() => goTo(item.id)}
-                  className="relative rounded-full px-4 py-1.5 text-[14.5px] transition-colors duration-200"
+                  href={`#${item.id}`}
+                  onClick={(e) => goTo(e, item.id)}
+                  className="relative rounded-full px-4 py-1.5 text-[14.5px] no-underline transition-colors duration-200"
                   style={{
                     color: active === item.id ? "var(--text)" : "var(--text-muted)",
                     background: "none",
@@ -105,12 +111,13 @@ export function FloatingNav() {
                     />
                   )}
                   <span className="relative z-10">{item.name}</span>
-                </button>
+                </a>
               ))}
 
-              <button
-                onClick={() => goTo("contact")}
-                className="group ml-2 flex items-center gap-2 rounded-full py-1 pl-4 pr-1 text-[14.5px] font-medium transition-colors duration-200"
+              <a
+                href="#contact"
+                onClick={(e) => goTo(e, "contact")}
+                className="group ml-2 flex items-center gap-2 rounded-full py-1 pl-4 pr-1 text-[14.5px] font-medium no-underline transition-colors duration-200"
                 style={{
                   background: "var(--accent)",
                   color: "var(--on-accent)",
@@ -122,7 +129,7 @@ export function FloatingNav() {
                 <span className="btn-chev btn-chev-sm">
                   <ArrowRight className="h-3 w-3" />
                 </span>
-              </button>
+              </a>
             </div>
           )}
         </div>
@@ -142,16 +149,17 @@ export function FloatingNav() {
             <div className="space-y-6 text-center">
               {[...NAV_ITEMS, { name: "Contact", id: "contact" }].map((item) => (
                 <div key={item.id}>
-                  <button
-                    onClick={() => {
+                  <a
+                    href={`#${item.id}`}
+                    onClick={(e) => {
                       setIsOpen(false)
-                      goTo(item.id)
+                      goTo(e, item.id)
                     }}
-                    className="text-2xl font-medium"
+                    className="text-2xl font-medium no-underline"
                     style={{ color: "var(--text)", background: "none", border: "none", cursor: "pointer" }}
                   >
                     {item.name}
-                  </button>
+                  </a>
                 </div>
               ))}
             </div>
