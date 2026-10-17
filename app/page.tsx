@@ -181,24 +181,23 @@ export default function Portfolio() {
       {/* ═══════════ EXPERIENCE ═══════════ */}
       <SectionReveal className="section">
         <div className="container">
-          <SectionHeading title="Experience" subtitle="The road" />
+          <SectionHeading title="How I got here" subtitle="The road" />
           <p className="section-lede">
             Seven years, two countries, seven employers. It started on a helpdesk in Karachi
             and it has been the same job ever since, only the number of people depending
             on it keeps going up.
           </p>
 
-          {/* The nav's Experience lands here, on the roles themselves, rather
-              than on the heading above them. */}
-          <div id="experience" className="section-body measure-wide">
-            <Timeline />
+          <div className="section-body measure-wide">
+            <JourneyMap />
           </div>
 
-          <div className="mt-20">
+          {/* The nav's Experience lands here, on the roles themselves. */}
+          <div id="experience" className="mt-20">
             <h3 className="eyebrow mb-10">
-              How I got here
+              The detail
             </h3>
-            <JourneyMap />
+            <Timeline />
           </div>
         </div>
       </SectionReveal>
