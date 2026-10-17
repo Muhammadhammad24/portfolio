@@ -121,7 +121,7 @@
   font-weight: 700;
   border: 1px solid var(--accent);
   border-radius: var(--radius-pill);
-  transition: all 0.22s ease;
+  transition: background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
   font-family: 'IBM Plex Sans', sans-serif;
   letter-spacing: 0.01em;
 }
@@ -144,7 +144,7 @@
   font-family: 'IBM Plex Sans', sans-serif;
   letter-spacing: 0.01em;
   border-radius: var(--radius-pill);
-  transition: all 0.22s ease;
+  transition: background 0.22s ease, border-color 0.22s ease, color 0.22s ease, transform 0.22s ease;
   overflow: hidden;
 }
 .btn-cyber:hover {
@@ -190,7 +190,7 @@
 .social-icon-btn {
   border: 1px solid rgba(255,255,255,0.14);
   color: rgba(255,255,255,0.45);
-  transition: all 0.22s;
+  transition: border-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
 }
 .social-icon-btn:hover {
   border-color: var(--accent);

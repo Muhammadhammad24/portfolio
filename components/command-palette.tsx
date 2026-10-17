@@ -219,8 +219,6 @@ export function CommandPalette() {
           background: "var(--nav-bg)",
           border: "1px solid var(--border)",
           color: "var(--text-muted)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
         }}
       >
         <Search className="h-3.5 w-3.5" />

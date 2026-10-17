@@ -161,13 +161,22 @@ export function Globe({ markers, className = "" }: { markers: Marker[]; classNam
 
     let raf = 0
     let last = performance.now()
+    // The planet swings about a degree a second. Re-projecting every ring and
+    // re-rastering the glow 60 times a second buys nothing the eye can see,
+    // and it is main-thread work that lands in the middle of a scroll.
+    const STEP = 1000 / 30
     const tick = (now: number) => {
-      const dt = now - last
-      last = now
       if (!onScreen || document.hidden) {
+        last = now
         raf = requestAnimationFrame(tick)
         return
       }
+      const dt = now - last
+      if (dt < STEP) {
+        raf = requestAnimationFrame(tick)
+        return
+      }
+      last = now
       // The pulse keeps travelling even while the planet is held still.
       trip.current = (trip.current + dt * 0.00018) % 1.35
       if (!paused.current) {
