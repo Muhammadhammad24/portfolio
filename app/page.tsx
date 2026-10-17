@@ -179,7 +179,7 @@ export default function Portfolio() {
       </SectionReveal>
 
       {/* ═══════════ EXPERIENCE ═══════════ */}
-      <SectionReveal id="experience" className="section">
+      <SectionReveal className="section">
         <div className="container">
           <SectionHeading title="Experience" subtitle="The road" />
           <p className="section-lede">
@@ -188,8 +188,9 @@ export default function Portfolio() {
             on it keeps going up.
           </p>
 
-          {/* The roles themselves lead: this is what the nav promises. */}
-          <div className="section-body measure-wide">
+          {/* The nav's Experience lands here, on the roles themselves, rather
+              than on the heading above them. */}
+          <div id="experience" className="section-body measure-wide">
             <Timeline />
           </div>
 
