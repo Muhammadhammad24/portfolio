@@ -143,6 +143,7 @@ export function CommandPalette() {
   const [copied, setCopied] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
+  const opener = useRef<HTMLElement | null>(null)
 
   const close = useCallback(() => setOpen(false), [])
   const markCopied = useCallback((id: string) => {
@@ -159,12 +160,15 @@ export function CommandPalette() {
     )
   }, [query])
 
-  // Global shortcut
+  // Global shortcut. Escape is handled here rather than on the search field
+  // because focus can be on any row by then, and the panel shows an "esc" cap.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault()
         setOpen((v) => !v)
+      } else if (e.key === "Escape") {
+        setOpen(false)
       }
     }
     window.addEventListener("keydown", onKey)
@@ -178,6 +182,10 @@ export function CommandPalette() {
     setCursor(0)
     const prev = document.body.style.overflow
     document.body.style.overflow = "hidden"
+    // Whatever opened the panel gets focus back, but only once the panel has
+    // finished animating out — restoring it earlier is undone when React
+    // removes the still-focused search field.
+    opener.current = document.activeElement as HTMLElement | null
     const id = window.setTimeout(() => inputRef.current?.focus(), 20)
     return () => {
       document.body.style.overflow = prev
@@ -189,6 +197,30 @@ export function CommandPalette() {
   useEffect(() => {
     setCursor((c) => Math.min(c, Math.max(results.length - 1, 0)))
   }, [results.length])
+
+  // The list scrolls, so arrowing past its bottom edge has to bring the row
+  // along rather than highlighting something nobody can see.
+  useEffect(() => {
+    listRef.current?.querySelector<HTMLElement>(`[data-row="${cursor}"]`)
+      ?.scrollIntoView({ block: "nearest" })
+  }, [cursor])
+
+  // Tab must cycle inside the panel: behind it the page is dimmed and scroll
+  // locked, so focus that walks out of the dialog has no way back in.
+  function onDialogKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (e.key !== "Tab") return
+    const focusable = e.currentTarget.querySelectorAll<HTMLElement>("input, button")
+    if (!focusable.length) return
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault()
+      last.focus()
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault()
+      first.focus()
+    }
+  }
 
   function onInputKeyDown(e: React.KeyboardEvent) {
     if (e.key === "Escape") {
@@ -231,7 +263,7 @@ export function CommandPalette() {
         </kbd>
       </button>
 
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={() => opener.current?.focus?.()}>
         {open && (
           <motion.div
             className="fixed inset-0 z-[60] flex items-start justify-center px-4 pt-[14vh]"
@@ -251,6 +283,7 @@ export function CommandPalette() {
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={{ duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
               onMouseDown={(e) => e.stopPropagation()}
+              onKeyDown={onDialogKeyDown}
               className="w-full max-w-lg overflow-hidden rounded-2xl"
               style={{
                 background: "var(--bg-elevated)",
@@ -301,6 +334,7 @@ export function CommandPalette() {
                         </div>
                       )}
                       <button
+                        data-row={i}
                         onMouseEnter={() => setCursor(i)}
                         onClick={() => cmd.run({ close, markCopied })}
                         className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left"

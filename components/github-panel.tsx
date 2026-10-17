@@ -96,6 +96,7 @@ async function contributions(): Promise<ContributionDay[] | null> {
         variables: { login: USER },
       }),
       next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(4000),
     })
     if (!res.ok) return null
     const json = await res.json()

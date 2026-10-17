@@ -136,6 +136,8 @@ const SWING = 34 // degrees either side
 
 export function Globe({ markers, className = "" }: { markers: Marker[]; className?: string }) {
   const [lam, setLam] = useState(HOME_LON)
+  // SMIL does not read prefers-reduced-motion, so the ping is gated here too.
+  const [still, setStill] = useState(false)
   const [dragging, setDragging] = useState(false)
   const drag = useRef<{ x: number; lam: number } | null>(null)
   const paused = useRef(false)
@@ -149,7 +151,10 @@ export function Globe({ markers, className = "" }: { markers: Marker[]; classNam
   const wrap = useRef<SVGSVGElement>(null)
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setStill(true)
+      return
+    }
 
     // Off screen the swing is invisible, and re-rendering this SVG every frame
     // is what makes the page crawl while you scroll past it.
@@ -344,7 +349,7 @@ export function Globe({ markers, className = "" }: { markers: Marker[]; classNam
         const home = m.kind === "home"
         return (
           <g key={m.label} transform={`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`}>
-            {home && (
+            {home && !still && (
               <circle r="3" fill="none" stroke="#FFFFFF" strokeWidth="1">
                 <animate attributeName="r" values="3;11" dur="2.4s" repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.7;0" dur="2.4s" repeatCount="indefinite" />

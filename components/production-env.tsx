@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 /**
  * The environment, not the CV.
@@ -60,19 +60,34 @@ const ctlY = (i: number) => TOP + 26 + i * (CTL_H + 24)
 
 export function ProductionEnv() {
   const [hop, setHop] = useState(-1)
+  const wrap = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    // The diagram sits in the hero, so without this the request keeps hopping
+    // — and re-rendering the whole SVG — for as long as the tab is open, from
+    // the far end of the page and from behind another tab.
+    let onScreen = true
+    const io = new IntersectionObserver(([e]) => {
+      onScreen = e.isIntersecting
+    })
+    if (wrap.current) io.observe(wrap.current)
+
     let i = -1
     const id = setInterval(() => {
+      if (!onScreen || document.hidden) return
       i = i >= PATH.length - 1 ? -1 : i + 1
       setHop(i)
     }, 900)
-    return () => clearInterval(id)
+    return () => {
+      clearInterval(id)
+      io.disconnect()
+    }
   }, [])
 
   return (
-    <div className="w-full">
+    <div ref={wrap} className="w-full">
       <div className="mb-4 flex items-baseline justify-between gap-4">
         <span className="eyebrow">The environment I run</span>
         <span className="text-[12.5px]" style={{ color: "var(--text-muted)" }}>

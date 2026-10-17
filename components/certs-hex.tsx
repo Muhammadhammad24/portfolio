@@ -126,11 +126,16 @@ export function CertsHex() {
         activeId={String(active)}
         onSelect={(id) => setActive(Number(id))}
         label="Certifications"
+        baseId="certs"
+        panelId="certs-panel"
       />
 
       {/* Detail for the selected certificate */}
       <div
         role="tabpanel"
+        id="certs-panel"
+        aria-labelledby={`certs-tab-${active}`}
+        tabIndex={0}
         key={active}
         className="card mt-6 p-6"
       >

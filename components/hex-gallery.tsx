@@ -16,12 +16,29 @@ export type HexItem = {
 
 const ACCENT = "var(--accent)"
 
-function Card({ item, active, onSelect }: { item: HexItem; active: boolean; onSelect: () => void }) {
+function Card({
+  item,
+  active,
+  onSelect,
+  id,
+  panelId,
+}: {
+  item: HexItem
+  active: boolean
+  onSelect: () => void
+  id: string
+  panelId: string
+}) {
   return (
     <button
       type="button"
       role="tab"
+      id={id}
       aria-selected={active}
+      aria-controls={panelId}
+      // Roving focus: the arrow keys move between the cards, so the grid is
+      // one tab stop rather than one per card.
+      tabIndex={active ? 0 : -1}
       onClick={onSelect}
       data-active={active}
       className="card flex flex-col items-start gap-2 p-4 pl-5 text-left outline-none"
@@ -70,16 +87,48 @@ export function HexGallery({
   activeId,
   onSelect,
   label,
+  baseId,
+  panelId,
 }: {
   items: HexItem[]
   activeId: string
   onSelect: (id: string) => void
   label: string
+  baseId: string
+  panelId: string
 }) {
+  const tabId = (id: string) => `${baseId}-tab-${id}`
+
+  function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    const at = items.findIndex((i) => i.id === activeId)
+    if (at === -1) return
+    let next = at
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (at + 1) % items.length
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (at - 1 + items.length) % items.length
+    else if (e.key === "Home") next = 0
+    else if (e.key === "End") next = items.length - 1
+    else return
+    e.preventDefault()
+    onSelect(items[next].id)
+    document.getElementById(tabId(items[next].id))?.focus()
+  }
+
   return (
-    <div role="tablist" aria-label={label} className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div
+      role="tablist"
+      aria-label={label}
+      onKeyDown={onKeyDown}
+      className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
+    >
       {items.map((item) => (
-        <Card key={item.id} item={item} active={item.id === activeId} onSelect={() => onSelect(item.id)} />
+        <Card
+          key={item.id}
+          item={item}
+          active={item.id === activeId}
+          onSelect={() => onSelect(item.id)}
+          id={tabId(item.id)}
+          panelId={panelId}
+        />
       ))}
     </div>
   )
