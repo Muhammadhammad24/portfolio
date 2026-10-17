@@ -105,7 +105,7 @@ export default function Portfolio() {
                       period: "2023 – 2026",
                     },
                     {
-                      degree: "B.Sc. Computational Mathematics",
+                      degree: "B.Sc (Hons) Computational Mathematics",
                       school: "University of Karachi, Pakistan",
                       period: "2016 – 2018",
                     },
