@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 /**
  * The environment, not the CV.
@@ -60,13 +60,11 @@ const ctlY = (i: number) => TOP + 26 + i * (CTL_H + 24)
 
 export function ProductionEnv() {
   const [hop, setHop] = useState(-1)
-  const held = useRef(false)
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
     let i = -1
     const id = setInterval(() => {
-      if (held.current) return
       i = i >= PATH.length - 1 ? -1 : i + 1
       setHop(i)
     }, 900)
@@ -87,13 +85,6 @@ export function ProductionEnv() {
         className="w-full"
         role="img"
         aria-label="A production environment: a request passes from a managed endpoint through identity, a zero-trust edge, a workload, data and observability, built and governed by a control plane of Git, CI/CD, infrastructure as code and policy."
-        onMouseEnter={() => {
-          held.current = true
-          setHop(-1)
-        }}
-        onMouseLeave={() => {
-          held.current = false
-        }}
       >
         <defs>
           <marker id="pe-head" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto">
