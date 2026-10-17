@@ -21,21 +21,29 @@ export function FloatingNav() {
   // section it passes, and each pill move forces a layout read mid-scroll.
   const travelling = useRef(false)
 
-  // Highlight whichever section is currently in view.
+  // Highlight whichever section is currently in view. Experience anchors on
+  // the roles so a click lands there, but the pill belongs to the whole
+  // section around them — otherwise the journey map above is a dead zone.
   useEffect(() => {
     const ids = [...NAV_ITEMS.map((i) => i.id), "contact"]
+    const watched: Record<string, string> = { experience: "experience-section" }
+    const names = new Map<Element, string>()
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0]
-        if (visible && !travelling.current) setActive(visible.target.id)
+        if (visible && !travelling.current) {
+          setActive(names.get(visible.target) ?? visible.target.id)
+        }
       },
       { rootMargin: "-20% 0px -70% 0px" },
     )
     ids.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
+      const el = document.getElementById(watched[id] ?? id)
+      if (!el) return
+      names.set(el, id)
+      observer.observe(el)
     })
     return () => observer.disconnect()
   }, [])

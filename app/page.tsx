@@ -179,7 +179,7 @@ export default function Portfolio() {
       </SectionReveal>
 
       {/* ═══════════ EXPERIENCE ═══════════ */}
-      <SectionReveal className="section">
+      <SectionReveal id="experience-section" className="section">
         <div className="container">
           <SectionHeading title="How I got here" subtitle="The road" />
           <p className="section-lede">
