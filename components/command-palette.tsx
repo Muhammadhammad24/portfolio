@@ -22,12 +22,10 @@ type Command = {
   run: (ctx: { close: () => void; markCopied: (id: string) => void }) => void
 }
 
+import { scrollToSection } from "@/components/smooth-scroll"
+
 const EMAIL = "muhammad24997@gmail.com"
 const PHONE = "+49 176 8733 3721"
-
-function scrollToSection(id: string) {
-  document.getElementById(id)?.scrollIntoView({ block: "start" })
-}
 
 function openExternal(url: string) {
   window.open(url, "_blank", "noopener,noreferrer")

@@ -146,14 +146,28 @@ export function Globe({ markers, className = "" }: { markers: Marker[]; classNam
   const trip = useRef(0)
   const [, setTick] = useState(0)
 
+  const wrap = useRef<SVGSVGElement>(null)
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    // Off screen the swing is invisible, and re-rendering this SVG every frame
+    // is what makes the page crawl while you scroll past it.
+    let onScreen = true
+    const io = new IntersectionObserver(([e]) => {
+      onScreen = e.isIntersecting
+    })
+    if (wrap.current) io.observe(wrap.current)
 
     let raf = 0
     let last = performance.now()
     const tick = (now: number) => {
       const dt = now - last
       last = now
+      if (!onScreen || document.hidden) {
+        raf = requestAnimationFrame(tick)
+        return
+      }
       // The pulse keeps travelling even while the planet is held still.
       trip.current = (trip.current + dt * 0.00018) % 1.35
       if (!paused.current) {
@@ -167,7 +181,10 @@ export function Globe({ markers, className = "" }: { markers: Marker[]; classNam
       raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      cancelAnimationFrame(raf)
+      io.disconnect()
+    }
   }, [])
 
   const onDown = (e: React.PointerEvent) => {
@@ -197,6 +214,7 @@ export function Globe({ markers, className = "" }: { markers: Marker[]; classNam
 
   return (
     <svg
+      ref={wrap}
       viewBox="-130 -130 260 260"
       className={`w-full select-none ${className}`}
       style={{ cursor: dragging ? "grabbing" : "grab", touchAction: "pan-y" }}

@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
 import { ProductionEnv } from "@/components/production-env"
+import { scrollToSection } from "@/components/smooth-scroll"
 
 export function HeroSection() {
   return (
@@ -55,6 +56,10 @@ export function HeroSection() {
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <a
               href="#contact"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection("contact")
+              }}
               className="btn-cyber-fill group flex items-center gap-3 py-2 pl-6 pr-2"
               style={{ fontSize: 15 }}
             >
@@ -65,6 +70,10 @@ export function HeroSection() {
             </a>
             <a
               href="#projects"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection("projects")
+              }}
               className="btn-cyber group flex items-center gap-3 py-2 pl-6 pr-2"
               style={{ fontSize: 15 }}
             >

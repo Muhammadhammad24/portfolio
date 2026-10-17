@@ -1,9 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowRight, Menu, X } from "lucide-react"
 import { useMobile } from "@/hooks/use-mobile"
+import { scrollToSection, scrollToY } from "@/components/smooth-scroll"
 
 const NAV_ITEMS = [
   { name: "About", id: "about" },
@@ -16,6 +17,9 @@ export function FloatingNav() {
   const [isOpen, setIsOpen] = useState(false)
   const [active, setActive] = useState("")
   const isMobile = useMobile()
+  // While our own scroll is in flight the observer would fire for every
+  // section it passes, and each pill move forces a layout read mid-scroll.
+  const travelling = useRef(false)
 
   // Highlight whichever section is currently in view.
   useEffect(() => {
@@ -25,7 +29,7 @@ export function FloatingNav() {
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0]
-        if (visible) setActive(visible.target.id)
+        if (visible && !travelling.current) setActive(visible.target.id)
       },
       { rootMargin: "-20% 0px -70% 0px" },
     )
@@ -36,10 +40,15 @@ export function FloatingNav() {
     return () => observer.disconnect()
   }, [])
 
-  // Native scrolling: the browser handles easing via `scroll-behavior` and
-  // lands correctly thanks to `scroll-padding-top`. No JS animation to fight it.
+  // The pill lands on the destination straight away, then the observer is
+  // let back in once the travel is over.
   function goTo(id: string) {
-    document.getElementById(id)?.scrollIntoView({ block: "start" })
+    travelling.current = true
+    setActive(id)
+    scrollToSection(id)
+    window.setTimeout(() => {
+      travelling.current = false
+    }, 700)
   }
 
   return (
@@ -50,13 +59,11 @@ export function FloatingNav() {
           style={{
             background: "var(--nav-bg)",
             border: "1px solid var(--border)",
-            backdropFilter: "blur(20px)",
-            WebkitBackdropFilter: "blur(20px)",
           }}
         >
           {isMobile ? (
             <div className="flex items-center gap-3 px-2">
-              <span className="text-sm font-semibold" style={{ color: "var(--text)" }}>
+              <span className="text-[15px] font-semibold" style={{ color: "var(--text)" }}>
                 MH
               </span>
               <button
@@ -70,8 +77,8 @@ export function FloatingNav() {
           ) : (
             <div className="flex items-center gap-1">
               <button
-                onClick={() => window.scrollTo({ top: 0 })}
-                className="px-3 text-sm font-semibold"
+                onClick={() => scrollToY(0)}
+                className="px-3 text-[15px] font-semibold"
                 style={{ color: "var(--text)", background: "none", border: "none", cursor: "pointer" }}
               >
                 MH
@@ -81,7 +88,7 @@ export function FloatingNav() {
                 <button
                   key={item.id}
                   onClick={() => goTo(item.id)}
-                  className="relative rounded-full px-3.5 py-1.5 text-[13px] transition-colors duration-200"
+                  className="relative rounded-full px-4 py-1.5 text-[14.5px] transition-colors duration-200"
                   style={{
                     color: active === item.id ? "var(--text)" : "var(--text-muted)",
                     background: "none",
@@ -103,7 +110,7 @@ export function FloatingNav() {
 
               <button
                 onClick={() => goTo("contact")}
-                className="group ml-2 flex items-center gap-2 rounded-full py-1 pl-4 pr-1 text-[13px] font-medium transition-colors duration-200"
+                className="group ml-2 flex items-center gap-2 rounded-full py-1 pl-4 pr-1 text-[14.5px] font-medium transition-colors duration-200"
                 style={{
                   background: "var(--accent)",
                   color: "var(--on-accent)",
