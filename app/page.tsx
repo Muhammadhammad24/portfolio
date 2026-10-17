@@ -181,22 +181,23 @@ export default function Portfolio() {
       {/* ═══════════ EXPERIENCE ═══════════ */}
       <SectionReveal id="experience" className="section">
         <div className="container">
-          <SectionHeading title="How I got here" subtitle="The road" />
+          <SectionHeading title="Experience" subtitle="The road" />
           <p className="section-lede">
             Seven years, two countries, seven employers. It started on a helpdesk in Karachi
             and it has been the same job ever since, only the number of people depending
             on it keeps going up.
           </p>
 
+          {/* The roles themselves lead: this is what the nav promises. */}
           <div className="section-body measure-wide">
-            <JourneyMap />
+            <Timeline />
           </div>
 
           <div className="mt-20">
             <h3 className="eyebrow mb-10">
-              The detail
+              How I got here
             </h3>
-            <Timeline />
+            <JourneyMap />
           </div>
         </div>
       </SectionReveal>
