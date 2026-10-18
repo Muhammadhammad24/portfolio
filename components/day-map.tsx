@@ -407,6 +407,9 @@ export function DayMap() {
             <marker id="dm-head" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto">
               <path d="M0 0 L5 2.5 L0 5 z" fill="rgba(255,255,255,0.32)" />
             </marker>
+            <marker id="dm-head-red" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto">
+              <path d="M0 0 L5 2.5 L0 5 z" fill="var(--danger)" />
+            </marker>
             <filter id="dm-glow" x="-200%" y="-200%" width="500%" height="500%">
               <feGaussianBlur stdDeviation="2.6" result="b" />
               <feMerge>
@@ -465,12 +468,12 @@ export function DayMap() {
                 </text>
                 {/* Dashed: it happens on its own, underneath the day. */}
                 <path
-                  d={`M${CTL_X + CTL_W} ${ctlY(i) + CTL_H / 2} H${caught ? NODE_X - 11 : NODE_X - 16}`}
+                  d={`M${CTL_X + CTL_W} ${ctlY(i) + CTL_H / 2} H${NODE_X - 16}`}
                   fill="none"
                   stroke={caught ? "var(--danger)" : "rgba(255,255,255,0.18)"}
                   strokeWidth="1"
                   strokeDasharray="3 3"
-                  markerEnd={caught ? undefined : "url(#dm-head)"}
+                  markerEnd={caught ? "url(#dm-head-red)" : "url(#dm-head)"}
                   style={{ transition: `stroke ${EASE}` }}
                 />
               </g>
