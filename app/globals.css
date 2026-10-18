@@ -440,3 +440,40 @@ body { counter-reset: plate; }
 /* Brand marks in the toolbox: dimmed until you look at one. */
 .brand img { opacity: 0.82; transition: opacity 0.2s ease, transform 0.2s ease; }
 .brand:hover img { opacity: 1; transform: translateY(-1px); }
+
+/* ── Skills: one tool, one chip ────────────────────────────────
+   The brand marks are the only colour in this section, so they sit on the
+   page's own hairline surface rather than on cards of their own, and the
+   name is set in the page's text rather than under the logo. A row lights
+   on hover the way the timeline and project rows do. */
+.skill-row {
+  border-top: 1px solid var(--border);
+  transition: background 0.25s ease;
+}
+.skill-row:first-child { border-top: none; }
+.skill-row:hover { background: rgba(255,255,255,0.018); }
+
+.tool-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 13px 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.022);
+  font-size: 12.5px;
+  line-height: 1;
+  color: var(--text-dim);
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.tool-chip img {
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+.tool-chip:hover {
+  border-color: rgba(255,255,255,0.42);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+.tool-chip:hover img { opacity: 1; }

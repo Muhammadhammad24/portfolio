@@ -120,71 +120,57 @@ const DOMAINS: Domain[] = [
 ]
 
 const TOTAL = DOMAINS.reduce((n, d) => n + d.tools.length, 0)
-const BASE = 32
 
 export function SkillsHex() {
   return (
     <div className="section-body measure-wide">
-      <div className="card overflow-hidden">
-        <div
-          className="flex items-baseline justify-between gap-4 px-5 py-4 sm:px-7"
-          style={{ borderBottom: "1px solid var(--border)" }}
-        >
-          <span className="eyebrow">Toolbox</span>
-          <span className="mono text-[11px]" style={{ color: "var(--text-muted)" }}>
-            {TOTAL} tools · {DOMAINS.length} domains · hands-on
-          </span>
-        </div>
+      <div className="mb-5 flex items-baseline justify-between gap-4">
+        <span className="eyebrow">By domain</span>
+        <span className="mono text-[11.5px]" style={{ color: "var(--text-muted)" }}>
+          {TOTAL} tools · {DOMAINS.length} domains · hands-on
+        </span>
+      </div>
 
+      <div className="space-y-px">
         {DOMAINS.map((d, i) => (
           <div
             key={d.name}
-            className="grid grid-cols-1 gap-5 px-5 py-6 sm:grid-cols-[196px_1fr] sm:gap-6 sm:px-7"
-            style={{ borderTop: i === 0 ? "none" : "1px dashed var(--border)" }}
+            className="skill-row grid grid-cols-1 gap-5 px-5 py-7 sm:grid-cols-[210px_1fr] sm:gap-8 sm:px-7"
           >
-            <div className="flex items-start gap-3">
-              <span
-                className="mt-[7px] h-[6px] w-[6px] shrink-0 rounded-full"
-                style={{ background: "var(--accent)" }}
-              />
+            {/* The domain, numbered the way every other stack on this page is. */}
+            <div className="flex items-start gap-4">
+              <span className="num pt-[3px] text-[11px]" style={{ color: "var(--text-muted)" }}>
+                {String(i + 1).padStart(2, "0")}
+              </span>
               <div>
-                <h3 className="font-medium" style={{ fontSize: 14.5, color: "var(--text)" }}>
+                <h3 className="font-medium" style={{ fontSize: 15.5, color: "var(--text)" }}>
                   {d.name}
                 </h3>
-                <p className="mono mt-1 text-[10.5px]" style={{ color: "var(--text-muted)" }}>
-                  {String(d.tools.length).padStart(2, "0")} tools
-                </p>
-                <p className="mt-1 text-[12px]" style={{ color: "var(--text-muted)" }}>
+                <p className="mt-1 text-[12.5px]" style={{ lineHeight: 1.6, color: "var(--text-muted)" }}>
                   {d.note}
                 </p>
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-x-2 gap-y-5">
-              {d.tools.map((t) => {
-                const size = BASE * (t.scale ?? 1)
-                return (
-                  <div key={t.label} className="brand w-[78px] shrink-0 text-center">
-                    <div className="flex h-11 items-center justify-center">
-                      <img
-                        src={`/brands/${t.icon}.svg`}
-                        alt=""
-                        width={size}
-                        height={size}
-                        loading="lazy"
-                        decoding="async"
-                        style={{ width: size, height: size, objectFit: "contain" }}
-                      />
-                    </div>
-                    <div
-                      className="mono mt-2 text-[9.5px] leading-[1.35]"
-                      style={{ color: "var(--text-muted)" }}
-                    >
-                      {t.label}
-                    </div>
-                  </div>
-                )
-              })}
+            {/* Each tool reads as a thing I use, named: mark on the left, name
+                beside it, on the page's own hairline surface. */}
+            <div className="flex flex-wrap gap-2">
+              {d.tools.map((t) => (
+                <span key={t.label} className="tool-chip">
+                  <img
+                    src={`/brands/${t.icon}.svg`}
+                    alt=""
+                    width={18}
+                    height={18}
+                    loading="lazy"
+                    decoding="async"
+                    // Wordmarks are wide and short: they get the width their
+                    // drawing needs, never more height than a square mark.
+                    style={{ width: 18 * (t.scale ?? 1), height: 18, objectFit: "contain" }}
+                  />
+                  {t.label}
+                </span>
+              ))}
             </div>
           </div>
         ))}
