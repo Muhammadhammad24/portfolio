@@ -182,11 +182,18 @@ const AUTO = DAY.findIndex((d) => d.id === "automate")
 /** The hours the day actually plans for, in order. */
 const ORDER = DAY.map((_, i) => i).filter((i) => i !== BREAK)
 
-/** Four slots under the diagram, and three vocabularies for them. */
+/**
+ * Four slots under the diagram, and two things they can say: what is running
+ * underneath the day, and — once the day breaks — what is being done about it.
+ *
+ * A third vocabulary was tried here, where the automation block turned them
+ * into the repeating jobs and struck each one out. It read as the row cutting
+ * itself up and moving on, which is not what automation feels like. The hours
+ * coming back say it on their own, so the slots hold still and the counter
+ * does the talking.
+ */
 const WATCHING = ["monitoring", "backups", "endpoints", "on-call"]
 const CONTAINING = ["isolate", "revoke", "block", "restore"]
-/** The repeating jobs that get written out of existence, and what they cost. */
-const TOIL = ["onboarding", "provisioning", "patching", "resets"]
 /** Hours a week the automation block hands back, by the end of it. */
 const TOIL_HOURS = 25
 
@@ -231,8 +238,6 @@ export function DayMap() {
    * desk escalates it up from L1 — so it arrives both ways here, in turn.
    */
   const [source, setSource] = useState<"monitor" | "desk">("monitor")
-  /** How many repeating jobs have been written out of existence. */
-  const [struck, setStruck] = useState(0)
   /** Hours a week handed back so far. */
   const [hours, setHours] = useState(0)
 
@@ -335,28 +340,30 @@ export function DayMap() {
     return () => clearInterval(id)
   }, [breached])
 
-  // ── The automation block, striking out tomorrow's tickets ──
+  // ── The automation block, counting back the week it hands over ──
   useEffect(() => {
     if (!automating) {
-      setStruck(0)
       setHours(0)
       return
     }
-    const timers = TOIL.map((_, k) => setTimeout(() => setStruck(k + 1), (k + 1) * 380))
     const id = setInterval(() => setHours((v) => (v >= TOIL_HOURS ? v : v + 1)), 70)
-    return () => {
-      timers.forEach(clearTimeout)
-      clearInterval(id)
-    }
+    return () => clearInterval(id)
   }, [automating])
+
+  const RAIL_X = NODE_X - 11
+  /** Where the P1 came in, on the rail's own scale. */
+  const sourceY = source === "monitor" ? ctlY(0) + CTL_H / 2 : nodeY(1) + NODE_H / 2
+  /** Everything the incident touches: where it came in, the hour it took, itself. */
+  const redTop = Math.min(sourceY, nodeY(from) + NODE_H / 2, nodeY(BREAK) + NODE_H / 2)
+  const redBottom = Math.max(sourceY, nodeY(from) + NODE_H / 2, nodeY(BREAK) + NODE_H / 2)
 
   const B = DAY[hour]
   const mm = String(Math.floor(elapsed / 60)).padStart(2, "0")
   const ss = String(Math.floor(elapsed % 60)).padStart(2, "0")
 
-  // One strip, three vocabularies: what watches, what acts, what gets deleted.
-  const slots = broken ? CONTAINING : automating ? TOIL : WATCHING
-  const landed = broken ? step : automating ? struck : 0
+  // One strip, two vocabularies: what watches, and what acts once it breaks.
+  const slots = broken ? CONTAINING : WATCHING
+  const landed = broken ? step : 0
 
   const statusText =
     phase === "alert"
@@ -368,7 +375,7 @@ export function DayMap() {
         : phase === "clear"
           ? "CONTAINED · DAY RESUMES"
           : automating
-            ? "TOIL REMOVED, FOR GOOD"
+            ? "TOIL REMOVED FROM THE WEEK"
             : "NOTHING ON FIRE"
 
   const readout = broken ? `T+${mm}:${ss}` : automating ? `+${hours} h/wk` : "--:--"
@@ -458,12 +465,12 @@ export function DayMap() {
                 </text>
                 {/* Dashed: it happens on its own, underneath the day. */}
                 <path
-                  d={`M${CTL_X + CTL_W} ${ctlY(i) + CTL_H / 2} H${NODE_X - 16}`}
+                  d={`M${CTL_X + CTL_W} ${ctlY(i) + CTL_H / 2} H${caught ? NODE_X - 11 : NODE_X - 16}`}
                   fill="none"
                   stroke={caught ? "var(--danger)" : "rgba(255,255,255,0.18)"}
                   strokeWidth="1"
                   strokeDasharray="3 3"
-                  markerEnd="url(#dm-head)"
+                  markerEnd={caught ? undefined : "url(#dm-head)"}
                   style={{ transition: `stroke ${EASE}` }}
                 />
               </g>
@@ -480,7 +487,7 @@ export function DayMap() {
           {/* The stretch of day the incident takes away from him. */}
           {broken && (
             <path
-              d={`M${NODE_X - 11} ${nodeY(Math.min(from, BREAK)) + NODE_H / 2} V${nodeY(Math.max(from, BREAK)) + NODE_H / 2}`}
+              d={`M${RAIL_X} ${redTop} V${redBottom}`}
               stroke={breached ? "var(--danger)" : "var(--danger-dim)"}
               strokeWidth="1.5"
               fill="none"
@@ -689,10 +696,9 @@ export function DayMap() {
             {readout}
           </text>
 
-          {/* Four slots: what watches, what acts, or what is being deleted. */}
+          {/* Four slots: what watches, or what acts once the day breaks. */}
           {slots.map((label, i) => {
             const done = landed > i
-            const gone = automating && done
             return (
               <g key={i}>
                 <rect
@@ -701,12 +707,8 @@ export function DayMap() {
                   width={CHIP_W}
                   height={20}
                   rx="5"
-                  fill={
-                    gone ? "rgba(255,255,255,0.07)" : done ? "var(--danger-wash)" : "rgba(255,255,255,0.02)"
-                  }
-                  stroke={
-                    gone ? "rgba(255,255,255,0.45)" : done ? "var(--danger-line)" : "rgba(255,255,255,0.12)"
-                  }
+                  fill={done ? "var(--danger-wash)" : "rgba(255,255,255,0.02)"}
+                  stroke={done ? "var(--danger-line)" : "rgba(255,255,255,0.12)"}
                   style={{ transition: `fill ${EASE}, stroke ${EASE}` }}
                 />
                 <text
@@ -714,27 +716,11 @@ export function DayMap() {
                   y={STRIP_Y + 22}
                   textAnchor="middle"
                   fontSize="11"
-                  fill={
-                    gone
-                      ? "var(--text)"
-                      : done
-                        ? "var(--danger)"
-                        : broken
-                          ? "rgba(255,255,255,0.3)"
-                          : "var(--text-muted)"
-                  }
+                  fill={done ? "var(--danger)" : broken ? "rgba(255,255,255,0.3)" : "var(--text-muted)"}
                   style={{ transition: `fill ${EASE}` }}
                 >
                   {label}
                 </text>
-                {/* Struck through: this one is not coming back. */}
-                {gone && (
-                  <path
-                    d={`M${chipX(i) + 12} ${STRIP_Y + 18.5} H${chipX(i) + CHIP_W - 12}`}
-                    stroke="rgba(255,255,255,0.8)"
-                    strokeWidth="1.2"
-                  />
-                )}
               </g>
             )
           })}
