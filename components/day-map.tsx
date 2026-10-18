@@ -225,6 +225,12 @@ export function DayMap() {
   const [elapsed, setElapsed] = useState(0)
   /** The hour the day was on when it got interrupted. */
   const [from, setFrom] = useState(0)
+  /**
+   * Where the incident came in. A P1 reaches an engineer one of two ways —
+   * monitoring trips a threshold, or somebody cannot work and the service
+   * desk escalates it up from L1 — so it arrives both ways here, in turn.
+   */
+  const [source, setSource] = useState<"monitor" | "desk">("monitor")
   /** How many repeating jobs have been written out of existence. */
   const [struck, setStruck] = useState(0)
   /** Hours a week handed back so far. */
@@ -246,6 +252,7 @@ export function DayMap() {
 
   /** Abandon whatever the day was doing and go to the incident. */
   const breakTheDay = () => {
+    setSource((v) => (v === "monitor" ? "desk" : "monitor"))
     setFrom(hourRef.current)
     setStep(0)
     setElapsed(0)
@@ -353,7 +360,9 @@ export function DayMap() {
 
   const statusText =
     phase === "alert"
-      ? "P1 · CAUGHT BY MONITORING"
+      ? source === "monitor"
+        ? "P1 · CAUGHT BY MONITORING"
+        : "P1 · ESCALATED FROM L1"
       : phase === "contain"
         ? "P1 · CONTAINING"
         : phase === "clear"
@@ -420,8 +429,8 @@ export function DayMap() {
           </text>
 
           {ALWAYS.map((c, i) => {
-            // Monitoring is the one that catches it, so it is the one that lights.
-            const caught = breached && i === 0
+            // Monitoring lights only when monitoring is what caught it.
+            const caught = breached && i === 0 && source === "monitor"
             return (
               <g key={c.name}>
                 <rect
@@ -483,9 +492,11 @@ export function DayMap() {
             const y = nodeY(i)
             const live = hour === i
             const isBreak = i === BREAK
+            // The desk stays lit while it is the thing that raised the P1.
+            const raised = breached && source === "desk" && n.id === "triage"
             // While the day is broken, everything that is not the incident
             // steps back — which is exactly what happens to the real day.
-            const dimmed = broken && !isBreak
+            const dimmed = broken && !isBreak && !raised
             return (
               <g
                 key={n.id}
@@ -549,20 +560,22 @@ export function DayMap() {
                   height={NODE_H}
                   rx="8"
                   fill={
-                    isBreak && breached
+                    (isBreak && breached) || raised
                       ? "var(--danger-wash)"
                       : live
                         ? "rgba(255,255,255,0.06)"
                         : "rgba(255,255,255,0.025)"
                   }
                   stroke={
-                    isBreak && broken
-                      ? breached
-                        ? "var(--danger)"
-                        : "var(--danger-line)"
-                      : live
-                        ? "rgba(255,255,255,0.46)"
-                        : "rgba(255,255,255,0.14)"
+                    raised
+                      ? "var(--danger)"
+                      : isBreak && broken
+                        ? breached
+                          ? "var(--danger)"
+                          : "var(--danger-line)"
+                        : live
+                          ? "rgba(255,255,255,0.46)"
+                          : "rgba(255,255,255,0.14)"
                   }
                   strokeWidth="1"
                   strokeDasharray={isBreak && !broken ? "5 4" : undefined}
@@ -586,7 +599,11 @@ export function DayMap() {
                   transform={`translate(${NODE_X + 12} ${y + (NODE_H - MARK) / 2}) scale(${MARK / 24})`}
                   fill="none"
                   stroke={
-                    isBreak && breached ? "var(--danger)" : live ? "#FFFFFF" : "rgba(255,255,255,0.42)"
+                    (isBreak && breached) || raised
+                      ? "var(--danger)"
+                      : live
+                        ? "#FFFFFF"
+                        : "rgba(255,255,255,0.42)"
                   }
                   strokeWidth="1.7"
                   strokeLinecap="round"
@@ -608,7 +625,9 @@ export function DayMap() {
                   fontSize="9.5"
                   className="mono"
                   letterSpacing="0.07em"
-                  fill={isBreak && breached ? "var(--danger)" : "rgba(255,255,255,0.32)"}
+                  fill={
+                    (isBreak && breached) || raised ? "var(--danger)" : "rgba(255,255,255,0.32)"
+                  }
                   style={{ transition: `fill ${EASE}` }}
                 >
                   {n.tag}

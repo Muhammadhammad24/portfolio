@@ -142,7 +142,7 @@ export function JourneyMap() {
         />
 
         <div className="space-y-7">
-          {STEPS.map((s, i) => (
+          {STEPS.map((s) => (
             <div
               key={s.year + s.title}
               className="relative pl-7 sm:pl-24"

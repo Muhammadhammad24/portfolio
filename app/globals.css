@@ -48,8 +48,6 @@
   --danger-dim:        rgba(229,72,77,0.30);
   --danger-wash:       rgba(229,72,77,0.09);
 
-  /* ── Shadows ── */
-
   /* ── Radii ── */
   --radius-pill: 999px;
 
@@ -122,8 +120,6 @@
 ::-webkit-scrollbar-track { background: var(--bg-base); }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-bright); }
-
-/* ── Native cursor restored ── */
 
 /* ── PRIMARY button — accent fill, dark text ── */
 .btn-cyber-fill {

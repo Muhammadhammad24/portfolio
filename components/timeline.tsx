@@ -128,7 +128,7 @@ const experiences = [
 ]
 
 /* ── One role on the vertical timeline ── */
-function TimelineEntry({ exp, index }: { exp: (typeof experiences)[0]; index: number }) {
+function TimelineEntry({ exp }: { exp: (typeof experiences)[0] }) {
   return (
     <div
       className="relative pl-10 sm:pl-14"
@@ -202,8 +202,8 @@ export function Timeline() {
         style={{ background: "linear-gradient(to bottom, transparent, var(--border-dark) 8%, var(--border-dark) 92%, transparent)" }}
       />
       <div className="space-y-5">
-        {experiences.map((exp, i) => (
-          <TimelineEntry key={exp.company} exp={exp} index={i} />
+        {experiences.map((exp) => (
+          <TimelineEntry key={exp.company} exp={exp} />
         ))}
       </div>
     </div>
