@@ -41,5 +41,8 @@ export const LinkedInMark = (p: Props) => <Mark src="/brands/si-linkedin.svg" la
 
 export const GmailMark = (p: Props) => <Mark src="/brands/si-gmail.svg" label="Gmail" {...p} />
 
-/** A telephone has no brand, so this one is drawn in the page's own greys. */
-export const PhoneMark = (p: Props) => <Mark src="/brands/call.svg" label="Phone" {...p} />
+/** A telephone has no brand, so this one is drawn in the page's text colour. */
+export const PhoneMark = (p: Props) => <Mark src="/brands/phone.svg" label="Phone" {...p} />
+
+/** The location row: Google's own pin, in its own colours. */
+export const MapsMark = (p: Props) => <Mark src="/brands/google-maps.svg" label="Google Maps" {...p} />

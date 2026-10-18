@@ -1,6 +1,5 @@
 import Link from "next/link"
-import { MapPin } from "lucide-react"
-import { GitHubMark, GmailMark, LinkedInMark, PhoneMark } from "@/components/brand-marks"
+import { GitHubMark, GmailMark, LinkedInMark, MapsMark, PhoneMark } from "@/components/brand-marks"
 import { ProjectsExplorer } from "@/components/projects-explorer"
 import { Timeline } from "@/components/timeline"
 import { JourneyMap } from "@/components/journey-map"
@@ -56,7 +55,7 @@ export default function Portfolio() {
               <ProfilePhoto />
               <div className="mt-6 space-y-3">
                 {[
-                  { icon: MapPin, text: "Germany" },
+                  { icon: MapsMark, text: "Germany" },
                   { icon: PhoneMark, text: "+49 176 8733 3721" },
                   { icon: GmailMark, text: "muhammad24997@gmail.com" },
                 ].map(({ icon: Icon, text }) => (
@@ -259,7 +258,7 @@ export default function Portfolio() {
               <Link key={href} href={href} target="_blank" rel="noopener noreferrer"
                 className="social-icon-btn w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
               >
-                <Icon className="h-3.5 w-3.5" />
+                <Icon className="h-4 w-4" />
               </Link>
             ))}
           </div>
