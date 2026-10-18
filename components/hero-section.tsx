@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
+import { ArrowRight } from "lucide-react"
+import { GitHubMark, GmailMark, LinkedInMark } from "@/components/brand-marks"
 import { DayMap } from "@/components/day-map"
 import { scrollToSection } from "@/components/smooth-scroll"
 
@@ -86,9 +87,9 @@ export function HeroSection() {
 
           <div className="mt-9 flex items-center gap-3">
             {[
-              { icon: Github, href: "https://github.com/Muhammadhammad24", label: "GitHub" },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/mhammad24/", label: "LinkedIn" },
-              { icon: Mail, href: "mailto:muhammad24997@gmail.com", label: "Email" },
+              { icon: GitHubMark, href: "https://github.com/Muhammadhammad24", label: "GitHub" },
+              { icon: LinkedInMark, href: "https://www.linkedin.com/in/mhammad24/", label: "LinkedIn" },
+              { icon: GmailMark, href: "mailto:muhammad24997@gmail.com", label: "Email" },
             ].map(({ icon: Icon, href, label }) => (
               <Link
                 key={label}

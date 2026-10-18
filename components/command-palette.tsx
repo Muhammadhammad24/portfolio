@@ -6,12 +6,10 @@ import {
   ArrowRight,
   Check,
   Copy,
-  Github,
-  Linkedin,
-  Mail,
   Phone,
   Search,
 } from "lucide-react"
+import { GitHubMark, GmailMark, LinkedInMark } from "@/components/brand-marks"
 
 type Command = {
   id: string
@@ -89,7 +87,7 @@ const COMMANDS: Command[] = [
     label: "Send an email",
     hint: EMAIL,
     group: "Contact",
-    icon: Mail,
+    icon: GmailMark,
     run: ({ close }) => {
       close()
       window.location.href = `mailto:${EMAIL}`
@@ -111,7 +109,7 @@ const COMMANDS: Command[] = [
     label: "GitHub",
     hint: "github.com/Muhammadhammad24",
     group: "Links",
-    icon: Github,
+    icon: GitHubMark,
     run: ({ close }) => {
       close()
       openExternal("https://github.com/Muhammadhammad24")
@@ -122,7 +120,7 @@ const COMMANDS: Command[] = [
     label: "LinkedIn",
     hint: "linkedin.com/in/mhammad24",
     group: "Links",
-    icon: Linkedin,
+    icon: LinkedInMark,
     run: ({ close }) => {
       close()
       openExternal("https://www.linkedin.com/in/mhammad24/")

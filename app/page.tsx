@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { Github, Linkedin, Mail, Phone, MapPin } from "lucide-react"
+import { Phone, MapPin } from "lucide-react"
+import { GitHubMark, GmailMark, LinkedInMark } from "@/components/brand-marks"
 import { ProjectsExplorer } from "@/components/projects-explorer"
 import { Timeline } from "@/components/timeline"
 import { JourneyMap } from "@/components/journey-map"
@@ -57,7 +58,7 @@ export default function Portfolio() {
                 {[
                   { icon: MapPin, text: "Germany" },
                   { icon: Phone, text: "+49 176 8733 3721" },
-                  { icon: Mail, text: "muhammad24997@gmail.com" },
+                  { icon: GmailMark, text: "muhammad24997@gmail.com" },
                 ].map(({ icon: Icon, text }) => (
                   <div key={text} className="flex items-center gap-3">
                     <Icon className="h-4 w-4 shrink-0" style={{ color: 'var(--text-muted)' }} />
@@ -212,10 +213,10 @@ export default function Portfolio() {
 
               <div className="space-y-4 mb-8">
                 {[
-                  { icon: Mail, label: "Email", value: "muhammad24997@gmail.com", href: "mailto:muhammad24997@gmail.com" },
+                  { icon: GmailMark, label: "Email", value: "muhammad24997@gmail.com", href: "mailto:muhammad24997@gmail.com" },
                   { icon: Phone, label: "Phone", value: "+49 176 8733 3721", href: "tel:+4917687333721" },
-                  { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/mhammad24", href: "https://www.linkedin.com/in/mhammad24/" },
-                  { icon: Github, label: "GitHub", value: "github.com/Muhammadhammad24", href: "https://github.com/Muhammadhammad24" },
+                  { icon: LinkedInMark, label: "LinkedIn", value: "linkedin.com/in/mhammad24", href: "https://www.linkedin.com/in/mhammad24/" },
+                  { icon: GitHubMark, label: "GitHub", value: "github.com/Muhammadhammad24", href: "https://github.com/Muhammadhammad24" },
                 ].map(({ icon: Icon, label, value, href }) => (
                   <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
                     <Icon className="h-4 w-4 shrink-0" style={{ color: 'var(--text-muted)' }} />
@@ -251,9 +252,9 @@ export default function Portfolio() {
           </div>
           <div className="flex items-center gap-4">
             {[
-              { icon: Github, href: "https://github.com/Muhammadhammad24" },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/mhammad24/" },
-              { icon: Mail, href: "mailto:muhammad24997@gmail.com" },
+              { icon: GitHubMark, href: "https://github.com/Muhammadhammad24" },
+              { icon: LinkedInMark, href: "https://www.linkedin.com/in/mhammad24/" },
+              { icon: GmailMark, href: "mailto:muhammad24997@gmail.com" },
             ].map(({ icon: Icon, href }) => (
               <Link key={href} href={href} target="_blank" rel="noopener noreferrer"
                 className="social-icon-btn w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"

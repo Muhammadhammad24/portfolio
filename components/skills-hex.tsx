@@ -155,8 +155,7 @@ export function SkillsHex() {
             {/* Drawn the way the profile's own toolbox draws them: the mark
                 standing on the page with no tile around it, at that panel's
                 sizes — 32px for a square mark, 44 for a wordmark, 72 for the
-                one that is all wordmark — and the name set small in mono
-                underneath. */}
+                one that is all wordmark — and the name set small in the page's own type underneath. */}
             <div className="flex flex-wrap items-start gap-x-4 gap-y-6">
               {d.tools.map((t) => (
                 <div key={t.label} className="tool-mark w-[82px] shrink-0 text-center">
@@ -173,7 +172,7 @@ export function SkillsHex() {
                       }}
                     />
                   </div>
-                  <div className="mono mt-2 text-[9.5px] leading-[1.4]" style={{ color: "var(--text-muted)" }}>
+                  <div className="mt-2 text-[11px] leading-[1.45]" style={{ color: "var(--text-muted)" }}>
                     {t.label}
                   </div>
                 </div>

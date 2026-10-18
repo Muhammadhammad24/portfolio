@@ -21,7 +21,6 @@ const H = 450
 
 type Hour = {
   id: string
-  time: string
   name: string
   /** The stack this hour is actually spent in, on two readable lines. */
   sub: string
@@ -35,7 +34,6 @@ type Hour = {
 const DAY: Hour[] = [
   {
     id: "check",
-    time: "08:00",
     name: "Morning check",
     sub: "PRTG · SolarWinds · Datadog · Veeam",
     sub2: "Defender · patch compliance · SLA breaches",
@@ -45,7 +43,6 @@ const DAY: Hour[] = [
   },
   {
     id: "triage",
-    time: "09:00",
     name: "Triage the queue",
     sub: "ServiceNow · Jira SM · Freshservice · ITIL",
     sub2: "L1/L2/L3 · P1–P4 · incident & change mgmt",
@@ -55,7 +52,6 @@ const DAY: Hour[] = [
   },
   {
     id: "change",
-    time: "10:00",
     name: "Change window",
     sub: "Group Policy · WSUS · SCCM · change mgmt",
     sub2: "maintenance window · rollback · CAB",
@@ -65,7 +61,6 @@ const DAY: Hour[] = [
   },
   {
     id: "build",
-    time: "12:00",
     name: "Build & automate",
     sub: "PowerShell · Python · Ansible · Terraform",
     sub2: "Intune · Autopilot · SCCM · Power Automate",
@@ -75,7 +70,6 @@ const DAY: Hour[] = [
   },
   {
     id: "secure",
-    time: "14:00",
     name: "Security & identity",
     sub: "Entra ID · Active Directory · Okta · MFA/SSO",
     sub2: "CrowdStrike · Splunk · Zero Trust · GDPR",
@@ -85,7 +79,6 @@ const DAY: Hour[] = [
   },
   {
     id: "incident",
-    time: "when it comes",
     name: "Incident",
     sub: "Defender · CrowdStrike · Splunk · Wireshark",
     sub2: "isolate · revoke access · Veeam restore",
@@ -95,7 +88,6 @@ const DAY: Hour[] = [
   },
   {
     id: "close",
-    time: "17:30",
     name: "Close the loop",
     sub: "Confluence · runbooks · ITIL postmortem",
     sub2: "M365 · Teams · handover · asset records",
@@ -173,11 +165,8 @@ export function DayMap() {
       onPointerLeave={() => setPinned(false)}
       onBlur={() => setPinned(false)}
     >
-      <div className="mb-4 flex items-baseline justify-between gap-4">
+      <div className="mb-4">
         <span className="eyebrow">A day on the job</span>
-        <span className="text-[12.5px]" style={{ color: "var(--text-muted)" }}>
-          08:00 → 17:30 · hover a block
-        </span>
       </div>
 
       <div className="relative">
@@ -191,7 +180,7 @@ export function DayMap() {
         // without ever running off the first screen.
         style={{ maxHeight: "min(calc(100vh - 320px), 580px)" }}
         role="img"
-        aria-label="A working day: morning checks, ticket triage, a change window, automation work, security and identity, an incident if one comes, and closing the loop — with monitoring, backup, patching and logging running underneath all of it."
+        aria-label="The work in order: morning checks, ticket triage, a change window, automation work, security and identity, an incident if one comes, and closing the loop — with monitoring, backup, patching and logging running underneath all of it."
       >
         <defs>
           <marker id="dm-head" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto">
@@ -271,7 +260,7 @@ export function DayMap() {
               key={n.id}
               tabIndex={0}
               role="button"
-              aria-label={`${n.time} — ${n.name}: ${n.sub}, ${n.sub2}`}
+              aria-label={`${n.name}: ${n.sub}, ${n.sub2}`}
               className="dm-hour"
               style={{ cursor: "pointer" }}
               onMouseEnter={() => {
@@ -356,7 +345,7 @@ export function DayMap() {
                 opacity={live ? 0 : 1}
                 style={{ transition: "opacity 0.35s ease" }}
               >
-                {n.time}
+                {String(i + 1).padStart(2, "0")}
               </text>
             </g>
           )
@@ -378,7 +367,7 @@ export function DayMap() {
       <div className="mt-4" style={{ borderTop: "1px solid var(--border)", paddingTop: 14 }}>
         <div className="flex items-baseline gap-3">
           <span className="mono text-[11px]" style={{ color: "rgba(255,255,255,0.5)" }}>
-            {H_.time}
+            {String(hour + 1).padStart(2, "0")}
           </span>
           <span className="text-[13.5px] font-medium" style={{ color: "var(--text)" }}>
             {H_.name}
