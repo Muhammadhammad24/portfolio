@@ -11,9 +11,14 @@
  * site keeps saying `h-4 w-4` and nothing else moves.
  */
 
-type Props = { className?: string }
+type Props = {
+  className?: string
+  /** Call sites that used an icon font pass a colour here; a mark ignores it
+      but keeps anything else, such as a size. */
+  style?: React.CSSProperties
+}
 
-function Mark({ src, label, className }: Props & { src: string; label: string }) {
+function Mark({ src, label, className, style }: Props & { src: string; label: string }) {
   return (
     <img
       src={src}
@@ -25,19 +30,16 @@ function Mark({ src, label, className }: Props & { src: string; label: string })
       loading="eager"
       decoding="async"
       className={className}
-      style={{ objectFit: "contain" }}
+      style={{ ...style, color: undefined, objectFit: "contain" }}
     />
   )
 }
 
-export const GitHubMark = ({ className }: Props) => (
-  <Mark src="/brands/si-github.svg" label="GitHub" className={className} />
-)
+export const GitHubMark = (p: Props) => <Mark src="/brands/si-github.svg" label="GitHub" {...p} />
 
-export const LinkedInMark = ({ className }: Props) => (
-  <Mark src="/brands/si-linkedin.svg" label="LinkedIn" className={className} />
-)
+export const LinkedInMark = (p: Props) => <Mark src="/brands/si-linkedin.svg" label="LinkedIn" {...p} />
 
-export const GmailMark = ({ className }: Props) => (
-  <Mark src="/brands/si-gmail.svg" label="Gmail" className={className} />
-)
+export const GmailMark = (p: Props) => <Mark src="/brands/si-gmail.svg" label="Gmail" {...p} />
+
+/** A telephone has no brand, so this one is drawn in the page's own greys. */
+export const PhoneMark = (p: Props) => <Mark src="/brands/call.svg" label="Phone" {...p} />

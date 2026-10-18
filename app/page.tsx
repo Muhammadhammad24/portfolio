@@ -1,6 +1,6 @@
 import Link from "next/link"
-import { Phone, MapPin } from "lucide-react"
-import { GitHubMark, GmailMark, LinkedInMark } from "@/components/brand-marks"
+import { MapPin } from "lucide-react"
+import { GitHubMark, GmailMark, LinkedInMark, PhoneMark } from "@/components/brand-marks"
 import { ProjectsExplorer } from "@/components/projects-explorer"
 import { Timeline } from "@/components/timeline"
 import { JourneyMap } from "@/components/journey-map"
@@ -57,7 +57,7 @@ export default function Portfolio() {
               <div className="mt-6 space-y-3">
                 {[
                   { icon: MapPin, text: "Germany" },
-                  { icon: Phone, text: "+49 176 8733 3721" },
+                  { icon: PhoneMark, text: "+49 176 8733 3721" },
                   { icon: GmailMark, text: "muhammad24997@gmail.com" },
                 ].map(({ icon: Icon, text }) => (
                   <div key={text} className="flex items-center gap-3">
@@ -214,7 +214,7 @@ export default function Portfolio() {
               <div className="space-y-4 mb-8">
                 {[
                   { icon: GmailMark, label: "Email", value: "muhammad24997@gmail.com", href: "mailto:muhammad24997@gmail.com" },
-                  { icon: Phone, label: "Phone", value: "+49 176 8733 3721", href: "tel:+4917687333721" },
+                  { icon: PhoneMark, label: "Phone", value: "+49 176 8733 3721", href: "tel:+4917687333721" },
                   { icon: LinkedInMark, label: "LinkedIn", value: "linkedin.com/in/mhammad24", href: "https://www.linkedin.com/in/mhammad24/" },
                   { icon: GitHubMark, label: "GitHub", value: "github.com/Muhammadhammad24", href: "https://github.com/Muhammadhammad24" },
                 ].map(({ icon: Icon, label, value, href }) => (

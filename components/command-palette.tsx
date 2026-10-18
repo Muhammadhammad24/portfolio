@@ -6,10 +6,9 @@ import {
   ArrowRight,
   Check,
   Copy,
-  Phone,
   Search,
 } from "lucide-react"
-import { GitHubMark, GmailMark, LinkedInMark } from "@/components/brand-marks"
+import { GitHubMark, GmailMark, LinkedInMark, PhoneMark } from "@/components/brand-marks"
 
 type Command = {
   id: string
@@ -98,7 +97,7 @@ const COMMANDS: Command[] = [
     label: "Copy phone number",
     hint: PHONE,
     group: "Contact",
-    icon: Phone,
+    icon: PhoneMark,
     run: ({ markCopied }) => {
       copyText(PHONE)
       markCopied("copy-phone")
