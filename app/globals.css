@@ -436,3 +436,7 @@ body { counter-reset: plate; }
   stroke: #FFFFFF;
   stroke-width: 1.4;
 }
+
+/* Brand marks in the toolbox: dimmed until you look at one. */
+.brand img { opacity: 0.82; transition: opacity 0.2s ease, transform 0.2s ease; }
+.brand:hover img { opacity: 1; transform: translateY(-1px); }

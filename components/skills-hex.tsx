@@ -1,101 +1,191 @@
-"use client"
-
 /**
- * Skills under the six layers of an environment. Set as plain type rather
- * than sixty bordered chips: the brighter names are what I am in most days,
- * the dimmer ones I reach for when the job calls for them.
+ * The toolbox, drawn with the real marks.
+ *
+ * Same seven domains and the same logos as the GitHub profile's toolbox panel,
+ * exported once from that repository's icon set into `public/brands` with the
+ * dark-mode treatment already applied — near-black marks lightened, everything
+ * else exactly as the brand publishes it. Keeping both surfaces on one source
+ * means a tool is added in one place and looks identical in the other.
  */
 
-type Group = {
-  layer: string
-  note: string
-  core: string[]
-  also: string[]
+type Tool = {
+  label: string
+  icon: string
+  /** Wordmarks and wide marks sit small in their square, so they are drawn larger. */
+  scale?: number
 }
 
-const GROUPS: Group[] = [
+type Domain = {
+  name: string
+  note: string
+  tools: Tool[]
+}
+
+const DOMAINS: Domain[] = [
   {
-    layer: "Security & Compliance",
-    note: "Access, detection, audits",
-    core: ["Zero Trust", "Okta MFA / SSO", "Conditional Access", "Microsoft Defender"],
-    also: ["Sentinel", "CrowdStrike", "Splunk", "GDPR / ISO 27001"],
-  },
-  {
-    layer: "DevSecOps & Automation",
-    note: "The repetitive parts, as code",
-    core: ["PowerShell", "Python", "Power Automate", "Git"],
-    also: ["Terraform", "Ansible", "GitHub Actions", "Bash"],
-  },
-  {
-    layer: "Cloud",
+    name: "Cloud & virtualisation",
     note: "Where the estate lives",
-    core: ["Microsoft Azure", "Microsoft 365", "Azure Virtual Desktop"],
-    also: ["AWS", "Hyper-V", "Docker", "Kubernetes"],
+    tools: [
+      { label: "Azure", icon: "dev-azure-original" },
+      { label: "AWS", icon: "dev-amazonwebservices-original-wordmark", scale: 1.375 },
+      { label: "Google Cloud", icon: "dev-googlecloud-original" },
+      { label: "VMware", icon: "vmware", scale: 1.375 },
+      { label: "Virtual Desktop", icon: "ms-virtual-desktop" },
+      { label: "Docker", icon: "si-docker" },
+      { label: "Kubernetes", icon: "dev-kubernetes-original" },
+      { label: "Terraform", icon: "terraform" },
+    ],
   },
   {
-    layer: "Network",
+    name: "Operating systems",
+    note: "What the workloads run on",
+    tools: [
+      { label: "Windows", icon: "dev-windows11-original" },
+      { label: "Linux", icon: "dev-linux-original" },
+      { label: "Ubuntu", icon: "si-ubuntu" },
+      { label: "Red Hat", icon: "redhat" },
+      { label: "CentOS", icon: "dev-centos-original" },
+      { label: "macOS", icon: "dev-apple-original" },
+      { label: "iOS", icon: "si-ios" },
+      { label: "Android", icon: "si-android" },
+    ],
+  },
+  {
+    name: "Identity & endpoints",
+    note: "Who gets in, and on what",
+    tools: [
+      { label: "Entra ID", icon: "ms-entra-id" },
+      { label: "Active Directory", icon: "ms-active-directory" },
+      { label: "Intune", icon: "ms-intune" },
+      { label: "Defender", icon: "ms-defender" },
+      { label: "Jamf Pro", icon: "jamf" },
+      { label: "Okta", icon: "okta", scale: 1.375 },
+      { label: "TeamViewer", icon: "si-teamviewer" },
+    ],
+  },
+  {
+    name: "Network & security",
     note: "Routing, segmentation, perimeter",
-    core: ["TCP/IP · VLAN", "DNS / DHCP", "VPN"],
-    also: ["pfSense", "Fortinet", "Cisco Meraki", "Wireshark"],
+    tools: [
+      { label: "Cisco", icon: "cisco", scale: 1.375 },
+      { label: "Juniper", icon: "si-junipernetworks", scale: 1.375 },
+      { label: "Fortinet", icon: "si-fortinet" },
+      { label: "pfSense", icon: "pfsense" },
+      { label: "SonicWall", icon: "si-sonicwall", scale: 1.375 },
+      { label: "Palo Alto", icon: "si-paloaltonetworks" },
+      { label: "CrowdStrike", icon: "crowdstrike", scale: 1.375 },
+    ],
   },
   {
-    layer: "Servers & Infrastructure",
-    note: "Identity, hosts, backups",
-    core: ["Active Directory", "Entra ID", "Windows Server", "Group Policy"],
-    also: ["VMware ESXi", "Linux / RHEL", "Exchange Online", "Veeam"],
+    name: "Automation & delivery",
+    note: "The repetitive parts, as code",
+    tools: [
+      { label: "PowerShell", icon: "dev-powershell-original" },
+      { label: "Python", icon: "dev-python-original" },
+      { label: "Bash", icon: "bash" },
+      { label: "Ansible", icon: "si-ansible" },
+      { label: "Chocolatey", icon: "si-chocolatey" },
+      { label: "YAML", icon: "si-yaml" },
+      { label: "GitHub Actions", icon: "si-githubactions" },
+      { label: "Git", icon: "dev-git-original" },
+    ],
   },
   {
-    layer: "Endpoints & Support",
-    note: "The machines people use",
-    core: ["Microsoft Intune", "Autopilot", "ServiceNow", "ITIL"],
-    also: ["Jamf Pro", "macOS", "Jira Service Mgmt", "Zendesk"],
+    name: "Monitoring & backup",
+    note: "Knowing, and getting it back",
+    tools: [
+      { label: "Splunk", icon: "si-splunk", scale: 1.375 },
+      { label: "Datadog", icon: "datadog" },
+      { label: "New Relic", icon: "si-newrelic" },
+      { label: "Grafana", icon: "dev-grafana-original" },
+      { label: "Prometheus", icon: "dev-prometheus-original" },
+      { label: "Wireshark", icon: "wireshark" },
+      { label: "Veeam", icon: "veeam", scale: 1.375 },
+    ],
+  },
+  {
+    name: "Service & collaboration",
+    note: "How the work reaches people",
+    tools: [
+      { label: "ServiceNow", icon: "servicenow", scale: 2.25 },
+      { label: "Jira", icon: "dev-jira-original" },
+      { label: "Confluence", icon: "confluence" },
+      { label: "Zendesk", icon: "si-zendesk" },
+      { label: "Microsoft 365", icon: "ms-365" },
+      { label: "Google Workspace", icon: "dev-google-original" },
+      { label: "Slack", icon: "dev-slack-original" },
+      { label: "Zoom", icon: "si-zoom", scale: 1.375 },
+    ],
   },
 ]
+
+const TOTAL = DOMAINS.reduce((n, d) => n + d.tools.length, 0)
+const BASE = 32
 
 export function SkillsHex() {
   return (
     <div className="section-body measure-wide">
-      <p className="mb-7 text-[13px]" style={{ color: "var(--text-muted)" }}>
-        Brighter names are the ones in my hands most days.
-      </p>
-
-      {/* Indexed L6→L1, top of the stack down to the metal, so the order
-          reads the same way an environment is actually built. */}
       <div className="card overflow-hidden">
-        {GROUPS.map((g, i) => (
-          <div
-            key={g.layer}
-            className="grid grid-cols-1 gap-2 px-5 py-6 sm:grid-cols-[32px_230px_1fr] sm:gap-6 sm:px-7"
-            style={{ borderTop: i === 0 ? "none" : "1px solid var(--border)" }}
-          >
-            <span className="num hidden pt-[3px] text-[11px] sm:block" style={{ color: "var(--text-muted)" }}>
-              L{GROUPS.length - i}
-            </span>
+        <div
+          className="flex items-baseline justify-between gap-4 px-5 py-4 sm:px-7"
+          style={{ borderBottom: "1px solid var(--border)" }}
+        >
+          <span className="eyebrow">Toolbox</span>
+          <span className="mono text-[11px]" style={{ color: "var(--text-muted)" }}>
+            {TOTAL} tools · {DOMAINS.length} domains · hands-on
+          </span>
+        </div>
 
-            <div>
-              <h3 className="font-medium" style={{ fontSize: 15.5, color: "var(--text)" }}>
-                {g.layer}
-              </h3>
-              <p className="mt-1 text-[12.5px]" style={{ color: "var(--text-muted)" }}>
-                {g.note}
-              </p>
+        {DOMAINS.map((d, i) => (
+          <div
+            key={d.name}
+            className="grid grid-cols-1 gap-5 px-5 py-6 sm:grid-cols-[196px_1fr] sm:gap-6 sm:px-7"
+            style={{ borderTop: i === 0 ? "none" : "1px dashed var(--border)" }}
+          >
+            <div className="flex items-start gap-3">
+              <span
+                className="mt-[7px] h-[6px] w-[6px] shrink-0 rounded-full"
+                style={{ background: "var(--accent)" }}
+              />
+              <div>
+                <h3 className="font-medium" style={{ fontSize: 14.5, color: "var(--text)" }}>
+                  {d.name}
+                </h3>
+                <p className="mono mt-1 text-[10.5px]" style={{ color: "var(--text-muted)" }}>
+                  {String(d.tools.length).padStart(2, "0")} tools
+                </p>
+                <p className="mt-1 text-[12px]" style={{ color: "var(--text-muted)" }}>
+                  {d.note}
+                </p>
+              </div>
             </div>
 
-            <p style={{ fontSize: 15, lineHeight: 1.9 }}>
-              {g.core.map((t, j) => (
-                <span key={t}>
-                  {j > 0 && <span style={{ color: "var(--border-dark)" }}> · </span>}
-                  <span style={{ color: "var(--accent)" }}>{t}</span>
-                </span>
-              ))}
-              <span style={{ color: "var(--border-dark)" }}> · </span>
-              {g.also.map((t, j) => (
-                <span key={t}>
-                  {j > 0 && <span style={{ color: "var(--border-dark)" }}> · </span>}
-                  <span style={{ color: "var(--text-muted)" }}>{t}</span>
-                </span>
-              ))}
-            </p>
+            <div className="flex flex-wrap gap-x-2 gap-y-5">
+              {d.tools.map((t) => {
+                const size = BASE * (t.scale ?? 1)
+                return (
+                  <div key={t.label} className="brand w-[78px] shrink-0 text-center">
+                    <div className="flex h-11 items-center justify-center">
+                      <img
+                        src={`/brands/${t.icon}.svg`}
+                        alt=""
+                        width={size}
+                        height={size}
+                        loading="lazy"
+                        decoding="async"
+                        style={{ width: size, height: size, objectFit: "contain" }}
+                      />
+                    </div>
+                    <div
+                      className="mono mt-2 text-[9.5px] leading-[1.35]"
+                      style={{ color: "var(--text-muted)" }}
+                    >
+                      {t.label}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         ))}
       </div>
