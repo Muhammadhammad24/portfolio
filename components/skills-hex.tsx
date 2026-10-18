@@ -107,7 +107,7 @@ const DOMAINS: Domain[] = [
     name: "Service & collaboration",
     note: "How the work reaches people",
     tools: [
-      { label: "ServiceNow", icon: "servicenow", scale: 2.25 },
+      { label: "ServiceNow", icon: "servicenow" },
       { label: "Jira", icon: "dev-jira-original" },
       { label: "Confluence", icon: "confluence" },
       { label: "Zendesk", icon: "si-zendesk" },

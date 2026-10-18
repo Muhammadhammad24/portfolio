@@ -17,7 +17,7 @@ import { useEffect, useRef, useState } from "react"
  */
 
 const W = 432
-const H = 458
+const H = 436
 
 type Hour = {
   id: string
@@ -27,73 +27,66 @@ type Hour = {
   sub2: string
   /** The one-line result of the hour, shown while it is lit. */
   does: string
-  /** What is actually going through his head in that hour. */
-  think: string
+  /** Where the block sits on the clock; null for the one that can land anywhere. */
+  at: [number, number] | null
 }
 
 const DAY: Hour[] = [
   {
     id: "check",
+    at: [8, 9],
     name: "Morning check",
     sub: "PRTG · SolarWinds · Datadog",
     sub2: "Defender · patch compliance",
     does: "nothing on fire",
-    think:
-      "First twenty minutes answer one question: did anything break, drift or fill up overnight? Failed backup jobs, overnight alerts, patch compliance, disk and licence headroom. Everything after this is planned work — unless this screen says otherwise.",
   },
   {
     id: "triage",
+    at: [9, 10],
     name: "Triage the queue",
     sub: "ServiceNow · Jira SM · ITIL",
     sub2: "L1–L3 · P1–P4 · change mgmt",
     does: "sorted by impact",
-    think:
-      "Tickets get ordered by who cannot work, not by who shouted loudest or waited longest. Three people blocked beats thirty people mildly annoyed, and anything that looks like the same ticket twice goes on the automation list instead.",
   },
   {
     id: "change",
+    at: [10, 12],
     name: "Change window",
     sub: "Group Policy · WSUS · SCCM",
     sub2: "maintenance window · rollback",
     does: "shipped safely",
-    think:
-      "The change is a reviewed commit with a plan output, a rollback path and the affected team told in advance. Nothing reaches production because somebody clicked around in a portal at the end of a long day.",
   },
   {
     id: "build",
+    at: [12, 15],
     name: "Build & automate",
     sub: "PowerShell · Python · Ansible",
     sub2: "Terraform · Intune · Autopilot",
-    does: "tomorrow's tickets deleted",
-    think:
-      "The quiet middle of the day is where the job is actually won: onboarding, patching and provisioning turned into code that runs itself. This is the block that removed about 25 hours of manual work a week at TestSolutions.",
+    does: "tickets deleted",
   },
   {
     id: "secure",
+    at: [15, 16],
     name: "Security & identity",
     sub: "Entra ID · Active Directory · Okta",
     sub2: "MFA/SSO · Zero Trust · GDPR",
-    does: "least privilege held",
-    think:
-      "Access reviews, conditional access, privileged accounts, this week's vulnerabilities, baseline drift on endpoints. Permissions creep every single week, so somebody has to take them back on purpose.",
+    does: "least privilege",
   },
   {
     id: "incident",
+    at: null,
     name: "Incident",
     sub: "Defender · CrowdStrike · Splunk",
     sub2: "isolate · revoke · Veeam restore",
-    does: "contained, then fixed",
-    think:
-      "Contain first, investigate second: isolate the device, revoke the sessions, block at the edge, then restore from immutable backup against the agreed RTO. People are told what is happening before they have to ask.",
+    does: "contained first",
   },
   {
     id: "close",
+    at: [17, 18],
     name: "Close the loop",
     sub: "Confluence · runbooks · postmortem",
     sub2: "M365 · Teams · asset records",
     does: "written down",
-    think:
-      "Whatever happened today becomes a runbook line, a monitoring rule or a commit, so the next person — or the next me at 03:00 — does not have to work it out again. Then tomorrow's three priorities, in writing.",
   },
 ]
 
@@ -107,15 +100,24 @@ const ALWAYS = [
 
 const NODE_X = 152
 const NODE_W = 272
-const NODE_H = 56
-const GAP = 6
+const NODE_H = 44
+const GAP = 8
 const TOP = 10
 const nodeY = (i: number) => TOP + i * (NODE_H + GAP)
 
 const CTL_X = 4
 const CTL_W = 106
 const CTL_H = 48
-const ctlY = (i: number) => TOP + 44 + i * (CTL_H + 50)
+const ctlY = (i: number) => TOP + 44 + i * (CTL_H + 40)
+
+/** The clock the day is laid against: one working day, 06:00 to 20:00. */
+const R_X0 = CTL_X
+const R_X1 = W - 4
+const R_FROM = 6
+const R_TO = 20
+const RULE_Y = 412
+const rx = (h: number) => R_X0 + ((h - R_FROM) / (R_TO - R_FROM)) * (R_X1 - R_X0)
+const EASE = "0.5s cubic-bezier(0.5, 0, 0.3, 1)"
 
 export function DayMap() {
   const [hour, setHour] = useState(0)
@@ -178,7 +180,7 @@ export function DayMap() {
         // Whatever the window leaves after the heading, the label row and the
         // paragraph below is what the day gets — so it is as large as it can be
         // without ever running off the first screen.
-        style={{ maxHeight: "min(calc(100vh - 260px), 680px)" }}
+        style={{ maxHeight: "min(calc(100vh - 250px), 660px)" }}
         role="img"
         aria-label="The work in order: morning checks, ticket triage, a change window, automation work, security and identity, an incident if one comes, and closing the loop — with monitoring, backup, patching and logging running underneath all of it."
       >
@@ -313,20 +315,18 @@ export function DayMap() {
                 style={{ transition: "fill 0.35s ease" }}
               />
 
-              <text x={NODE_X + 13} y={y + 20} fontSize="14" fontWeight="500" fill="var(--text)">
+              <text x={NODE_X + 13} y={y + 19} fontSize="14" fontWeight="500" fill="var(--text)">
                 {n.name}
               </text>
-              <text x={NODE_X + 13} y={y + 36} fontSize="11.5" letterSpacing="0.012em" fill="rgba(255,255,255,0.56)">
+              {/* One stack line only — the rest of the detail waits below. */}
+              <text x={NODE_X + 13} y={y + 34} fontSize="11.5" letterSpacing="0.012em" fill="rgba(255,255,255,0.5)">
                 {n.sub}
-              </text>
-              <text x={NODE_X + 13} y={y + 50} fontSize="11.5" letterSpacing="0.012em" fill="rgba(255,255,255,0.4)">
-                {n.sub2}
               </text>
 
               {/* The clock, replaced by the result once the hour is lit. */}
               <text
                 x={NODE_X + NODE_W - 12}
-                y={y + 20}
+                y={y + 19}
                 textAnchor="end"
                 fontSize="10.5"
                 fill="var(--text-dim)"
@@ -337,7 +337,7 @@ export function DayMap() {
               </text>
               <text
                 x={NODE_X + NODE_W - 12}
-                y={y + 20}
+                y={y + 19}
                 textAnchor="end"
                 fontSize="10.5"
                 className="mono"
@@ -360,22 +360,81 @@ export function DayMap() {
           filter="url(#dm-glow)"
           style={{ transition: "cy 0.5s cubic-bezier(0.5, 0, 0.3, 1)" }}
         />
+
+        {/* ── Where that block actually sits on the clock ── */}
+        <text x={R_X0} y={RULE_Y - 26} fontSize="10.5" fill="var(--text-muted)" letterSpacing="0.08em">
+          ON THE CLOCK
+        </text>
+
+        {/* The one block that refuses to own an hour gets the whole day, dashed. */}
+        {H_.at ? (
+          <rect
+            x={rx(H_.at[0])}
+            y={RULE_Y - 18}
+            width={rx(H_.at[1]) - rx(H_.at[0])}
+            height="16"
+            rx="4"
+            fill="rgba(255,255,255,0.1)"
+            stroke="rgba(255,255,255,0.5)"
+            strokeWidth="1"
+            style={{ transition: `x ${EASE}, width ${EASE}` }}
+          />
+        ) : (
+          <rect
+            x={R_X0}
+            y={RULE_Y - 18}
+            width={R_X1 - R_X0}
+            height="16"
+            rx="4"
+            fill="rgba(255,255,255,0.04)"
+            stroke="rgba(255,255,255,0.42)"
+            strokeWidth="1"
+            strokeDasharray="5 4"
+          />
+        )}
+
+        <path d={`M${R_X0} ${RULE_Y} H${R_X1}`} stroke="rgba(255,255,255,0.14)" strokeWidth="1" />
+        {Array.from({ length: R_TO - R_FROM + 1 }, (_, k) => R_FROM + k).map((h) => {
+          const label = h % 3 === 0
+          return (
+            <g key={h}>
+              <path
+                d={`M${rx(h)} ${RULE_Y} V${RULE_Y + (label ? 6 : 3)}`}
+                stroke="rgba(255,255,255,0.22)"
+                strokeWidth="1"
+              />
+              {label && (
+                <text
+                  x={rx(h)}
+                  y={RULE_Y + 18}
+                  textAnchor={h === R_FROM ? "start" : "middle"}
+                  fontSize="9.5"
+                  className="mono"
+                  fill="rgba(255,255,255,0.3)"
+                >
+                  {String(h).padStart(2, "0")}
+                </text>
+              )}
+            </g>
+          )
+        })}
         </svg>
       </div>
 
-      {/* The detail: what that hour is actually for. */}
-      <div className="mt-3" style={{ borderTop: "1px solid var(--border)", paddingTop: 10 }}>
-        <div className="flex items-baseline gap-3">
-          <span className="mono text-[13px]" style={{ color: "rgba(255,255,255,0.5)" }}>
-            {String(hour + 1).padStart(2, "0")}
-          </span>
-          <span className="text-[14px] font-medium" style={{ color: "var(--text)" }}>
-            {H_.name}
-          </span>
-        </div>
-        <p className="mt-2 text-[14px]" style={{ lineHeight: 1.65, color: "var(--text-muted)", minHeight: 44 }}>
-          {H_.think}
-        </p>
+      {/* One line: the hour, what it is, and what it leaves behind. */}
+      <div
+        className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1"
+        style={{ borderTop: "1px solid var(--border)", paddingTop: 10, minHeight: 38 }}
+      >
+        <span className="mono text-[13px]" style={{ color: "rgba(255,255,255,0.5)" }}>
+          {H_.at ? `${String(H_.at[0]).padStart(2, "0")}:00` : "any hour"}
+        </span>
+        <span className="text-[14px] font-medium" style={{ color: "var(--text)" }}>
+          {H_.name}
+        </span>
+        <span className="text-[14px]" style={{ color: "var(--text-muted)" }}>
+          — {H_.does}
+        </span>
       </div>
     </div>
   )
