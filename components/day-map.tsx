@@ -16,8 +16,8 @@ import { useEffect, useRef, useState } from "react"
  * own in the background, a dotted frame is a boundary.
  */
 
-const W = 364
-const H = 450
+const W = 432
+const H = 418
 
 type Hour = {
   id: string
@@ -105,17 +105,17 @@ const ALWAYS = [
   { name: "Logs", sub: "Splunk SIEM" },
 ]
 
-const NODE_X = 122
-const NODE_W = 234
-const NODE_H = 54
-const GAP = 9
+const NODE_X = 140
+const NODE_W = 282
+const NODE_H = 50
+const GAP = 8
 const TOP = 10
 const nodeY = (i: number) => TOP + i * (NODE_H + GAP)
 
 const CTL_X = 6
-const CTL_W = 94
-const CTL_H = 42
-const ctlY = (i: number) => TOP + 36 + i * (CTL_H + 44)
+const CTL_W = 112
+const CTL_H = 48
+const ctlY = (i: number) => TOP + 40 + i * (CTL_H + 42)
 
 export function DayMap() {
   const [hour, setHour] = useState(0)
@@ -138,14 +138,14 @@ export function DayMap() {
     let last = performance.now()
     // Start the accumulator part-way so a release from hover carries straight
     // on instead of sitting still for a full beat first.
-    let acc = resumed.current ? 3400 : 0
+    let acc = resumed.current ? 2400 : 0
     resumed.current = false
     const tick = (now: number) => {
       frame = requestAnimationFrame(tick)
       const dt = now - last
       last = now
       acc += Math.min(dt, 500)
-      if (acc < 2600) return
+      if (acc < 1900) return
       acc = 0
       const box = wrap.current?.getBoundingClientRect()
       if (box && (box.bottom < -400 || box.top > window.innerHeight + 400)) return
@@ -178,7 +178,7 @@ export function DayMap() {
         // Whatever the window leaves after the heading, the label row and the
         // paragraph below is what the day gets — so it is as large as it can be
         // without ever running off the first screen.
-        style={{ maxHeight: "min(calc(100vh - 348px), 580px)" }}
+        style={{ maxHeight: "min(calc(100vh - 296px), 700px)" }}
         role="img"
         aria-label="The work in order: morning checks, ticket triage, a change window, automation work, security and identity, an incident if one comes, and closing the loop — with monitoring, backup, patching and logging running underneath all of it."
       >
@@ -207,10 +207,10 @@ export function DayMap() {
           strokeWidth="1"
           strokeDasharray="4 4"
         />
-        <text x={CTL_X + 2} y={TOP + 17} fontSize="8.6" fill="var(--text-muted)" letterSpacing="0.1em">
+        <text x={CTL_X + 2} y={TOP + 17} fontSize="9.8" fill="var(--text-muted)" letterSpacing="0.1em">
           ALWAYS RUNNING
         </text>
-        <text x={CTL_X + 2} y={TOP + 27} fontSize="8" fill="rgba(255,255,255,0.28)">
+        <text x={CTL_X + 2} y={TOP + 29} fontSize="9" fill="rgba(255,255,255,0.28)">
           no hour of the day owns these
         </text>
 
@@ -225,10 +225,10 @@ export function DayMap() {
               fill="rgba(255,255,255,0.022)"
               stroke="rgba(255,255,255,0.14)"
             />
-            <text x={CTL_X + 10} y={ctlY(i) + 18} fontSize="10.5" fontWeight="500" fill="var(--text)">
+            <text x={CTL_X + 9} y={ctlY(i) + 20} fontSize="12.5" fontWeight="500" fill="var(--text)">
               {c.name}
             </text>
-            <text x={CTL_X + 10} y={ctlY(i) + 30} fontSize="7.6" fill="var(--text-muted)">
+            <text x={CTL_X + 9} y={ctlY(i) + 34} fontSize="9.8" fill="var(--text-muted)">
               {c.sub}
             </text>
             {/* Dashed: it happens on its own, underneath the day. */}
@@ -313,22 +313,22 @@ export function DayMap() {
                 style={{ transition: "fill 0.35s ease" }}
               />
 
-              <text x={NODE_X + 14} y={y + 19} fontSize="12.5" fontWeight="500" fill="var(--text)">
+              <text x={NODE_X + 13} y={y + 18} fontSize="15" fontWeight="500" fill="var(--text)">
                 {n.name}
               </text>
-              <text x={NODE_X + 14} y={y + 33} fontSize="8.2" fill="var(--text-muted)">
+              <text x={NODE_X + 13} y={y + 32} fontSize="10.4" fill="var(--text-muted)">
                 {n.sub}
               </text>
-              <text x={NODE_X + 14} y={y + 45} fontSize="8.2" fill="rgba(255,255,255,0.33)">
+              <text x={NODE_X + 13} y={y + 44} fontSize="10.4" fill="rgba(255,255,255,0.33)">
                 {n.sub2}
               </text>
 
               {/* The clock, replaced by the result once the hour is lit. */}
               <text
                 x={NODE_X + NODE_W - 12}
-                y={y + 19}
+                y={y + 18}
                 textAnchor="end"
-                fontSize="8.6"
+                fontSize="9.8"
                 fill="var(--text-dim)"
                 opacity={live ? 1 : 0}
                 style={{ transition: "opacity 0.35s ease" }}
@@ -337,9 +337,9 @@ export function DayMap() {
               </text>
               <text
                 x={NODE_X + NODE_W - 12}
-                y={y + 19}
+                y={y + 18}
                 textAnchor="end"
-                fontSize="9"
+                fontSize="10"
                 className="mono"
                 fill="rgba(255,255,255,0.22)"
                 opacity={live ? 0 : 1}
