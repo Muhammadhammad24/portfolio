@@ -53,11 +53,14 @@ type Block = {
   tag: string
   /** Where it sits on the clock; null for the one that can land anywhere. */
   at: [number, number] | null
+  /** The real marks of the tools this block is spent in. */
+  marks: string[]
 }
 
 const DAY: Block[] = [
   {
     id: "check",
+    marks: ["dev-grafana-original", "datadog", "si-splunk"],
     at: [8, 9],
     tag: "SRE",
     name: "Monitoring & alerts",
@@ -67,6 +70,7 @@ const DAY: Block[] = [
   },
   {
     id: "triage",
+    marks: ["dev-jira-original", "servicenow", "dev-slack-original"],
     at: [9, 10],
     tag: "IT SUPPORT",
     name: "Service desk",
@@ -76,6 +80,7 @@ const DAY: Block[] = [
   },
   {
     id: "change",
+    marks: ["dev-git-original", "si-githubactions", "terraform"],
     at: [10, 12],
     tag: "DEVOPS",
     name: "Change management",
@@ -85,6 +90,7 @@ const DAY: Block[] = [
   },
   {
     id: "automate",
+    marks: ["dev-powershell-original", "dev-python-original", "si-ansible", "terraform"],
     at: [12, 15],
     tag: "AUTOMATION",
     name: "Automation & IaC",
@@ -94,6 +100,7 @@ const DAY: Block[] = [
   },
   {
     id: "identity",
+    marks: ["ms-entra-id", "ms-active-directory", "okta"],
     at: [15, 16],
     tag: "SECURITY",
     name: "Identity & access",
@@ -103,6 +110,7 @@ const DAY: Block[] = [
   },
   {
     id: "incident",
+    marks: ["ms-defender", "crowdstrike", "veeam"],
     at: null,
     tag: "ON-CALL",
     name: "Incident response",
@@ -112,6 +120,7 @@ const DAY: Block[] = [
   },
   {
     id: "fleet",
+    marks: ["ms-intune", "jamf", "dev-windows11-original", "dev-apple-original"],
     at: [17, 18],
     tag: "ENDPOINTS",
     name: "Endpoint management",
@@ -123,11 +132,61 @@ const DAY: Block[] = [
 
 /** The estate underneath all of it, which does not stop for any of it. */
 const ALWAYS = [
-  { name: "Monitor", sub: "Grafana · Datadog" },
-  { name: "Network", sub: "Fortinet · Cisco" },
-  { name: "Systems", sub: "Windows · Linux" },
-  { name: "Cloud", sub: "Azure · AWS" },
+  { name: "Monitor", sub: "Grafana · Datadog", marks: ["dev-grafana-original", "datadog"] },
+  { name: "Network", sub: "Fortinet · Cisco", marks: ["si-fortinet", "cisco"] },
+  { name: "Systems", sub: "Windows · Linux", marks: ["dev-windows11-original", "dev-linux-original"] },
+  { name: "Cloud", sub: "Azure · AWS", marks: ["dev-azure-original", "dev-amazonwebservices-original-wordmark"] },
 ]
+
+/**
+ * The marks are the companies' own SVGs, exactly as they publish them — the
+ * same files the toolbox further down the page uses. Wordmarks need a wider
+ * slot than square marks or they shrink to nothing beside them.
+ */
+const WIDE = new Set([
+  "si-splunk",
+  "cisco",
+  "veeam",
+  "crowdstrike",
+  "okta",
+  "dev-amazonwebservices-original-wordmark",
+])
+const markW = (icon: string) => (WIDE.has(icon) ? 26 : 15)
+
+/**
+ * Colour on this page belongs to whatever is lit, so a mark that is not being
+ * used sits in greyscale and only takes its own colours when the day is
+ * actually inside that block. That way fifty-three brand palettes never get
+ * to compete with the one red the incident is owed.
+ */
+function Marks({ icons, live, y, x }: { icons: string[]; live: boolean; y: number; x: number }) {
+  let at = 0
+  return (
+    <g style={{ transition: `opacity ${EASE}` }}>
+      {icons.map((icon) => {
+        const w = markW(icon)
+        const el = (
+          <image
+            key={icon}
+            href={`/brands/${icon}.svg`}
+            x={x + at}
+            y={y}
+            width={w}
+            height="13"
+            preserveAspectRatio="xMidYMid meet"
+            style={{
+              filter: live ? "none" : "grayscale(1)",
+              opacity: live ? 1 : 0.45,
+              transition: `filter ${EASE}, opacity ${EASE}`,
+            }}
+          />
+        )
+        at += w + 6
+        return el
+      })}
+    </g>
+  )
+}
 
 /** The one block that does not get an hour — it takes whichever one it lands on. */
 const BREAK = DAY.findIndex((d) => d.at === null)
@@ -401,6 +460,7 @@ export function DayMap() {
                 <text x={CTL_X + 9} y={ctlY(i) + 36} fontSize="10.5" fill="var(--text-muted)">
                   {c.sub}
                 </text>
+                <Marks icons={c.marks} live={caught} x={CTL_X + 62} y={ctlY(i) + 10} />
                 {/* Dashed: it happens on its own, underneath the day. */}
                 <path
                   d={`M${CTL_X + CTL_W} ${ctlY(i) + CTL_H / 2} H${NODE_X - 16}`}
@@ -538,10 +598,9 @@ export function DayMap() {
                 <text x={NODE_X + 13} y={y + 19} fontSize="14" fontWeight="500" fill="var(--text)">
                   {n.name}
                 </text>
-                {/* One stack line only — the rest of the detail waits below. */}
-                <text x={NODE_X + 13} y={y + 34} fontSize="11.5" letterSpacing="0.012em" fill="rgba(255,255,255,0.5)">
-                  {n.sub}
-                </text>
+                {/* The tools themselves, in their own marks. The names of them
+                    stay as text on the line under the diagram. */}
+                <Marks icons={n.marks} live={live} x={NODE_X + 13} y={y + 24} />
 
                 {/* The hat worn for this block, replaced by the result once it is lit. */}
                 <text
@@ -678,7 +737,7 @@ export function DayMap() {
           {B.name}
         </span>
         <span className="text-[14px]" style={{ color: "var(--text-muted)" }}>
-          — {broken ? `pulled out of ${DAY[from].name.toLowerCase()}` : B.sub2}
+          — {broken ? `pulled out of ${DAY[from].name.toLowerCase()}` : `${B.sub} · ${B.sub2}`}
         </span>
       </div>
     </div>
