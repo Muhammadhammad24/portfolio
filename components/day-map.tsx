@@ -17,7 +17,7 @@ import { useEffect, useRef, useState } from "react"
  */
 
 const W = 432
-const H = 418
+const H = 458
 
 type Hour = {
   id: string
@@ -35,8 +35,8 @@ const DAY: Hour[] = [
   {
     id: "check",
     name: "Morning check",
-    sub: "PRTG · SolarWinds · Datadog · Veeam",
-    sub2: "Defender · patch compliance · SLA breaches",
+    sub: "PRTG · SolarWinds · Datadog",
+    sub2: "Defender · patch compliance",
     does: "nothing on fire",
     think:
       "First twenty minutes answer one question: did anything break, drift or fill up overnight? Failed backup jobs, overnight alerts, patch compliance, disk and licence headroom. Everything after this is planned work — unless this screen says otherwise.",
@@ -44,8 +44,8 @@ const DAY: Hour[] = [
   {
     id: "triage",
     name: "Triage the queue",
-    sub: "ServiceNow · Jira SM · Freshservice · ITIL",
-    sub2: "L1/L2/L3 · P1–P4 · incident & change mgmt",
+    sub: "ServiceNow · Jira SM · ITIL",
+    sub2: "L1–L3 · P1–P4 · change mgmt",
     does: "sorted by impact",
     think:
       "Tickets get ordered by who cannot work, not by who shouted loudest or waited longest. Three people blocked beats thirty people mildly annoyed, and anything that looks like the same ticket twice goes on the automation list instead.",
@@ -53,8 +53,8 @@ const DAY: Hour[] = [
   {
     id: "change",
     name: "Change window",
-    sub: "Group Policy · WSUS · SCCM · change mgmt",
-    sub2: "maintenance window · rollback · CAB",
+    sub: "Group Policy · WSUS · SCCM",
+    sub2: "maintenance window · rollback",
     does: "shipped safely",
     think:
       "The change is a reviewed commit with a plan output, a rollback path and the affected team told in advance. Nothing reaches production because somebody clicked around in a portal at the end of a long day.",
@@ -62,8 +62,8 @@ const DAY: Hour[] = [
   {
     id: "build",
     name: "Build & automate",
-    sub: "PowerShell · Python · Ansible · Terraform",
-    sub2: "Intune · Autopilot · SCCM · Power Automate",
+    sub: "PowerShell · Python · Ansible",
+    sub2: "Terraform · Intune · Autopilot",
     does: "tomorrow's tickets deleted",
     think:
       "The quiet middle of the day is where the job is actually won: onboarding, patching and provisioning turned into code that runs itself. This is the block that removed about 25 hours of manual work a week at TestSolutions.",
@@ -71,8 +71,8 @@ const DAY: Hour[] = [
   {
     id: "secure",
     name: "Security & identity",
-    sub: "Entra ID · Active Directory · Okta · MFA/SSO",
-    sub2: "CrowdStrike · Splunk · Zero Trust · GDPR",
+    sub: "Entra ID · Active Directory · Okta",
+    sub2: "MFA/SSO · Zero Trust · GDPR",
     does: "least privilege held",
     think:
       "Access reviews, conditional access, privileged accounts, this week's vulnerabilities, baseline drift on endpoints. Permissions creep every single week, so somebody has to take them back on purpose.",
@@ -80,8 +80,8 @@ const DAY: Hour[] = [
   {
     id: "incident",
     name: "Incident",
-    sub: "Defender · CrowdStrike · Splunk · Wireshark",
-    sub2: "isolate · revoke access · Veeam restore",
+    sub: "Defender · CrowdStrike · Splunk",
+    sub2: "isolate · revoke · Veeam restore",
     does: "contained, then fixed",
     think:
       "Contain first, investigate second: isolate the device, revoke the sessions, block at the edge, then restore from immutable backup against the agreed RTO. People are told what is happening before they have to ask.",
@@ -89,8 +89,8 @@ const DAY: Hour[] = [
   {
     id: "close",
     name: "Close the loop",
-    sub: "Confluence · runbooks · ITIL postmortem",
-    sub2: "M365 · Teams · handover · asset records",
+    sub: "Confluence · runbooks · postmortem",
+    sub2: "M365 · Teams · asset records",
     does: "written down",
     think:
       "Whatever happened today becomes a runbook line, a monitoring rule or a commit, so the next person — or the next me at 03:00 — does not have to work it out again. Then tomorrow's three priorities, in writing.",
@@ -107,15 +107,15 @@ const ALWAYS = [
 
 const NODE_X = 140
 const NODE_W = 282
-const NODE_H = 50
-const GAP = 8
+const NODE_H = 58
+const GAP = 7
 const TOP = 10
 const nodeY = (i: number) => TOP + i * (NODE_H + GAP)
 
 const CTL_X = 6
 const CTL_W = 112
 const CTL_H = 48
-const ctlY = (i: number) => TOP + 40 + i * (CTL_H + 42)
+const ctlY = (i: number) => TOP + 44 + i * (CTL_H + 50)
 
 export function DayMap() {
   const [hour, setHour] = useState(0)
@@ -178,7 +178,7 @@ export function DayMap() {
         // Whatever the window leaves after the heading, the label row and the
         // paragraph below is what the day gets — so it is as large as it can be
         // without ever running off the first screen.
-        style={{ maxHeight: "min(calc(100vh - 296px), 700px)" }}
+        style={{ maxHeight: "min(calc(100vh - 212px), 760px)" }}
         role="img"
         aria-label="The work in order: morning checks, ticket triage, a change window, automation work, security and identity, an incident if one comes, and closing the loop — with monitoring, backup, patching and logging running underneath all of it."
       >
@@ -228,7 +228,7 @@ export function DayMap() {
             <text x={CTL_X + 9} y={ctlY(i) + 20} fontSize="12.5" fontWeight="500" fill="var(--text)">
               {c.name}
             </text>
-            <text x={CTL_X + 9} y={ctlY(i) + 34} fontSize="9.8" fill="var(--text-muted)">
+            <text x={CTL_X + 9} y={ctlY(i) + 35} fontSize="10" fill="var(--text-muted)">
               {c.sub}
             </text>
             {/* Dashed: it happens on its own, underneath the day. */}
@@ -313,20 +313,20 @@ export function DayMap() {
                 style={{ transition: "fill 0.35s ease" }}
               />
 
-              <text x={NODE_X + 13} y={y + 18} fontSize="15" fontWeight="500" fill="var(--text)">
+              <text x={NODE_X + 13} y={y + 20} fontSize="15" fontWeight="500" fill="var(--text)">
                 {n.name}
               </text>
-              <text x={NODE_X + 13} y={y + 32} fontSize="10.4" fill="var(--text-muted)">
+              <text x={NODE_X + 13} y={y + 36} fontSize="10.6" letterSpacing="0.012em" fill="rgba(255,255,255,0.56)">
                 {n.sub}
               </text>
-              <text x={NODE_X + 13} y={y + 44} fontSize="10.4" fill="rgba(255,255,255,0.33)">
+              <text x={NODE_X + 13} y={y + 50} fontSize="10.6" letterSpacing="0.012em" fill="rgba(255,255,255,0.4)">
                 {n.sub2}
               </text>
 
               {/* The clock, replaced by the result once the hour is lit. */}
               <text
                 x={NODE_X + NODE_W - 12}
-                y={y + 18}
+                y={y + 20}
                 textAnchor="end"
                 fontSize="9.8"
                 fill="var(--text-dim)"
@@ -337,7 +337,7 @@ export function DayMap() {
               </text>
               <text
                 x={NODE_X + NODE_W - 12}
-                y={y + 18}
+                y={y + 20}
                 textAnchor="end"
                 fontSize="10"
                 className="mono"
