@@ -100,7 +100,7 @@ const DAY: Block[] = [
   },
   {
     id: "identity",
-    marks: ["ms-entra-id", "ms-active-directory", "okta"],
+    marks: ["ms-entra-id", "ms-active-directory"],
     at: [15, 16],
     tag: "SECURITY",
     name: "Identity & access",
@@ -132,26 +132,26 @@ const DAY: Block[] = [
 
 /** The estate underneath all of it, which does not stop for any of it. */
 const ALWAYS = [
-  { name: "Monitor", sub: "Grafana · Datadog", marks: ["dev-grafana-original", "datadog"] },
-  { name: "Network", sub: "Fortinet · Cisco", marks: ["si-fortinet", "cisco"] },
-  { name: "Systems", sub: "Windows · Linux", marks: ["dev-windows11-original", "dev-linux-original"] },
-  { name: "Cloud", sub: "Azure · AWS", marks: ["dev-azure-original", "dev-amazonwebservices-original-wordmark"] },
+  { name: "Monitor", sub: "Grafana · Datadog" },
+  { name: "Network", sub: "Fortinet · Cisco" },
+  { name: "Systems", sub: "Windows · Linux" },
+  { name: "Cloud", sub: "Azure · AWS" },
 ]
 
 /**
  * The marks are the companies' own SVGs, exactly as they publish them — the
- * same files the toolbox further down the page uses. Wordmarks need a wider
- * slot than square marks or they shrink to nothing beside them.
+ * same files the toolbox further down the page uses.
+ *
+ * Every one of them gets the same cell on the same pitch, and that is the
+ * whole trick: a row of logos reads as calm when the grid under it never
+ * moves, and as a jumble the moment one of them is allowed its own width.
+ * Only marks that are roughly square are drawn here. The genuinely wide
+ * wordmarks — Okta at 3:1, Cisco at nearly 2:1 — would come out as slivers
+ * at this size, so they stay in the line of text under the diagram and in
+ * the toolbox, where they have the room to be themselves.
  */
-const WIDE = new Set([
-  "si-splunk",
-  "cisco",
-  "veeam",
-  "crowdstrike",
-  "okta",
-  "dev-amazonwebservices-original-wordmark",
-])
-const markW = (icon: string) => (WIDE.has(icon) ? 26 : 15)
+const CELL = 15
+const PITCH = 21
 
 /**
  * Colour on this page belongs to whatever is lit, so a mark that is not being
@@ -160,30 +160,24 @@ const markW = (icon: string) => (WIDE.has(icon) ? 26 : 15)
  * to compete with the one red the incident is owed.
  */
 function Marks({ icons, live, y, x }: { icons: string[]; live: boolean; y: number; x: number }) {
-  let at = 0
   return (
-    <g style={{ transition: `opacity ${EASE}` }}>
-      {icons.map((icon) => {
-        const w = markW(icon)
-        const el = (
-          <image
-            key={icon}
-            href={`/brands/${icon}.svg`}
-            x={x + at}
-            y={y}
-            width={w}
-            height="13"
-            preserveAspectRatio="xMidYMid meet"
-            style={{
-              filter: live ? "none" : "grayscale(1)",
-              opacity: live ? 1 : 0.45,
-              transition: `filter ${EASE}, opacity ${EASE}`,
-            }}
-          />
-        )
-        at += w + 6
-        return el
-      })}
+    <g>
+      {icons.map((icon, i) => (
+        <image
+          key={icon}
+          href={`/brands/${icon}.svg`}
+          x={x + i * PITCH}
+          y={y}
+          width={CELL}
+          height={CELL}
+          preserveAspectRatio="xMidYMid meet"
+          style={{
+            filter: live ? "none" : "grayscale(1)",
+            opacity: live ? 1 : 0.4,
+            transition: `filter ${EASE}, opacity ${EASE}`,
+          }}
+        />
+      ))}
     </g>
   )
 }
@@ -460,7 +454,6 @@ export function DayMap() {
                 <text x={CTL_X + 9} y={ctlY(i) + 36} fontSize="10.5" fill="var(--text-muted)">
                   {c.sub}
                 </text>
-                <Marks icons={c.marks} live={caught} x={CTL_X + 62} y={ctlY(i) + 10} />
                 {/* Dashed: it happens on its own, underneath the day. */}
                 <path
                   d={`M${CTL_X + CTL_W} ${ctlY(i) + CTL_H / 2} H${NODE_X - 16}`}
@@ -595,17 +588,31 @@ export function DayMap() {
                   style={{ transition: `fill ${EASE}` }}
                 />
 
-                <text x={NODE_X + 13} y={y + 19} fontSize="14" fontWeight="500" fill="var(--text)">
+                <text x={NODE_X + 13} y={y + 17} fontSize="14" fontWeight="500" fill="var(--text)">
                   {n.name}
                 </text>
                 {/* The tools themselves, in their own marks. The names of them
                     stay as text on the line under the diagram. */}
                 <Marks icons={n.marks} live={live} x={NODE_X + 13} y={y + 24} />
 
-                {/* The hat worn for this block, replaced by the result once it is lit. */}
+                {/* The hat worn for this block — always there, never traded away. */}
                 <text
                   x={NODE_X + NODE_W - 12}
-                  y={y + 19}
+                  y={y + 17}
+                  textAnchor="end"
+                  fontSize="9.5"
+                  className="mono"
+                  letterSpacing="0.06em"
+                  fill={isBreak && breached ? "var(--danger)" : "rgba(255,255,255,0.3)"}
+                  style={{ transition: `fill ${EASE}` }}
+                >
+                  {n.tag}
+                </text>
+                {/* What the block leaves behind, out on the marks' line so the
+                    two of them never fade through one another. */}
+                <text
+                  x={NODE_X + NODE_W - 12}
+                  y={y + 35}
                   textAnchor="end"
                   fontSize="10.5"
                   fill={isBreak && breached ? "var(--danger)" : "var(--text-dim)"}
@@ -613,19 +620,6 @@ export function DayMap() {
                   style={{ transition: `opacity ${EASE}, fill ${EASE}` }}
                 >
                   {n.does}
-                </text>
-                <text
-                  x={NODE_X + NODE_W - 12}
-                  y={y + 19}
-                  textAnchor="end"
-                  fontSize="9.5"
-                  className="mono"
-                  letterSpacing="0.06em"
-                  fill="rgba(255,255,255,0.26)"
-                  opacity={live ? 0 : 1}
-                  style={{ transition: `opacity ${EASE}` }}
-                >
-                  {n.tag}
                 </text>
               </g>
             )
