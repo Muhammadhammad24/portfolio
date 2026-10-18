@@ -453,27 +453,31 @@ body { counter-reset: plate; }
 .skill-row:first-child { border-top: none; }
 .skill-row:hover { background: rgba(255,255,255,0.018); }
 
-.tool-chip {
+/* One tool, one mark. The tile is the page's hairline surface; the logo is
+   the only colour in it, and the name lives in the tooltip because a row of
+   marks reads faster than a row of labels. */
+.tool-tile {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 7px 13px 7px 10px;
+  justify-content: center;
+  width: 50px;
+  height: 46px;
+  padding: 0 8px;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: rgba(255,255,255,0.022);
-  font-size: 12.5px;
-  line-height: 1;
-  color: var(--text-dim);
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
-.tool-chip img {
-  opacity: 0.9;
+/* Wordmarks need the room their drawing was made for. */
+.tool-tile.is-wide { width: auto; min-width: 56px; height: 46px; padding: 0 10px; }
+.tool-tile img {
+  opacity: 0.92;
   transition: opacity 0.2s ease;
 }
-.tool-chip:hover {
+.tool-tile:hover {
   border-color: rgba(255,255,255,0.42);
   background: rgba(255,255,255,0.05);
-  color: var(--text);
   transform: translateY(-1px);
 }
-.tool-chip:hover img { opacity: 1; }
+.tool-tile:hover img { opacity: 1; }
+

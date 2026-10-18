@@ -146,7 +146,7 @@ export default function Portfolio() {
         <div className="container">
           <SectionHeading title="Skills" subtitle="Expertise" />
           <p className="section-lede">
-            The same seven domains as my GitHub toolbox, with the tools I actually have my hands on — not a list of everything I have ever opened.
+            Seven domains, and in each one the tools I actually have my hands on — not a list of everything I have ever opened.
           </p>
           <SkillsHex />
         </div>

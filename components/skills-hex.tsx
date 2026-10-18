@@ -119,6 +119,9 @@ const DOMAINS: Domain[] = [
   },
 ]
 
+/** Wordmarks and other wide marks, which are not drawn to a square. */
+const wide = (t: Tool) => (t.scale ?? 1) > 1
+
 const TOTAL = DOMAINS.reduce((n, d) => n + d.tools.length, 0)
 
 export function SkillsHex() {
@@ -152,23 +155,27 @@ export function SkillsHex() {
               </div>
             </div>
 
-            {/* Each tool reads as a thing I use, named: mark on the left, name
-                beside it, on the page's own hairline surface. */}
-            <div className="flex flex-wrap gap-2">
+            {/* No captions: anyone reading this page knows the marks, and a
+                row of logos says it faster than a row of labels. The name is
+                still there for a cursor and for a screen reader. */}
+            <div className="flex flex-wrap gap-2.5">
               {d.tools.map((t) => (
-                <span key={t.label} className="tool-chip">
+                <span key={t.label} className={`tool-tile${wide(t) ? " is-wide" : ""}`} title={t.label} aria-label={t.label} role="img">
                   <img
                     src={`/brands/${t.icon}.svg`}
                     alt=""
-                    width={18}
-                    height={18}
                     loading="lazy"
                     decoding="async"
-                    // Wordmarks are wide and short: they get the width their
-                    // drawing needs, never more height than a square mark.
-                    style={{ width: 18 * (t.scale ?? 1), height: 18, objectFit: "contain" }}
+                    // Several of these marks are a small wordmark sitting
+                    // inside a square document, so the box itself is scaled up
+                    // rather than the drawing stretched: object-fit keeps each
+                    // one's own proportions inside it.
+                    style={{
+                      width: 24 * (t.scale ?? 1),
+                      height: 24 * (t.scale ?? 1),
+                      objectFit: "contain",
+                    }}
                   />
-                  {t.label}
                 </span>
               ))}
             </div>
