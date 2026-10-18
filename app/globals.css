@@ -39,8 +39,14 @@
   --text-on-dark-secondary: #ACAEB8;
   --text-on-dark-muted:     #777982;
 
-  /* ── Semantic ── */
+  /* ── Semantic ──
+     The one hue on the page, and it is spent on one thing: the moment the
+     day breaks. Everything else resolves to luminance, so a single red
+     stroke carries more weight here than a palette would anywhere else. */
   --danger:            #E5484D;
+  --danger-line:       rgba(229,72,77,0.58);
+  --danger-dim:        rgba(229,72,77,0.30);
+  --danger-wash:       rgba(229,72,77,0.09);
 
   /* ── Shadows ── */
 
