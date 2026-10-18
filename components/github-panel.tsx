@@ -150,7 +150,7 @@ function Unavailable() {
             <div className="num font-semibold" style={{ fontSize: 23, color: "var(--text)" }}>
               {f.v}
             </div>
-            <div className="mt-1 text-[13px]" style={{ color: "var(--text-muted)" }}>
+            <div className="mt-1 text-[14px]" style={{ color: "var(--text-muted)" }}>
               {f.k}
             </div>
           </div>
@@ -158,7 +158,7 @@ function Unavailable() {
       </div>
 
       <p
-        className="mt-6 pt-5 text-[13.5px]"
+        className="mt-6 pt-5 text-[14px]"
         style={{ borderTop: "1px solid var(--border)", lineHeight: 1.65, color: "var(--text-muted)", maxWidth: "70ch" }}
       >
         The live read is rate limited right now — GitHub allows sixty
@@ -284,7 +284,7 @@ export async function GitHubPanel() {
             <div className="num font-semibold" style={{ fontSize: 23, color: "var(--text)" }}>
               {s.value}
             </div>
-            <div className="mt-0.5 text-[13px]" style={{ color: "var(--text-muted)" }}>
+            <div className="mt-0.5 text-[14px]" style={{ color: "var(--text-muted)" }}>
               {s.label}
             </div>
           </div>
@@ -294,7 +294,7 @@ export async function GitHubPanel() {
       {/* Contribution graph — appears once GITHUB_TOKEN is configured */}
       {days && days.length > 0 && (
         <div className="px-5 py-4" style={{ borderBottom: "1px solid var(--border)" }}>
-          <div className="mb-2.5 text-[13.5px]" style={{ color: "var(--text-dim)" }}>
+          <div className="mb-2.5 text-[14px]" style={{ color: "var(--text-dim)" }}>
             <span className="num" style={{ color: "var(--text)" }}>
               {days.reduce((a, d) => a + d.contributionCount, 0)}
             </span>{" "}
@@ -330,20 +330,20 @@ export async function GitHubPanel() {
         </div>
         <div className="flex flex-wrap gap-x-5 gap-y-1.5">
           {shown.map((l, i) => (
-            <span key={l.name} className="flex items-center gap-2 text-[13.5px]" style={{ color: "var(--text-dim)" }}>
+            <span key={l.name} className="flex items-center gap-2 text-[14px]" style={{ color: "var(--text-dim)" }}>
               <span className="h-2 w-2 rounded-full" style={{ background: tint(i) }} />
               {l.name}
               <span className="num" style={{ color: "var(--text-muted)" }}>{l.pct.toFixed(1)}%</span>
             </span>
           ))}
           {otherPct > 0 && (
-            <span className="text-[13.5px]" style={{ color: "var(--text-muted)" }}>
+            <span className="text-[14px]" style={{ color: "var(--text-muted)" }}>
               other {otherPct.toFixed(1)}%
             </span>
           )}
         </div>
         {shown.some((l) => l.name === "Jupyter Notebook") && (
-          <p className="mt-3 text-[13px]" style={{ color: "var(--text-muted)" }}>
+          <p className="mt-3 text-[14px]" style={{ color: "var(--text-muted)" }}>
             Measured in bytes, so notebooks read high: they store their saved output alongside the code.
           </p>
         )}
@@ -355,7 +355,7 @@ export async function GitHubPanel() {
           {topics.map((t) => (
             <span
               key={t}
-              className="rounded-full px-2.5 py-1 text-[13px]"
+              className="rounded-full px-2.5 py-1 text-[14px]"
               style={{ border: "1px solid var(--border)", color: "var(--text-muted)" }}
             >
               {t}
@@ -368,10 +368,10 @@ export async function GitHubPanel() {
         className="flex items-center justify-between gap-3 px-5 py-3.5"
         style={{ borderTop: "1px solid var(--border)", background: "rgba(255,255,255,0.015)" }}
       >
-        <span className="text-[13.5px]" style={{ color: "var(--text-muted)" }}>
+        <span className="text-[14px]" style={{ color: "var(--text-muted)" }}>
           Pushing code since <span className="num">{since}</span>
         </span>
-        <span className="text-[13.5px]" style={{ color: "var(--text-muted)" }}>
+        <span className="text-[14px]" style={{ color: "var(--text-muted)" }}>
           last push <span className="num">{new Date(lastPush).toISOString().slice(0, 10)}</span>
         </span>
       </div>

@@ -121,10 +121,10 @@ export function JourneyMap() {
             <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5">
               {FACTS.map((f) => (
                 <div key={f.k}>
-                  <dt className="text-[12.5px] uppercase" style={{ letterSpacing: "0.1em", color: "var(--text-muted)" }}>
+                  <dt className="text-[13px] uppercase" style={{ letterSpacing: "0.1em", color: "var(--text-muted)" }}>
                     {f.k}
                   </dt>
-                  <dd className="mt-1 text-[14.5px] tabular-nums" style={{ color: "var(--text)" }}>
+                  <dd className="mt-1 text-[15px] tabular-nums" style={{ color: "var(--text)" }}>
                     {f.v}
                   </dd>
                 </div>

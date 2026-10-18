@@ -178,7 +178,7 @@ export function DayMap() {
         // Whatever the window leaves after the heading, the label row and the
         // paragraph below is what the day gets — so it is as large as it can be
         // without ever running off the first screen.
-        style={{ maxHeight: "min(calc(100vh - 212px), 760px)" }}
+        style={{ maxHeight: "min(calc(100vh - 260px), 680px)" }}
         role="img"
         aria-label="The work in order: morning checks, ticket triage, a change window, automation work, security and identity, an incident if one comes, and closing the loop — with monitoring, backup, patching and logging running underneath all of it."
       >
@@ -207,10 +207,10 @@ export function DayMap() {
           strokeWidth="1"
           strokeDasharray="4 4"
         />
-        <text x={CTL_X + 2} y={TOP + 17} fontSize="9.8" fill="var(--text-muted)" letterSpacing="0.1em">
+        <text x={CTL_X + 2} y={TOP + 17} fontSize="11" fill="var(--text-muted)" letterSpacing="0.08em">
           ALWAYS RUNNING
         </text>
-        <text x={CTL_X + 2} y={TOP + 29} fontSize="9" fill="rgba(255,255,255,0.28)">
+        <text x={CTL_X + 2} y={TOP + 30} fontSize="10.5" fill="rgba(255,255,255,0.28)">
           no hour of the day owns these
         </text>
 
@@ -225,10 +225,10 @@ export function DayMap() {
               fill="rgba(255,255,255,0.022)"
               stroke="rgba(255,255,255,0.14)"
             />
-            <text x={CTL_X + 9} y={ctlY(i) + 20} fontSize="12.5" fontWeight="500" fill="var(--text)">
+            <text x={CTL_X + 9} y={ctlY(i) + 20} fontSize="13" fontWeight="500" fill="var(--text)">
               {c.name}
             </text>
-            <text x={CTL_X + 9} y={ctlY(i) + 35} fontSize="10" fill="var(--text-muted)">
+            <text x={CTL_X + 9} y={ctlY(i) + 36} fontSize="11" fill="var(--text-muted)">
               {c.sub}
             </text>
             {/* Dashed: it happens on its own, underneath the day. */}
@@ -316,10 +316,10 @@ export function DayMap() {
               <text x={NODE_X + 13} y={y + 20} fontSize="15" fontWeight="500" fill="var(--text)">
                 {n.name}
               </text>
-              <text x={NODE_X + 13} y={y + 36} fontSize="10.6" letterSpacing="0.012em" fill="rgba(255,255,255,0.56)">
+              <text x={NODE_X + 13} y={y + 36} fontSize="12" letterSpacing="0.012em" fill="rgba(255,255,255,0.56)">
                 {n.sub}
               </text>
-              <text x={NODE_X + 13} y={y + 50} fontSize="10.6" letterSpacing="0.012em" fill="rgba(255,255,255,0.4)">
+              <text x={NODE_X + 13} y={y + 50} fontSize="12" letterSpacing="0.012em" fill="rgba(255,255,255,0.4)">
                 {n.sub2}
               </text>
 
@@ -328,7 +328,7 @@ export function DayMap() {
                 x={NODE_X + NODE_W - 12}
                 y={y + 20}
                 textAnchor="end"
-                fontSize="9.8"
+                fontSize="11"
                 fill="var(--text-dim)"
                 opacity={live ? 1 : 0}
                 style={{ transition: "opacity 0.35s ease" }}
@@ -339,7 +339,7 @@ export function DayMap() {
                 x={NODE_X + NODE_W - 12}
                 y={y + 20}
                 textAnchor="end"
-                fontSize="10"
+                fontSize="11"
                 className="mono"
                 fill="rgba(255,255,255,0.22)"
                 opacity={live ? 0 : 1}
@@ -364,16 +364,16 @@ export function DayMap() {
       </div>
 
       {/* The detail: what that hour is actually for. */}
-      <div className="mt-4" style={{ borderTop: "1px solid var(--border)", paddingTop: 14 }}>
+      <div className="mt-3" style={{ borderTop: "1px solid var(--border)", paddingTop: 10 }}>
         <div className="flex items-baseline gap-3">
-          <span className="mono text-[12.5px]" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <span className="mono text-[13px]" style={{ color: "rgba(255,255,255,0.5)" }}>
             {String(hour + 1).padStart(2, "0")}
           </span>
           <span className="text-[14px] font-medium" style={{ color: "var(--text)" }}>
             {H_.name}
           </span>
         </div>
-        <p className="mt-2 text-[13.5px]" style={{ lineHeight: 1.7, color: "var(--text-muted)", minHeight: 56 }}>
+        <p className="mt-2 text-[14px]" style={{ lineHeight: 1.65, color: "var(--text-muted)", minHeight: 44 }}>
           {H_.think}
         </p>
       </div>

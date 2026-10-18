@@ -13,7 +13,13 @@ const config = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: "1.25rem",   // 20px — mobile
+        sm:      "1.5rem",    // 24px
+        lg:      "2rem",      // 32px
+        xl:      "2.5rem",    // 40px — breathing room at 1280px
+        "2xl":   "2rem",      // 32px — at 1240px cap
+      },
       screens: {
         // One page column. Everything — heading, prose, cards, diagrams —
         // shares these exact edges, so nothing can drift left or right.

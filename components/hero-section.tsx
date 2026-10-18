@@ -9,10 +9,10 @@ import { scrollToSection } from "@/components/smooth-scroll"
 export function HeroSection() {
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden">
-      <div className="container relative z-10 grid grid-cols-1 items-center gap-14 px-4 pb-10 pt-28 lg:grid-cols-[1fr_1fr] lg:gap-20">
+      <div className="container relative z-10 grid grid-cols-1 items-center gap-10 px-4 pb-8 pt-24 lg:grid-cols-[1fr_1fr] lg:gap-16">
         {/* ── Left: identity ── */}
         <div className="hero-in">
-          <div className="mb-7 flex items-center gap-3">
+          <div className="mb-6 flex items-center gap-3">
             <img
               src="/photo_hammad.jpg"
               alt="Muhammad Hammad"
@@ -34,9 +34,9 @@ export function HeroSection() {
           <h1
             className="font-semibold"
             style={{
-              fontSize: "clamp(44px, 6.5vw, 76px)",
+              fontSize: "clamp(38px, 6.5vw, 76px)",
               lineHeight: 1.05,
-              letterSpacing: "-0.04em",
+              letterSpacing: "-0.03em",
               color: "var(--text)",
             }}
           >
@@ -46,15 +46,15 @@ export function HeroSection() {
           </h1>
 
           <p
-            className="mt-6 max-w-xl"
-            style={{ fontSize: "clamp(16px, 1.6vw, 19px)", lineHeight: 1.6, color: "var(--text-dim)" }}
+            className="mt-5 max-w-xl"
+            style={{ fontSize: "clamp(15px, 1.6vw, 19px)", lineHeight: 1.65, color: "var(--text-dim)" }}
           >
             IT Infrastructure Engineer. I keep company systems running and
             locked down: cloud, networks, servers, and the laptops people actually sit
             in front of.
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
               href="#contact"
               onClick={(e) => {
@@ -85,7 +85,7 @@ export function HeroSection() {
             </a>
           </div>
 
-          <div className="mt-9 flex items-center gap-3">
+          <div className="mt-8 flex items-center gap-3">
             {[
               { icon: GitHubMark, href: "https://github.com/Muhammadhammad24", label: "GitHub" },
               { icon: LinkedInMark, href: "https://www.linkedin.com/in/mhammad24/", label: "LinkedIn" },

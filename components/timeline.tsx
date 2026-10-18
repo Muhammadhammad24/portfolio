@@ -154,7 +154,7 @@ function TimelineEntry({ exp, index }: { exp: (typeof experiences)[0]; index: nu
                 </h3>
                 {exp.type && (
                   <span
-                    className="rounded-full px-2 py-0.5 text-[12px] font-medium"
+                    className="rounded-full px-2 py-0.5 text-[13px] font-medium"
                     style={{ color: "var(--accent)", border: "1px solid rgb(var(--accent-rgb) / 0.3)" }}
                   >
                     {exp.type}
@@ -166,7 +166,7 @@ function TimelineEntry({ exp, index }: { exp: (typeof experiences)[0]; index: nu
                 <span style={{ color: "var(--text-muted)" }}> · {exp.location}</span>
               </p>
             </div>
-              <span className="shrink-0 text-xs whitespace-nowrap" style={{ color: "var(--text-muted)" }}>
+              <span className="shrink-0 text-[14px] whitespace-nowrap" style={{ color: "var(--text-muted)" }}>
                 {exp.period}
                 {exp.duration && <span style={{ color: "var(--text-muted)", opacity: 0.65 }}> · {exp.duration}</span>}
               </span>

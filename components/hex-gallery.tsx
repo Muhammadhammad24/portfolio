@@ -68,7 +68,7 @@ function Card({
           <span
             className="shrink-0 rounded-full px-2 py-0.5 font-medium"
             style={{
-              fontSize: 12,
+              fontSize: 13,
               letterSpacing: "0.04em",
               color: active ? ACCENT : "var(--text-muted)",
               border: `1px solid ${active ? "rgb(var(--accent-rgb) / 0.35)" : "var(--border)"}`,
