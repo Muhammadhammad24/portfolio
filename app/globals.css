@@ -462,3 +462,31 @@ body { counter-reset: plate; }
 .tool-mark:hover img { opacity: 1; transform: translateY(-2px); }
 .tool-mark:hover div:last-child { color: var(--text); }
 
+
+/* ── Brand marks, seated ──────────────────────────────────────────
+   These five logos are the only things on the page wearing somebody else's
+   colours, so instead of floating loose against the text they sit in a well:
+   the page's own hairline surface, one size, one radius, optically centred.
+   The colour is never touched — the frame is what does the matching. */
+.mark-well {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  transition: border-color 0.22s ease, background 0.22s ease, transform 0.22s ease;
+}
+.mark-well img { display: block; }
+a:hover > .mark-well,
+.mark-well:hover {
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.07);
+  transform: translateY(-1px);
+}
+
+/* The discs in the hero and the footer are the same idea, round. */
+.social-icon-btn { background: rgba(255,255,255,0.03); }
+.social-icon-btn img { display: block; }

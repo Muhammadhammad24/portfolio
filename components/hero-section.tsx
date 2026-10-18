@@ -98,7 +98,7 @@ export function HeroSection() {
                 aria-label={label}
                 className="social-icon-btn flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200"
               >
-                <Icon className="h-4 w-4" />
+                <Icon className="h-[15px] w-[15px]" />
               </Link>
             ))}
           </div>
