@@ -2,13 +2,13 @@
 
 import Link from "next/link"
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
-import { ProductionEnv } from "@/components/production-env"
+import { DayMap } from "@/components/day-map"
 import { scrollToSection } from "@/components/smooth-scroll"
 
 export function HeroSection() {
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden">
-      <div className="container relative z-10 grid grid-cols-1 items-center gap-14 px-4 pb-10 pt-28 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+      <div className="container relative z-10 grid grid-cols-1 items-center gap-14 px-4 pb-10 pt-28 lg:grid-cols-[1fr_1fr] lg:gap-20">
         {/* ── Left: identity ── */}
         <div className="hero-in">
           <div className="mb-7 flex items-center gap-3">
@@ -48,7 +48,7 @@ export function HeroSection() {
             className="mt-6 max-w-xl"
             style={{ fontSize: "clamp(16px, 1.6vw, 19px)", lineHeight: 1.6, color: "var(--text-dim)" }}
           >
-            IT Infrastructure &amp; Security Engineer. I keep company systems running and
+            IT Infrastructure Engineer. I keep company systems running and
             locked down: cloud, networks, servers, and the laptops people actually sit
             in front of.
           </p>
@@ -105,7 +105,7 @@ export function HeroSection() {
 
         {/* ── Right: proof ── */}
         <div className="hero-in" style={{ animationDelay: "0.12s" }}>
-          <ProductionEnv />
+          <DayMap />
         </div>
       </div>
     </section>

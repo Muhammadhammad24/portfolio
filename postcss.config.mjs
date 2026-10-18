@@ -2,6 +2,9 @@
 const config = {
   plugins: {
     tailwindcss: {},
+    // The project ships an autoprefixer dependency; without it listed here
+    // nothing was prefixing anything.
+    autoprefixer: {},
   },
 };
 

@@ -1,23 +1,24 @@
-# Muhammad Hammad — IT Infrastructure & Security Engineer Portfolio
+# Muhammad Hammad — IT Infrastructure Engineer Portfolio
 
-Personal portfolio website for Muhammad Hammad, IT Infrastructure & Security Engineer based in Germany.
+Personal portfolio site. Single static page, no database, no CMS: the only live
+data is read from the GitHub API at build time and refreshed hourly.
 
-## Tech Stack
+## Tech
 
-- **Next.js 15** — App Router
+- **Next.js 15** — App Router, statically rendered
 - **TypeScript**
-- **Tailwind CSS**
-- **Framer Motion** — animations
+- **Tailwind CSS** + one hand-written design system in `app/globals.css`
+- **Framer Motion** — nav, scroll progress, command palette
 - **Lucide React** — icons
 
-## Getting Started
+## Getting started
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Open <http://localhost:3000>.
 
 ## Build
 
@@ -26,29 +27,47 @@ npm run build
 npm start
 ```
 
+## Environment
+
+Copy `.env.local.example` to `.env.local`. Both values are optional — the site
+builds and runs without them.
+
+| Variable | Used by | Without it |
+| --- | --- | --- |
+| `GITHUB_TOKEN` | `components/github-panel.tsx` | Rate limit drops to 60 req/h and the contribution graph is hidden |
+| `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` | `components/contact-form.tsx` | The form reports that email delivery is not configured |
+
 ## Structure
 
 ```
 app/
-  globals.css      # Global styles + cyber theme
-  layout.tsx       # Root layout + metadata + favicon
-  page.tsx         # Main portfolio page
+  globals.css          # Design tokens, buttons, cards, section rhythm
+  layout.tsx           # Root layout, fonts, metadata, favicon
+  page.tsx             # The whole page, section by section
 
 components/
-  floating-nav.tsx     # Fixed nav with smooth scroll
-  profile-photo.tsx    # Animated photo widget
-  cyber-roles.tsx      # Orbital specializations diagram
-  spec-card.tsx        # "What I Do Best" cards with SVG icons
-  tech-marquee.tsx     # Scrolling tech stack bar (hover to pause)
-  project-card.tsx     # Project showcase cards
-  timeline.tsx         # Work experience timeline
-  contact-form.tsx     # Contact form
-  glassmorphic-card.tsx
-  section-heading.tsx
-  scroll-progress.tsx
+  hero-section.tsx     # Name, intro and the day map
+  day-map.tsx          # A working day, 08:00 → 17:30, as a diagram
+  github-panel.tsx     # Live GitHub data (server component)
+  skills-hex.tsx       # Skills grouped in six layers
+  certs-hex.tsx        # Certifications, built on hex-gallery
+  hex-gallery.tsx      # Shared pick-one-and-read-it gallery
+  projects-explorer.tsx
+  journey-map.tsx      # Karachi → Göttingen, drawn on globe.tsx
+  globe.tsx            # Orthographic globe; coastlines in world-land.ts
+  timeline.tsx         # The seven roles, in detail
+  contact-form.tsx     # Web3Forms, posted straight from the browser
+  floating-nav.tsx     # Floating nav, mobile sheet, section spy
+  command-palette.tsx  # ⌘K / Ctrl+K quick menu
+  scroll-progress.tsx  # Reading progress bar
+  smooth-scroll.ts     # Anchor scrolling, frame-driven
+  section-heading.tsx · section-reveal.tsx · glassmorphic-card.tsx
+  profile-photo.tsx
+
+hooks/
+  use-mobile.tsx       # Viewport-width breakpoint for the nav
 
 public/
-  photo_hammad.jpg   # Profile photo
-  favicon.svg        # Shield favicon
-  icons/             # SVG tech-stack icons
+  photo_hammad.jpg     # Portrait
+  favicon.svg
 ```

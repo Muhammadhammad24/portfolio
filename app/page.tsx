@@ -31,10 +31,10 @@ export default function Portfolio() {
         <div className="container">
           <SectionHeading title="Seven years, zero breaches" subtitle="Track record" />
           <p className="section-lede">
-            Those six layers are not a wish list. I have run them for a government body in
-            Karachi, a logistics firm, a bookstore chain and now a company spread over twelve
-            countries. Below is my GitHub, read live from their API — not a claim about my
-            work, just the work.
+            That day is not a wish list. I have run it for a government body in Karachi, a
+            logistics firm, a bookstore chain and now a company spread over twelve countries.
+            Below is my GitHub, read live from their API — not a claim about my work, just
+            the work.
           </p>
 
           <div className="section-body measure-wide">
@@ -71,24 +71,19 @@ export default function Portfolio() {
             <div className="space-y-12">
               <div className="space-y-5">
                 <p style={{ fontSize: 17, lineHeight: 1.75, color: 'var(--text-dim)' }}>
-                  I started in 2019 on a helpdesk in Karachi. Dead laptops, forgotten passwords, a
-                  printer nobody could fix. It taught me the thing I still work by: behind every
-                  ticket there is a person who cannot do their job right now.
+                  IT Infrastructure Engineer with{" "}
+                  <span style={{ color: 'var(--text)' }}>7 years of experience</span> bridging
+                  traditional system administration and cloud-native approaches. I manage{" "}
+                  <span style={{ color: 'var(--text)' }}>500+ endpoints</span> across Azure and AWS,
+                  with a strong foundation in Windows and Linux server administration, enterprise
+                  networking, and GDPR-aligned Zero Trust security.
                 </p>
                 <p style={{ fontSize: 17, lineHeight: 1.75, color: 'var(--text-dim)' }}>
-                  Seven years and seven employers later the numbers are bigger.{" "}
-                  <span style={{ color: 'var(--text)' }}>265 government endpoints</span> at KTDMC.{" "}
-                  <span style={{ color: 'var(--text)' }}>180 people across 12 countries</span> at
-                  TestSolutions. Azure and AWS, Active Directory, firewalls, a few hundred devices
-                  that all have to wake up working on Monday. The job never really changed. Keep it
-                  running, keep it locked, make sure nobody has to think about it.
-                </p>
-                <p style={{ fontSize: 17, lineHeight: 1.75, color: 'var(--text-dim)' }}>
-                  What I actually enjoy is deleting work. If something gets done by hand twice, I
-                  would rather lose a week automating it than do it a third time — that is how{" "}
-                  <span style={{ color: 'var(--text)' }}>25 hours a week</span> of manual onboarding
-                  and patching disappeared at TestSolutions. The best compliment my work gets is
-                  silence: no outage, no breach, no ticket.
+                  I build infrastructure that runs quietly in the background, scales without drama,
+                  stays secure, and rarely needs anyone to step in. If your systems feel messy,
+                  manual, or held together by too many late-night fixes, that is the kind of problem
+                  I like solving. Bring me the chaos, I will hand back something clean and
+                  self-reliant. Reach out anytime — let's build something together.
                 </p>
               </div>
 
@@ -151,7 +146,7 @@ export default function Portfolio() {
         <div className="container">
           <SectionHeading title="Skills" subtitle="Expertise" />
           <p className="section-lede">
-            Grouped by the same six layers as the stack above, and kept to what I actually reach for.
+            Grouped by the layer each one belongs to, and kept to what I actually reach for.
           </p>
           <SkillsHex />
         </div>
@@ -251,7 +246,7 @@ export default function Portfolio() {
           <div>
             <span className="text-base font-semibold" style={{ color: 'var(--text)' }}>MH</span>
             <p className="text-xs mt-1.5" style={{ color: 'var(--text-muted)' }}>
-              © {new Date().getFullYear()} Muhammad Hammad · IT Infrastructure & Security Engineer · Germany
+              © {new Date().getFullYear()} Muhammad Hammad · IT Infrastructure Engineer · Germany
             </p>
           </div>
           <div className="flex items-center gap-4">

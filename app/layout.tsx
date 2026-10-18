@@ -13,13 +13,13 @@ import '@fontsource/ibm-plex-mono/latin-600.css'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Muhammad Hammad',
-  description: 'IT Specialist — Cloud, Security & Infrastructure',
-  keywords: ['IT Specialist', 'System Administration', 'Cloud Infrastructure', 'Azure', 'Network Engineering', 'Germany'],
+  title: 'Muhammad Hammad — IT Infrastructure Engineer',
+  description: 'IT Infrastructure Engineer in Germany. Azure and AWS, Windows and Linux servers, enterprise networking, Zero Trust security and the automation that keeps it all quiet.',
+  keywords: ['IT Infrastructure Engineer', 'System Administration', 'Azure', 'AWS', 'Active Directory', 'Intune', 'Network Engineering', 'Zero Trust', 'Germany'],
   authors: [{ name: 'Muhammad Hammad' }],
   openGraph: {
-    title: 'Muhammad Hammad',
-    description: 'IT Specialist — Cloud, Security & Infrastructure',
+    title: 'Muhammad Hammad — IT Infrastructure Engineer',
+    description: 'IT Infrastructure Engineer in Germany: cloud, networks, servers and the endpoints people actually sit in front of.',
     type: 'website',
   },
   icons: {

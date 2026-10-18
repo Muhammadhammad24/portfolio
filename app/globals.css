@@ -429,3 +429,10 @@ body { counter-reset: plate; }
 @media (prefers-reduced-motion: reduce) {
   .spin-slow, .dot-pulse { animation: none; }
 }
+
+/* The day-map blocks are real controls: they take focus, so they show it. */
+.dm-hour:focus { outline: none; }
+.dm-hour:focus-visible rect:first-of-type {
+  stroke: #FFFFFF;
+  stroke-width: 1.4;
+}

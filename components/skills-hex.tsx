@@ -1,7 +1,7 @@
 "use client"
 
 /**
- * Skills under the same six layers as the hero stack. Set as plain type rather
+ * Skills under the six layers of an environment. Set as plain type rather
  * than sixty bordered chips: the brighter names are what I am in most days,
  * the dimmer ones I reach for when the job calls for them.
  */
@@ -59,8 +59,8 @@ export function SkillsHex() {
         Brighter names are the ones in my hands most days.
       </p>
 
-      {/* The six layers carry the hero's own L6→L1 index, so the stack up
-          there and the list down here are visibly the same six things. */}
+      {/* Indexed L6→L1, top of the stack down to the metal, so the order
+          reads the same way an environment is actually built. */}
       <div className="card overflow-hidden">
         {GROUPS.map((g, i) => (
           <div
