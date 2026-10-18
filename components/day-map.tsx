@@ -3,116 +3,145 @@
 import { useEffect, useRef, useState } from "react"
 
 /**
- * A day on the job, not the CV.
+ * A day in production, not the CV.
  *
- * The old diagram showed the estate; this one shows the person running it —
- * the order a modern infrastructure engineer actually works in. Down the left
- * runs the half of the job that never stops while he does any of it:
- * monitoring, backups, patching, logging.
+ * The estate is down the left and never stops — observability, the network,
+ * the servers, the cloud tenancy. The day itself runs down the right, in the
+ * order the work actually arrives in a 2026 production environment: check the
+ * error budget before anything else, triage by blast radius, ship the change
+ * as a reviewed commit through a policy gate, spend the quiet middle turning
+ * toil into code, hold least privilege, and write the day down so it ships as
+ * a runbook. The tag on each block is the hat being worn for it — SRE through
+ * service desk — because the span is the point.
  *
- * The point of the thing is what happens partway through. A day laid out
- * 1 → 7 in a tidy column is a lie about this job; the truth is that it gets
- * interrupted. So it does: monitoring catches something, the day is abandoned
- * where it stands, the rail turns and drops to the incident, containment runs
- * step by step against a clock, and only then does the day pick up where it
- * was. The four things that watch become the four things that act.
+ * Two things happen while it runs, and both are true of the job rather than
+ * decoration:
+ *
+ *   The day gets broken. Observability catches something, the day is
+ *   abandoned where it stands, the rail turns and drops to the incident,
+ *   containment runs against a clock, and only then does the day pick up from
+ *   the hour it was pulled out of. The four that watch become the four that
+ *   act. This is the one place the page spends colour.
+ *
+ *   The day deletes itself. In the automation block the four repeating jobs
+ *   are struck through one at a time and the hours they cost come back on the
+ *   counter. Work leaving the system for good gets its own verb — a line
+ *   through it — because it is the opposite of an incident, not a quieter
+ *   version of one.
  *
  * Drawing grammar is the page's own: a box is a thing that happens, a solid
  * line is the day moving forward, a dashed line is something running on its
- * own in the background, a dotted frame is a boundary. Colour is the page's
- * own too — the whole site resolves to luminance, so the single red here is
- * the only hue on it, and it is spent on the one thing it is for.
+ * own underneath, a dotted frame is a boundary. Colour is the page's own too
+ * — the whole site resolves to luminance, so the single red here is the only
+ * hue on it, and it is spent on the one thing it is for.
  */
 
 const W = 432
 const H = 436
 
-type Hour = {
+type Block = {
   id: string
   name: string
-  /** The stack this hour is actually spent in, on two readable lines. */
+  /** The stack the block is actually spent in. */
   sub: string
+  /** The rest of it, kept for the line underneath the diagram. */
   sub2: string
-  /** The one-line result of the hour, shown while it is lit. */
+  /** The one-line result, shown while the block is lit. */
   does: string
-  /** Where the block sits on the clock; null for the one that can land anywhere. */
+  /** The hat worn for this one. */
+  tag: string
+  /** Where it sits on the clock; null for the one that can land anywhere. */
   at: [number, number] | null
 }
 
-const DAY: Hour[] = [
+const DAY: Block[] = [
   {
-    id: "check",
+    id: "budget",
     at: [8, 9],
-    name: "Morning check",
-    sub: "PRTG · SolarWinds · Datadog",
-    sub2: "Defender · patch compliance",
-    does: "nothing on fire",
+    tag: "SRE",
+    name: "Error budget first",
+    sub: "Grafana SLOs · burn-rate alerts",
+    sub2: "overnight pages · what the on-call left",
+    does: "budget intact",
   },
   {
     id: "triage",
     at: [9, 10],
-    name: "Triage the queue",
-    sub: "ServiceNow · Jira SM · ITIL",
-    sub2: "L1–L3 · P1–P4 · change mgmt",
-    does: "sorted by impact",
+    tag: "IT SUPPORT",
+    name: "Triage L1 → L3",
+    sub: "ServiceNow · impact over noise",
+    sub2: "what the bot already closed · P1–P4",
+    does: "sorted by blast radius",
   },
   {
-    id: "change",
+    id: "ship",
     at: [10, 12],
-    name: "Change window",
-    sub: "Group Policy · WSUS · SCCM",
-    sub2: "maintenance window · rollback",
-    does: "shipped safely",
+    tag: "DEVOPS",
+    name: "Ship the change",
+    sub: "PR · policy gate · Argo CD · canary",
+    sub2: "OPA · Kyverno · rollback is the plan",
+    does: "shipped, reversible",
   },
   {
-    id: "build",
+    id: "automate",
     at: [12, 15],
-    name: "Build & automate",
-    sub: "PowerShell · Python · Ansible",
-    sub2: "Terraform · Intune · Autopilot",
-    does: "tickets deleted",
+    tag: "AUTOMATION",
+    name: "Automate the toil",
+    sub: "PowerShell · Python · Ansible · Terraform",
+    sub2: "Intune · Autopilot · the ticket stops coming",
+    does: "25 h/week returned",
   },
   {
-    id: "secure",
+    id: "identity",
     at: [15, 16],
-    name: "Security & identity",
-    sub: "Entra ID · Active Directory · Okta",
-    sub2: "MFA/SSO · Zero Trust · GDPR",
-    does: "least privilege",
+    tag: "SYSADMIN",
+    name: "Identity & access",
+    sub: "Entra ID · conditional access · PIM",
+    sub2: "MFA/SSO · Zero Trust · access reviews",
+    does: "least privilege held",
   },
   {
     id: "incident",
     at: null,
+    tag: "ON-CALL",
     name: "Incident",
-    sub: "Defender · CrowdStrike · Splunk",
-    sub2: "isolate · revoke · Veeam restore",
+    sub: "golden signals · isolate · Veeam restore",
+    sub2: "Defender · CrowdStrike · Splunk · RTO",
     does: "contained first",
   },
   {
     id: "close",
     at: [17, 18],
-    name: "Close the loop",
-    sub: "Confluence · runbooks · postmortem",
-    sub2: "M365 · Teams · asset records",
+    tag: "PLATFORM",
+    name: "Runbook, then code",
+    sub: "blameless postmortem · the fix ships",
+    sub2: "Confluence · asset records · tomorrow's three",
     does: "written down",
   },
 ]
 
-/** The half of the job that runs while he is doing all of the above. */
+/** The estate underneath all of it, which does not stop for any of it. */
 const ALWAYS = [
-  { name: "Monitor", sub: "PRTG · SolarWinds" },
-  { name: "Backup", sub: "Veeam · Acronis" },
-  { name: "Patch", sub: "WSUS · Intune" },
-  { name: "Logs", sub: "Splunk SIEM" },
+  { name: "Observe", sub: "OTel · Grafana" },
+  { name: "Network", sub: "firewall · VPN" },
+  { name: "Systems", sub: "Windows · Linux" },
+  { name: "Cloud", sub: "Azure · M365" },
 ]
 
 /** The one block that does not get an hour — it takes whichever one it lands on. */
 const BREAK = DAY.findIndex((d) => d.at === null)
+/** The one block whose whole job is to make future blocks unnecessary. */
+const AUTO = DAY.findIndex((d) => d.id === "automate")
 /** The hours the day actually plans for, in order. */
 const ORDER = DAY.map((_, i) => i).filter((i) => i !== BREAK)
 
-/** What containment does, in the order it is done. Four, to match the four above. */
-const CONTAIN = ["isolate", "revoke", "block", "restore"]
+/** Four slots under the diagram, and three vocabularies for them. */
+const WATCHING = ["monitoring", "backups", "drift", "on-call"]
+const CONTAINING = ["isolate", "revoke", "block", "restore"]
+/** The repeating jobs that get written out of existence, and what they cost. */
+const TOIL = ["resets", "onboarding", "patching", "provisioning"]
+/** Hours a week the automation block hands back, by the end of it. */
+const TOIL_HOURS = 25
 
 const NODE_X = 152
 const NODE_W = 272
@@ -149,6 +178,10 @@ export function DayMap() {
   const [elapsed, setElapsed] = useState(0)
   /** The hour the day was on when it got interrupted. */
   const [from, setFrom] = useState(0)
+  /** How many repeating jobs have been written out of existence. */
+  const [struck, setStruck] = useState(0)
+  /** Hours a week handed back so far. */
+  const [hours, setHours] = useState(0)
 
   const wrap = useRef<HTMLDivElement>(null)
   /** True once the day has been held by a pointer at least once. */
@@ -162,6 +195,7 @@ export function DayMap() {
 
   const breached = phase === "alert" || phase === "contain"
   const broken = phase !== "calm"
+  const automating = !broken && hour === AUTO
 
   /** Abandon whatever the day was doing and go to the incident. */
   const breakTheDay = () => {
@@ -225,8 +259,8 @@ export function DayMap() {
       timers.push(setTimeout(() => setPhase("contain"), 1200))
     }
     if (phase === "contain") {
-      CONTAIN.forEach((_, k) => timers.push(setTimeout(() => setStep(k + 1), (k + 1) * 850)))
-      timers.push(setTimeout(() => setPhase("clear"), CONTAIN.length * 850 + 400))
+      CONTAINING.forEach((_, k) => timers.push(setTimeout(() => setStep(k + 1), (k + 1) * 850)))
+      timers.push(setTimeout(() => setPhase("clear"), CONTAINING.length * 850 + 400))
     }
     if (phase === "clear") {
       timers.push(
@@ -247,18 +281,41 @@ export function DayMap() {
     return () => clearInterval(id)
   }, [breached])
 
-  const H_ = DAY[hour]
+  // ── The automation block, striking out tomorrow's tickets ──
+  useEffect(() => {
+    if (!automating) {
+      setStruck(0)
+      setHours(0)
+      return
+    }
+    const timers = TOIL.map((_, k) => setTimeout(() => setStruck(k + 1), (k + 1) * 380))
+    const id = setInterval(() => setHours((v) => (v >= TOIL_HOURS ? v : v + 1)), 70)
+    return () => {
+      timers.forEach(clearTimeout)
+      clearInterval(id)
+    }
+  }, [automating])
+
+  const B = DAY[hour]
   const mm = String(Math.floor(elapsed / 60)).padStart(2, "0")
   const ss = String(Math.floor(elapsed % 60)).padStart(2, "0")
 
+  // One strip, three vocabularies: what watches, what acts, what gets deleted.
+  const slots = broken ? CONTAINING : automating ? TOIL : WATCHING
+  const landed = broken ? step : automating ? struck : 0
+
   const statusText =
     phase === "alert"
-      ? "P1 · CAUGHT BY MONITORING"
+      ? "P1 · CAUGHT BY OBSERVABILITY"
       : phase === "contain"
         ? "P1 · CONTAINING"
         : phase === "clear"
           ? "CONTAINED · DAY RESUMES"
-          : "NOTHING ON FIRE"
+          : automating
+            ? "TOIL WRITTEN OUT OF EXISTENCE"
+            : "NOTHING ON FIRE"
+
+  const readout = broken ? `T+${mm}:${ss}` : automating ? `+${hours} h/wk` : "--:--"
 
   return (
     <div
@@ -269,7 +326,7 @@ export function DayMap() {
       onBlur={() => setPinned(false)}
     >
       <div className="mb-4">
-        <span className="eyebrow">A day on the job</span>
+        <span className="eyebrow">A day in production</span>
       </div>
 
       <div className="relative">
@@ -281,7 +338,7 @@ export function DayMap() {
           // running off the first screen.
           style={{ maxHeight: "min(calc(100vh - 250px), 660px)" }}
           role="img"
-          aria-label="The work in order: morning checks, ticket triage, a change window, automation work, security and identity, and closing the loop — with monitoring, backup, patching and logging running underneath all of it. Partway through, monitoring catches an incident, the day stops, and containment runs before the day resumes."
+          aria-label="A day in production: error budget first, triage from L1 to L3, ship a change through a policy gate, automate the toil, hold identity and access, and write the day down as a runbook — over an estate of observability, network, systems and cloud that never stops. Partway through, observability catches an incident, the day stops, and containment runs before the day resumes."
         >
           <defs>
             <marker id="dm-head" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto">
@@ -296,7 +353,7 @@ export function DayMap() {
             </filter>
           </defs>
 
-          {/* ── Always running ── */}
+          {/* ── The estate, which never stops ── */}
           <rect
             x={CTL_X - 4}
             y={TOP + 4}
@@ -316,7 +373,7 @@ export function DayMap() {
           </text>
 
           {ALWAYS.map((c, i) => {
-            // Monitoring is the one that catches it, so it is the one that lights.
+            // Observability is the one that catches it, so it is the one that lights.
             const caught = breached && i === 0
             return (
               <g key={c.name}>
@@ -387,7 +444,7 @@ export function DayMap() {
                 key={n.id}
                 tabIndex={0}
                 role="button"
-                aria-label={`${n.name}: ${n.sub}, ${n.sub2}`}
+                aria-label={`${n.name} — ${n.tag}: ${n.sub}, ${n.sub2}`}
                 className="dm-hour"
                 style={{
                   cursor: "pointer",
@@ -396,7 +453,7 @@ export function DayMap() {
                 }}
                 onMouseEnter={() => {
                   // Reaching for the incident sets one off. Everything else
-                  // holds the day still on that hour.
+                  // holds the day still on that block.
                   if (isBreak) {
                     if (!broken) breakTheDay()
                     return
@@ -464,7 +521,7 @@ export function DayMap() {
                   strokeDasharray={isBreak && !broken ? "5 4" : undefined}
                   style={{ transition: `fill ${EASE}, stroke ${EASE}` }}
                 />
-                {/* Spine, lit while the day is inside this hour. */}
+                {/* Spine, lit while the day is inside this block. */}
                 <rect
                   x={NODE_X}
                   y={y}
@@ -485,7 +542,7 @@ export function DayMap() {
                   {n.sub}
                 </text>
 
-                {/* The number, replaced by the result once the hour is lit. */}
+                {/* The hat worn for this block, replaced by the result once it is lit. */}
                 <text
                   x={NODE_X + NODE_W - 12}
                   y={y + 19}
@@ -501,13 +558,14 @@ export function DayMap() {
                   x={NODE_X + NODE_W - 12}
                   y={y + 19}
                   textAnchor="end"
-                  fontSize="10.5"
+                  fontSize="9.5"
                   className="mono"
-                  fill="rgba(255,255,255,0.22)"
+                  letterSpacing="0.06em"
+                  fill="rgba(255,255,255,0.26)"
                   opacity={live ? 0 : 1}
                   style={{ transition: `opacity ${EASE}` }}
                 >
-                  {isBreak ? "··" : String(ORDER.indexOf(i) + 1).padStart(2, "0")}
+                  {n.tag}
                 </text>
               </g>
             )
@@ -523,7 +581,7 @@ export function DayMap() {
             style={{ transition: `cy 0.5s cubic-bezier(0.5, 0, 0.3, 1), fill ${EASE}` }}
           />
 
-          {/* ── The state of the estate, and the clock that only runs when it is wrong ── */}
+          {/* ── The state of the estate, and whichever counter the moment calls for ── */}
           <circle
             cx={CTL_X + 4}
             cy={STRIP_Y - 4}
@@ -548,15 +606,16 @@ export function DayMap() {
             textAnchor="end"
             fontSize="10.5"
             className="mono"
-            fill={broken ? "var(--danger)" : "rgba(255,255,255,0.22)"}
+            fill={broken ? "var(--danger)" : automating ? "var(--text)" : "rgba(255,255,255,0.22)"}
             style={{ transition: `fill ${EASE}` }}
           >
-            {broken ? `T+${mm}:${ss}` : "--:--"}
+            {readout}
           </text>
 
-          {/* The four that watch, which during an incident become the four that act. */}
-          {CONTAIN.map((act, i) => {
-            const done = broken && step > i
+          {/* Four slots: what watches, what acts, or what is being deleted. */}
+          {slots.map((label, i) => {
+            const done = landed > i
+            const gone = automating && done
             return (
               <g key={i}>
                 <rect
@@ -565,8 +624,10 @@ export function DayMap() {
                   width={CHIP_W}
                   height={20}
                   rx="5"
-                  fill={done ? "var(--danger-wash)" : "rgba(255,255,255,0.02)"}
-                  stroke={done ? "var(--danger-line)" : "rgba(255,255,255,0.12)"}
+                  fill={done && !gone ? "var(--danger-wash)" : "rgba(255,255,255,0.02)"}
+                  stroke={
+                    gone ? "rgba(255,255,255,0.07)" : done ? "var(--danger-line)" : "rgba(255,255,255,0.12)"
+                  }
                   style={{ transition: `fill ${EASE}, stroke ${EASE}` }}
                 />
                 <text
@@ -574,18 +635,34 @@ export function DayMap() {
                   y={STRIP_Y + 22}
                   textAnchor="middle"
                   fontSize="11"
-                  fill={done ? "var(--danger)" : broken ? "rgba(255,255,255,0.3)" : "var(--text-muted)"}
+                  fill={
+                    gone
+                      ? "rgba(255,255,255,0.22)"
+                      : done
+                        ? "var(--danger)"
+                        : broken
+                          ? "rgba(255,255,255,0.3)"
+                          : "var(--text-muted)"
+                  }
                   style={{ transition: `fill ${EASE}` }}
                 >
-                  {broken ? act : ALWAYS[i].name.toLowerCase()}
+                  {label}
                 </text>
+                {/* Struck through: this one is not coming back. */}
+                {gone && (
+                  <path
+                    d={`M${chipX(i) + 12} ${STRIP_Y + 18.5} H${chipX(i) + CHIP_W - 12}`}
+                    stroke="rgba(255,255,255,0.5)"
+                    strokeWidth="1"
+                  />
+                )}
               </g>
             )
           })}
         </svg>
       </div>
 
-      {/* One line: the hour, what it is, and what it leaves behind. */}
+      {/* One line: when it happens, what it is, and what it leaves behind. */}
       <div
         className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1"
         style={{ borderTop: "1px solid var(--border)", paddingTop: 10, minHeight: 38 }}
@@ -594,13 +671,13 @@ export function DayMap() {
           className="mono text-[13px]"
           style={{ color: broken ? "var(--danger)" : "rgba(255,255,255,0.5)" }}
         >
-          {H_.at ? `${String(H_.at[0]).padStart(2, "0")}:00` : "any hour"}
+          {B.at ? `${String(B.at[0]).padStart(2, "0")}:00` : "any hour"}
         </span>
         <span className="text-[14px] font-medium" style={{ color: "var(--text)" }}>
-          {H_.name}
+          {B.name}
         </span>
         <span className="text-[14px]" style={{ color: "var(--text-muted)" }}>
-          — {broken ? `pulled out of ${DAY[from].name.toLowerCase()}` : H_.does}
+          — {broken ? `pulled out of ${DAY[from].name.toLowerCase()}` : B.sub2}
         </span>
       </div>
     </div>
