@@ -53,14 +53,14 @@ type Block = {
   tag: string
   /** Where it sits on the clock; null for the one that can land anywhere. */
   at: [number, number] | null
-  /** The real marks of the tools this block is spent in. */
-  marks: string[]
+  /** The one mark that stands for this block. */
+  mark: string
 }
 
 const DAY: Block[] = [
   {
     id: "check",
-    marks: ["dev-grafana-original", "datadog", "si-splunk"],
+    mark: "dev-grafana-original",
     at: [8, 9],
     tag: "SRE",
     name: "Monitoring & alerts",
@@ -70,7 +70,7 @@ const DAY: Block[] = [
   },
   {
     id: "triage",
-    marks: ["dev-jira-original", "servicenow", "dev-slack-original"],
+    mark: "servicenow",
     at: [9, 10],
     tag: "IT SUPPORT",
     name: "Service desk",
@@ -80,7 +80,7 @@ const DAY: Block[] = [
   },
   {
     id: "change",
-    marks: ["dev-git-original", "si-githubactions", "terraform"],
+    mark: "dev-git-original",
     at: [10, 12],
     tag: "DEVOPS",
     name: "Change management",
@@ -90,7 +90,7 @@ const DAY: Block[] = [
   },
   {
     id: "automate",
-    marks: ["dev-powershell-original", "dev-python-original", "si-ansible", "terraform"],
+    mark: "terraform",
     at: [12, 15],
     tag: "AUTOMATION",
     name: "Automation & IaC",
@@ -100,7 +100,7 @@ const DAY: Block[] = [
   },
   {
     id: "identity",
-    marks: ["ms-entra-id", "ms-active-directory"],
+    mark: "ms-entra-id",
     at: [15, 16],
     tag: "SECURITY",
     name: "Identity & access",
@@ -110,7 +110,7 @@ const DAY: Block[] = [
   },
   {
     id: "incident",
-    marks: ["ms-defender", "crowdstrike", "veeam"],
+    mark: "crowdstrike",
     at: null,
     tag: "ON-CALL",
     name: "Incident response",
@@ -120,7 +120,7 @@ const DAY: Block[] = [
   },
   {
     id: "fleet",
-    marks: ["ms-intune", "jamf", "dev-windows11-original", "dev-apple-original"],
+    mark: "ms-intune",
     at: [17, 18],
     tag: "ENDPOINTS",
     name: "Endpoint management",
@@ -139,19 +139,17 @@ const ALWAYS = [
 ]
 
 /**
- * The marks are the companies' own SVGs, exactly as they publish them — the
- * same files the toolbox further down the page uses.
+ * One mark per block, and it is the company's own SVG in its own colours —
+ * the same file the toolbox further down the page uses. Seven logos across
+ * the whole diagram, each standing for the thing its block does: Grafana for
+ * watching, ServiceNow for the desk, Git for a change, Terraform for the
+ * code that replaces the work, Entra ID for who gets in, CrowdStrike for
+ * when it goes wrong, Intune for the machines people actually hold.
  *
- * Every one of them gets the same cell on the same pitch, and that is the
- * whole trick: a row of logos reads as calm when the grid under it never
- * moves, and as a jumble the moment one of them is allowed its own width.
- * Only marks that are roughly square are drawn here. The genuinely wide
- * wordmarks — Okta at 3:1, Cisco at nearly 2:1 — would come out as slivers
- * at this size, so they stay in the line of text under the diagram and in
- * the toolbox, where they have the room to be themselves.
+ * There were twenty-two of them in a row under each name and it was too much
+ * to look at. Nobody reads a diagram that asks for a minute.
  */
-const CELL = 15
-const PITCH = 21
+const MARK = 19
 
 /**
  * Colour on this page belongs to whatever is lit, so a mark that is not being
@@ -159,28 +157,7 @@ const PITCH = 21
  * actually inside that block. That way fifty-three brand palettes never get
  * to compete with the one red the incident is owed.
  */
-function Marks({ icons, live, y, x }: { icons: string[]; live: boolean; y: number; x: number }) {
-  return (
-    <g>
-      {icons.map((icon, i) => (
-        <image
-          key={icon}
-          href={`/brands/${icon}.svg`}
-          x={x + i * PITCH}
-          y={y}
-          width={CELL}
-          height={CELL}
-          preserveAspectRatio="xMidYMid meet"
-          style={{
-            filter: live ? "none" : "grayscale(1)",
-            opacity: live ? 1 : 0.4,
-            transition: `filter ${EASE}, opacity ${EASE}`,
-          }}
-        />
-      ))}
-    </g>
-  )
-}
+
 
 /** The one block that does not get an hour — it takes whichever one it lands on. */
 const BREAK = DAY.findIndex((d) => d.at === null)
@@ -366,7 +343,7 @@ export function DayMap() {
         : phase === "clear"
           ? "CONTAINED · DAY RESUMES"
           : automating
-            ? "TOIL WRITTEN OUT OF EXISTENCE"
+            ? "TOIL REMOVED, FOR GOOD"
             : "NOTHING ON FIRE"
 
   const readout = broken ? `T+${mm}:${ss}` : automating ? `+${hours} h/wk` : "--:--"
@@ -588,31 +565,36 @@ export function DayMap() {
                   style={{ transition: `fill ${EASE}` }}
                 />
 
-                <text x={NODE_X + 13} y={y + 17} fontSize="14" fontWeight="500" fill="var(--text)">
+                {/* The one mark, in the company's own colours. */}
+                <image
+                  href={`/brands/${n.mark}.svg`}
+                  x={NODE_X + 12}
+                  y={y + (NODE_H - MARK) / 2}
+                  width={MARK}
+                  height={MARK}
+                  preserveAspectRatio="xMidYMid meet"
+                  style={{ opacity: live ? 1 : 0.78, transition: `opacity ${EASE}` }}
+                />
+
+                <text x={NODE_X + 41} y={y + 19} fontSize="14" fontWeight="500" fill="var(--text)">
                   {n.name}
                 </text>
-                {/* The tools themselves, in their own marks. The names of them
-                    stay as text on the line under the diagram. */}
-                <Marks icons={n.marks} live={live} x={NODE_X + 13} y={y + 24} />
-
-                {/* The hat worn for this block — always there, never traded away. */}
+                {/* The hat worn for this block, under its name. */}
                 <text
-                  x={NODE_X + NODE_W - 12}
-                  y={y + 17}
-                  textAnchor="end"
+                  x={NODE_X + 41}
+                  y={y + 33}
                   fontSize="9.5"
                   className="mono"
-                  letterSpacing="0.06em"
-                  fill={isBreak && breached ? "var(--danger)" : "rgba(255,255,255,0.3)"}
+                  letterSpacing="0.07em"
+                  fill={isBreak && breached ? "var(--danger)" : "rgba(255,255,255,0.32)"}
                   style={{ transition: `fill ${EASE}` }}
                 >
                   {n.tag}
                 </text>
-                {/* What the block leaves behind, out on the marks' line so the
-                    two of them never fade through one another. */}
+                {/* What it leaves behind, only while the day is inside it. */}
                 <text
                   x={NODE_X + NODE_W - 12}
-                  y={y + 35}
+                  y={y + 33}
                   textAnchor="end"
                   fontSize="10.5"
                   fill={isBreak && breached ? "var(--danger)" : "var(--text-dim)"}
@@ -678,9 +660,11 @@ export function DayMap() {
                   width={CHIP_W}
                   height={20}
                   rx="5"
-                  fill={done && !gone ? "var(--danger-wash)" : "rgba(255,255,255,0.02)"}
+                  fill={
+                    gone ? "rgba(255,255,255,0.07)" : done ? "var(--danger-wash)" : "rgba(255,255,255,0.02)"
+                  }
                   stroke={
-                    gone ? "rgba(255,255,255,0.07)" : done ? "var(--danger-line)" : "rgba(255,255,255,0.12)"
+                    gone ? "rgba(255,255,255,0.45)" : done ? "var(--danger-line)" : "rgba(255,255,255,0.12)"
                   }
                   style={{ transition: `fill ${EASE}, stroke ${EASE}` }}
                 />
@@ -691,7 +675,7 @@ export function DayMap() {
                   fontSize="11"
                   fill={
                     gone
-                      ? "rgba(255,255,255,0.22)"
+                      ? "var(--text)"
                       : done
                         ? "var(--danger)"
                         : broken
@@ -706,8 +690,8 @@ export function DayMap() {
                 {gone && (
                   <path
                     d={`M${chipX(i) + 12} ${STRIP_Y + 18.5} H${chipX(i) + CHIP_W - 12}`}
-                    stroke="rgba(255,255,255,0.5)"
-                    strokeWidth="1"
+                    stroke="rgba(255,255,255,0.8)"
+                    strokeWidth="1.2"
                   />
                 )}
               </g>
@@ -731,7 +715,7 @@ export function DayMap() {
           {B.name}
         </span>
         <span className="text-[14px]" style={{ color: "var(--text-muted)" }}>
-          — {broken ? `pulled out of ${DAY[from].name.toLowerCase()}` : `${B.sub} · ${B.sub2}`}
+          — {broken ? `pulled out of ${DAY[from].name.toLowerCase()}` : B.sub2}
         </span>
       </div>
     </div>
