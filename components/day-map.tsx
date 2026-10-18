@@ -105,15 +105,15 @@ const ALWAYS = [
   { name: "Logs", sub: "Splunk SIEM" },
 ]
 
-const NODE_X = 140
-const NODE_W = 282
-const NODE_H = 58
-const GAP = 7
+const NODE_X = 152
+const NODE_W = 272
+const NODE_H = 56
+const GAP = 6
 const TOP = 10
 const nodeY = (i: number) => TOP + i * (NODE_H + GAP)
 
-const CTL_X = 6
-const CTL_W = 112
+const CTL_X = 4
+const CTL_W = 106
 const CTL_H = 48
 const ctlY = (i: number) => TOP + 44 + i * (CTL_H + 50)
 
@@ -199,7 +199,7 @@ export function DayMap() {
         <rect
           x={CTL_X - 4}
           y={TOP + 4}
-          width={CTL_W + 8}
+          width={CTL_W + 16}
           height={ctlY(ALWAYS.length - 1) + CTL_H - TOP + 6}
           rx="9"
           fill="rgba(255,255,255,0.012)"
@@ -207,11 +207,11 @@ export function DayMap() {
           strokeWidth="1"
           strokeDasharray="4 4"
         />
-        <text x={CTL_X + 2} y={TOP + 17} fontSize="11" fill="var(--text-muted)" letterSpacing="0.08em">
+        <text x={CTL_X + 2} y={TOP + 17} fontSize="10.5" fill="var(--text-muted)" letterSpacing="0.08em">
           ALWAYS RUNNING
         </text>
         <text x={CTL_X + 2} y={TOP + 30} fontSize="10.5" fill="rgba(255,255,255,0.28)">
-          no hour of the day owns these
+          underneath every hour
         </text>
 
         {ALWAYS.map((c, i) => (
@@ -225,10 +225,10 @@ export function DayMap() {
               fill="rgba(255,255,255,0.022)"
               stroke="rgba(255,255,255,0.14)"
             />
-            <text x={CTL_X + 9} y={ctlY(i) + 20} fontSize="13" fontWeight="500" fill="var(--text)">
+            <text x={CTL_X + 9} y={ctlY(i) + 20} fontSize="12.5" fontWeight="500" fill="var(--text)">
               {c.name}
             </text>
-            <text x={CTL_X + 9} y={ctlY(i) + 36} fontSize="11" fill="var(--text-muted)">
+            <text x={CTL_X + 9} y={ctlY(i) + 36} fontSize="10.5" fill="var(--text-muted)">
               {c.sub}
             </text>
             {/* Dashed: it happens on its own, underneath the day. */}
@@ -313,13 +313,13 @@ export function DayMap() {
                 style={{ transition: "fill 0.35s ease" }}
               />
 
-              <text x={NODE_X + 13} y={y + 20} fontSize="15" fontWeight="500" fill="var(--text)">
+              <text x={NODE_X + 13} y={y + 20} fontSize="14" fontWeight="500" fill="var(--text)">
                 {n.name}
               </text>
-              <text x={NODE_X + 13} y={y + 36} fontSize="12" letterSpacing="0.012em" fill="rgba(255,255,255,0.56)">
+              <text x={NODE_X + 13} y={y + 36} fontSize="11.5" letterSpacing="0.012em" fill="rgba(255,255,255,0.56)">
                 {n.sub}
               </text>
-              <text x={NODE_X + 13} y={y + 50} fontSize="12" letterSpacing="0.012em" fill="rgba(255,255,255,0.4)">
+              <text x={NODE_X + 13} y={y + 50} fontSize="11.5" letterSpacing="0.012em" fill="rgba(255,255,255,0.4)">
                 {n.sub2}
               </text>
 
@@ -328,7 +328,7 @@ export function DayMap() {
                 x={NODE_X + NODE_W - 12}
                 y={y + 20}
                 textAnchor="end"
-                fontSize="11"
+                fontSize="10.5"
                 fill="var(--text-dim)"
                 opacity={live ? 1 : 0}
                 style={{ transition: "opacity 0.35s ease" }}
@@ -339,7 +339,7 @@ export function DayMap() {
                 x={NODE_X + NODE_W - 12}
                 y={y + 20}
                 textAnchor="end"
-                fontSize="11"
+                fontSize="10.5"
                 className="mono"
                 fill="rgba(255,255,255,0.22)"
                 opacity={live ? 0 : 1}

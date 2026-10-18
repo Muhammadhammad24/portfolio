@@ -224,7 +224,7 @@ export default function Portfolio() {
                       <Icon className="h-[15px] w-[15px]" />
                     </span>
                     <div>
-                      <div className="text-[12.5px] tracking-wider uppercase" style={{ color: 'var(--text-muted)' }}>{label}</div>
+                      <div className="text-[13px] tracking-wider uppercase" style={{ color: 'var(--text-muted)' }}>{label}</div>
                       <div className="text-sm" style={{ color: 'var(--text-dim)' }}>{value}</div>
                     </div>
                   </a>
