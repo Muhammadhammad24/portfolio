@@ -119,9 +119,6 @@ const DOMAINS: Domain[] = [
   },
 ]
 
-/** Wordmarks and other wide marks, which are not drawn to a square. */
-const wide = (t: Tool) => (t.scale ?? 1) > 1
-
 const TOTAL = DOMAINS.reduce((n, d) => n + d.tools.length, 0)
 
 export function SkillsHex() {
@@ -155,28 +152,31 @@ export function SkillsHex() {
               </div>
             </div>
 
-            {/* No captions: anyone reading this page knows the marks, and a
-                row of logos says it faster than a row of labels. The name is
-                still there for a cursor and for a screen reader. */}
-            <div className="flex flex-wrap gap-2.5">
+            {/* Drawn the way the profile's own toolbox draws them: the mark
+                standing on the page with no tile around it, at that panel's
+                sizes — 32px for a square mark, 44 for a wordmark, 72 for the
+                one that is all wordmark — and the name set small in mono
+                underneath. */}
+            <div className="flex flex-wrap items-start gap-x-4 gap-y-6">
               {d.tools.map((t) => (
-                <span key={t.label} className={`tool-tile${wide(t) ? " is-wide" : ""}`} title={t.label} aria-label={t.label} role="img">
-                  <img
-                    src={`/brands/${t.icon}.svg`}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    // Several of these marks are a small wordmark sitting
-                    // inside a square document, so the box itself is scaled up
-                    // rather than the drawing stretched: object-fit keeps each
-                    // one's own proportions inside it.
-                    style={{
-                      width: 24 * (t.scale ?? 1),
-                      height: 24 * (t.scale ?? 1),
-                      objectFit: "contain",
-                    }}
-                  />
-                </span>
+                <div key={t.label} className="tool-mark w-[82px] shrink-0 text-center">
+                  <div className="flex h-12 items-center justify-center">
+                    <img
+                      src={`/brands/${t.icon}.svg`}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      style={{
+                        width: 32 * (t.scale ?? 1),
+                        height: 32 * (t.scale ?? 1),
+                        objectFit: "contain",
+                      }}
+                    />
+                  </div>
+                  <div className="mono mt-2 text-[9.5px] leading-[1.4]" style={{ color: "var(--text-muted)" }}>
+                    {t.label}
+                  </div>
+                </div>
               ))}
             </div>
           </div>

@@ -453,31 +453,12 @@ body { counter-reset: plate; }
 .skill-row:first-child { border-top: none; }
 .skill-row:hover { background: rgba(255,255,255,0.018); }
 
-/* One tool, one mark. The tile is the page's hairline surface; the logo is
-   the only colour in it, and the name lives in the tooltip because a row of
-   marks reads faster than a row of labels. */
-.tool-tile {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 46px;
-  padding: 0 8px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: rgba(255,255,255,0.022);
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+/* One tool, one mark, standing on the page itself — no tile around it, the
+   way the profile's toolbox draws them, with the name small in mono below. */
+.tool-mark img {
+  opacity: 0.88;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
-/* Wordmarks need the room their drawing was made for. */
-.tool-tile.is-wide { width: auto; min-width: 56px; height: 46px; padding: 0 10px; }
-.tool-tile img {
-  opacity: 0.92;
-  transition: opacity 0.2s ease;
-}
-.tool-tile:hover {
-  border-color: rgba(255,255,255,0.42);
-  background: rgba(255,255,255,0.05);
-  transform: translateY(-1px);
-}
-.tool-tile:hover img { opacity: 1; }
+.tool-mark:hover img { opacity: 1; transform: translateY(-2px); }
+.tool-mark:hover div:last-child { color: var(--text); }
 
