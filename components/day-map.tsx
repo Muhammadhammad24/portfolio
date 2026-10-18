@@ -3,25 +3,26 @@
 import { useEffect, useRef, useState } from "react"
 
 /**
- * A day in production, not the CV.
+ * A day in production, built out of his own stack — not the industry's.
  *
- * The estate is down the left and never stops — observability, the network,
- * the servers, the cloud tenancy. The day itself runs down the right, in the
- * order the work actually arrives in a 2026 production environment: check the
- * error budget before anything else, triage by blast radius, ship the change
- * as a reviewed commit through a policy gate, spend the quiet middle turning
- * toil into code, hold least privilege, and write the day down so it ships as
- * a runbook. The tag on each block is the hat being worn for it — SRE through
- * service desk — because the span is the point.
+ * Every tool named here is one he actually runs, and every number is one he
+ * actually moved: 25 hours a week of onboarding, provisioning and patching
+ * written into PowerShell and Python; 40% less manual triage after Jira
+ * Service Management and Slack routing; 180-odd macOS, Windows and iOS
+ * endpoints rebuilt through Intune, Jamf and Autopilot. The estate down the
+ * left is his too — Grafana and Datadog watching, Fortinet and Cisco at the
+ * edge, Windows and Linux underneath, Azure and AWS around it. The tag on
+ * each block is the hat worn for it, because the span from service desk to
+ * SRE is the point.
  *
  * Two things happen while it runs, and both are true of the job rather than
  * decoration:
  *
- *   The day gets broken. Observability catches something, the day is
- *   abandoned where it stands, the rail turns and drops to the incident,
- *   containment runs against a clock, and only then does the day pick up from
- *   the hour it was pulled out of. The four that watch become the four that
- *   act. This is the one place the page spends colour.
+ *   The day gets broken. Monitoring catches something, the day is abandoned
+ *   where it stands, the rail turns and drops to the incident, containment
+ *   runs against a clock, and only then does the day pick up from the hour it
+ *   was pulled out of. The four that watch become the four that act. This is
+ *   the one place the page spends colour.
  *
  *   The day deletes itself. In the automation block the four repeating jobs
  *   are struck through one at a time and the hours they cost come back on the
@@ -56,76 +57,76 @@ type Block = {
 
 const DAY: Block[] = [
   {
-    id: "budget",
+    id: "check",
     at: [8, 9],
     tag: "SRE",
-    name: "Error budget first",
-    sub: "Grafana SLOs · burn-rate alerts",
-    sub2: "overnight pages · what the on-call left",
-    does: "budget intact",
+    name: "Monitoring & alerts",
+    sub: "Grafana · Datadog · Splunk",
+    sub2: "overnight alerts · backup jobs · disk headroom",
+    does: "all green",
   },
   {
     id: "triage",
     at: [9, 10],
     tag: "IT SUPPORT",
-    name: "Triage L1 → L3",
-    sub: "ServiceNow · impact over noise",
-    sub2: "what the bot already closed · P1–P4",
-    does: "sorted by blast radius",
+    name: "Service desk",
+    sub: "Jira SM · ServiceNow · Slack routing",
+    sub2: "L1–L3 triage · P1–P4 · 40% less manual triage",
+    does: "sorted by impact",
   },
   {
-    id: "ship",
+    id: "change",
     at: [10, 12],
     tag: "DEVOPS",
-    name: "Ship the change",
-    sub: "PR · policy gate · Argo CD · canary",
-    sub2: "OPA · Kyverno · rollback is the plan",
-    does: "shipped, reversible",
+    name: "Change management",
+    sub: "Git · GitHub Actions · Terraform · CI/CD",
+    sub2: "ITIL change window · tested, staged, rollback first",
+    does: "shipped safely",
   },
   {
     id: "automate",
     at: [12, 15],
     tag: "AUTOMATION",
-    name: "Automate the toil",
+    name: "Automation & IaC",
     sub: "PowerShell · Python · Ansible · Terraform",
-    sub2: "Intune · Autopilot · the ticket stops coming",
+    sub2: "onboarding · provisioning · patching, as code",
     does: "25 h/week returned",
   },
   {
     id: "identity",
     at: [15, 16],
-    tag: "SYSADMIN",
+    tag: "SECURITY",
     name: "Identity & access",
-    sub: "Entra ID · conditional access · PIM",
-    sub2: "MFA/SSO · Zero Trust · access reviews",
-    does: "least privilege held",
+    sub: "Entra ID · Active Directory · Okta",
+    sub2: "RBAC · MFA · GDPR and ISO 27001 controls",
+    does: "least privilege",
   },
   {
     id: "incident",
     at: null,
     tag: "ON-CALL",
-    name: "Incident",
-    sub: "golden signals · isolate · Veeam restore",
-    sub2: "Defender · CrowdStrike · Splunk · RTO",
+    name: "Incident response",
+    sub: "Defender · CrowdStrike · Veeam",
+    sub2: "isolate · revoke · IDS/IPS · restore to RTO",
     does: "contained first",
   },
   {
-    id: "close",
+    id: "fleet",
     at: [17, 18],
-    tag: "PLATFORM",
-    name: "Runbook, then code",
-    sub: "blameless postmortem · the fix ships",
-    sub2: "Confluence · asset records · tomorrow's three",
-    does: "written down",
+    tag: "ENDPOINTS",
+    name: "Endpoint management",
+    sub: "Intune · Jamf Pro · Autopilot · MDM",
+    sub2: "180+ macOS, Windows and iOS · setup 75% faster",
+    does: "fleet in line",
   },
 ]
 
 /** The estate underneath all of it, which does not stop for any of it. */
 const ALWAYS = [
-  { name: "Observe", sub: "OTel · Grafana" },
-  { name: "Network", sub: "firewall · VPN" },
+  { name: "Monitor", sub: "Grafana · Datadog" },
+  { name: "Network", sub: "Fortinet · Cisco" },
   { name: "Systems", sub: "Windows · Linux" },
-  { name: "Cloud", sub: "Azure · M365" },
+  { name: "Cloud", sub: "Azure · AWS" },
 ]
 
 /** The one block that does not get an hour — it takes whichever one it lands on. */
@@ -136,10 +137,10 @@ const AUTO = DAY.findIndex((d) => d.id === "automate")
 const ORDER = DAY.map((_, i) => i).filter((i) => i !== BREAK)
 
 /** Four slots under the diagram, and three vocabularies for them. */
-const WATCHING = ["monitoring", "backups", "drift", "on-call"]
+const WATCHING = ["monitoring", "backups", "endpoints", "on-call"]
 const CONTAINING = ["isolate", "revoke", "block", "restore"]
 /** The repeating jobs that get written out of existence, and what they cost. */
-const TOIL = ["resets", "onboarding", "patching", "provisioning"]
+const TOIL = ["onboarding", "provisioning", "patching", "resets"]
 /** Hours a week the automation block hands back, by the end of it. */
 const TOIL_HOURS = 25
 
@@ -306,7 +307,7 @@ export function DayMap() {
 
   const statusText =
     phase === "alert"
-      ? "P1 · CAUGHT BY OBSERVABILITY"
+      ? "P1 · CAUGHT BY MONITORING"
       : phase === "contain"
         ? "P1 · CONTAINING"
         : phase === "clear"
@@ -338,7 +339,7 @@ export function DayMap() {
           // running off the first screen.
           style={{ maxHeight: "min(calc(100vh - 250px), 660px)" }}
           role="img"
-          aria-label="A day in production: error budget first, triage from L1 to L3, ship a change through a policy gate, automate the toil, hold identity and access, and write the day down as a runbook — over an estate of observability, network, systems and cloud that never stops. Partway through, observability catches an incident, the day stops, and containment runs before the day resumes."
+          aria-label="A day in production: monitoring and alerts, service desk triage from L1 to L3, change management, infrastructure automation, identity and access, and endpoint management — over an estate of monitoring, network, systems and cloud that never stops. Partway through, monitoring catches an incident, the day stops, and containment runs before the day resumes."
         >
           <defs>
             <marker id="dm-head" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto">
@@ -373,7 +374,7 @@ export function DayMap() {
           </text>
 
           {ALWAYS.map((c, i) => {
-            // Observability is the one that catches it, so it is the one that lights.
+            // Monitoring is the one that catches it, so it is the one that lights.
             const caught = breached && i === 0
             return (
               <g key={c.name}>
