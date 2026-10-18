@@ -178,7 +178,7 @@ export function DayMap() {
         // Whatever the window leaves after the heading, the label row and the
         // paragraph below is what the day gets — so it is as large as it can be
         // without ever running off the first screen.
-        style={{ maxHeight: "min(calc(100vh - 320px), 580px)" }}
+        style={{ maxHeight: "min(calc(100vh - 348px), 580px)" }}
         role="img"
         aria-label="The work in order: morning checks, ticket triage, a change window, automation work, security and identity, an incident if one comes, and closing the loop — with monitoring, backup, patching and logging running underneath all of it."
       >
@@ -207,10 +207,10 @@ export function DayMap() {
           strokeWidth="1"
           strokeDasharray="4 4"
         />
-        <text x={CTL_X + 2} y={TOP + 17} fontSize="7.5" fill="var(--text-muted)" letterSpacing="0.1em">
+        <text x={CTL_X + 2} y={TOP + 17} fontSize="8.6" fill="var(--text-muted)" letterSpacing="0.1em">
           ALWAYS RUNNING
         </text>
-        <text x={CTL_X + 2} y={TOP + 27} fontSize="7" fill="rgba(255,255,255,0.28)">
+        <text x={CTL_X + 2} y={TOP + 27} fontSize="8" fill="rgba(255,255,255,0.28)">
           no hour of the day owns these
         </text>
 
@@ -366,14 +366,14 @@ export function DayMap() {
       {/* The detail: what that hour is actually for. */}
       <div className="mt-4" style={{ borderTop: "1px solid var(--border)", paddingTop: 14 }}>
         <div className="flex items-baseline gap-3">
-          <span className="mono text-[11px]" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <span className="mono text-[12.5px]" style={{ color: "rgba(255,255,255,0.5)" }}>
             {String(hour + 1).padStart(2, "0")}
           </span>
-          <span className="text-[13.5px] font-medium" style={{ color: "var(--text)" }}>
+          <span className="text-[14px] font-medium" style={{ color: "var(--text)" }}>
             {H_.name}
           </span>
         </div>
-        <p className="mt-2 text-[12.5px]" style={{ lineHeight: 1.7, color: "var(--text-muted)", minHeight: 56 }}>
+        <p className="mt-2 text-[13.5px]" style={{ lineHeight: 1.7, color: "var(--text-muted)", minHeight: 56 }}>
           {H_.think}
         </p>
       </div>

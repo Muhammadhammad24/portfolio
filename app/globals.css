@@ -263,7 +263,7 @@
    only on things that are measured, live or chosen — which is what makes it
    register when it does appear. */
 .eyebrow {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -393,7 +393,7 @@ body { counter-reset: plate; }
   left: -52px;
   top: 6px;
   font-family: 'IBM Plex Mono', ui-monospace, monospace;
-  font-size: 11px;
+  font-size: 12.5px;
   letter-spacing: 0.1em;
   color: var(--text-muted);
   opacity: 0.5;

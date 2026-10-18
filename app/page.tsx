@@ -220,7 +220,7 @@ export default function Portfolio() {
                   <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
                     <Icon className="h-4 w-4 shrink-0" style={{ color: 'var(--text-muted)' }} />
                     <div>
-                      <div className="text-[11px] tracking-wider uppercase" style={{ color: 'var(--text-muted)' }}>{label}</div>
+                      <div className="text-[12.5px] tracking-wider uppercase" style={{ color: 'var(--text-muted)' }}>{label}</div>
                       <div className="text-sm" style={{ color: 'var(--text-dim)' }}>{value}</div>
                     </div>
                   </a>

@@ -126,7 +126,7 @@ export function SkillsHex() {
     <div className="section-body measure-wide">
       <div className="mb-5 flex items-baseline justify-between gap-4">
         <span className="eyebrow">By domain</span>
-        <span className="mono text-[11.5px]" style={{ color: "var(--text-muted)" }}>
+        <span className="mono text-[13px]" style={{ color: "var(--text-muted)" }}>
           {TOTAL} tools · {DOMAINS.length} domains · hands-on
         </span>
       </div>
@@ -139,14 +139,14 @@ export function SkillsHex() {
           >
             {/* The domain, numbered the way every other stack on this page is. */}
             <div className="flex items-start gap-4">
-              <span className="num pt-[3px] text-[11px]" style={{ color: "var(--text-muted)" }}>
+              <span className="num pt-[3px] text-[12.5px]" style={{ color: "var(--text-muted)" }}>
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
                 <h3 className="font-medium" style={{ fontSize: 15.5, color: "var(--text)" }}>
                   {d.name}
                 </h3>
-                <p className="mt-1 text-[12.5px]" style={{ lineHeight: 1.6, color: "var(--text-muted)" }}>
+                <p className="mt-1 text-[13.5px]" style={{ lineHeight: 1.6, color: "var(--text-muted)" }}>
                   {d.note}
                 </p>
               </div>
@@ -172,7 +172,7 @@ export function SkillsHex() {
                       }}
                     />
                   </div>
-                  <div className="mt-2 text-[11px] leading-[1.45]" style={{ color: "var(--text-muted)" }}>
+                  <div className="mt-2 text-[12.5px] leading-[1.45]" style={{ color: "var(--text-muted)" }}>
                     {t.label}
                   </div>
                 </div>

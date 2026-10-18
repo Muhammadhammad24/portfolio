@@ -154,7 +154,7 @@ function TimelineEntry({ exp, index }: { exp: (typeof experiences)[0]; index: nu
                 </h3>
                 {exp.type && (
                   <span
-                    className="rounded-full px-2 py-0.5 text-[10px] font-medium"
+                    className="rounded-full px-2 py-0.5 text-[12px] font-medium"
                     style={{ color: "var(--accent)", border: "1px solid rgb(var(--accent-rgb) / 0.3)" }}
                   >
                     {exp.type}

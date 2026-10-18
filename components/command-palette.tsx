@@ -243,7 +243,7 @@ export function CommandPalette() {
       <button
         onClick={() => setOpen(true)}
         aria-label="Open command menu"
-        className="fixed bottom-5 right-5 z-40 flex items-center gap-2 rounded-full px-3.5 py-2.5 text-[13px] transition-colors duration-200"
+        className="fixed bottom-5 right-5 z-40 flex items-center gap-2 rounded-full px-3.5 py-2.5 text-[14px] transition-colors duration-200"
         style={{
           background: "var(--nav-bg)",
           border: "1px solid var(--border)",
@@ -253,7 +253,7 @@ export function CommandPalette() {
         <Search className="h-3.5 w-3.5" />
         <span className="hidden sm:inline">Quick menu</span>
         <kbd
-          className="hidden rounded px-1.5 py-0.5 text-[11px] sm:inline"
+          className="hidden rounded px-1.5 py-0.5 text-[12.5px] sm:inline"
           style={{ border: "1px solid var(--border)", color: "var(--text-muted)" }}
         >
           ⌘K
@@ -301,7 +301,7 @@ export function CommandPalette() {
                   style={{ color: "var(--text)" }}
                 />
                 <kbd
-                  className="shrink-0 rounded px-1.5 py-0.5 text-[11px]"
+                  className="shrink-0 rounded px-1.5 py-0.5 text-[12.5px]"
                   style={{ border: "1px solid var(--border)", color: "var(--text-muted)" }}
                 >
                   esc
@@ -324,7 +324,7 @@ export function CommandPalette() {
                     <div key={cmd.id}>
                       {showGroup && (
                         <div
-                          className="px-3 pb-1.5 pt-3 text-[11px] font-medium uppercase"
+                          className="px-3 pb-1.5 pt-3 text-[12.5px] font-medium uppercase"
                           style={{ color: "var(--text-muted)", letterSpacing: "0.1em" }}
                         >
                           {cmd.group}
@@ -342,12 +342,12 @@ export function CommandPalette() {
                           <span className="block truncate text-sm" style={{ color: "var(--text)" }}>
                             {cmd.label}
                           </span>
-                          <span className="block truncate text-[12px]" style={{ color: "var(--text-muted)" }}>
+                          <span className="block truncate text-[13px]" style={{ color: "var(--text-muted)" }}>
                             {cmd.hint}
                           </span>
                         </span>
                         {copied === cmd.id && (
-                          <span className="flex shrink-0 items-center gap-1 text-[12px]" style={{ color: "var(--accent)" }}>
+                          <span className="flex shrink-0 items-center gap-1 text-[13px]" style={{ color: "var(--accent)" }}>
                             <Check className="h-3.5 w-3.5" /> Copied
                           </span>
                         )}

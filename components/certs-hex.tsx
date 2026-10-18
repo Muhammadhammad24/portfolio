@@ -168,14 +168,14 @@ export function CertsHex() {
       {/* Supporting coursework — present but deliberately understated */}
       <div className="mt-10">
         <h3
-          className="mb-4 text-[13px] font-medium uppercase"
+          className="mb-4 text-[14px] font-medium uppercase"
           style={{ color: "var(--text-muted)", letterSpacing: "0.12em" }}
         >
           Additional coursework
         </h3>
         <div className="flex flex-wrap gap-x-6 gap-y-2">
           {COURSEWORK.map((w) => (
-            <span key={w.name} className="text-[13px]" style={{ color: "var(--text-muted)" }}>
+            <span key={w.name} className="text-[14px]" style={{ color: "var(--text-muted)" }}>
               {w.name}
               <span style={{ color: "var(--border-dark)" }}>
                 {" · "}{w.issuer}{w.hours ? ` · ${w.hours}` : ""}

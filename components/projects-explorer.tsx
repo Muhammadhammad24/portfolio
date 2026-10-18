@@ -153,7 +153,7 @@ export function ProjectsExplorer() {
               />
             </div>
 
-            <p className="mt-1 text-[12.5px]" style={{ color: "var(--text-muted)" }}>
+            <p className="mt-1 text-[13.5px]" style={{ color: "var(--text-muted)" }}>
               {p.category}
             </p>
 
@@ -164,7 +164,7 @@ export function ProjectsExplorer() {
                   {p.metric}
                 </span>
                 {p.metricLabel && (
-                  <span className="text-[11.5px]" style={{ color: "var(--text-muted)" }}>
+                  <span className="text-[13px]" style={{ color: "var(--text-muted)" }}>
                     {p.metricLabel}
                   </span>
                 )}
@@ -172,7 +172,7 @@ export function ProjectsExplorer() {
             )}
 
             <span
-              className="mt-4 self-start rounded-full px-2 py-0.5 text-[10px] font-medium uppercase"
+              className="mt-4 self-start rounded-full px-2 py-0.5 text-[12px] font-medium uppercase"
               style={{
                 letterSpacing: "0.08em",
                 color: "var(--text-muted)",

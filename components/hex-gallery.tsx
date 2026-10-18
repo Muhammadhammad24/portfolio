@@ -63,12 +63,12 @@ function Card({
       </span>
 
       <span className="flex w-full items-center justify-between gap-2">
-        <span style={{ fontSize: 12.5, color: "var(--text-muted)" }}>{item.sub}</span>
+        <span style={{ fontSize: 13.5, color: "var(--text-muted)" }}>{item.sub}</span>
         {item.badge && (
           <span
             className="shrink-0 rounded-full px-2 py-0.5 font-medium"
             style={{
-              fontSize: 10,
+              fontSize: 12,
               letterSpacing: "0.04em",
               color: active ? ACCENT : "var(--text-muted)",
               border: `1px solid ${active ? "rgb(var(--accent-rgb) / 0.35)" : "var(--border)"}`,

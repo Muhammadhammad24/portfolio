@@ -157,7 +157,7 @@ export function ContactForm() {
           <p
             role="status"
             aria-live="polite"
-            className="pt-1 text-center text-[12.5px]"
+            className="pt-1 text-center text-[13.5px]"
             style={{ color: state === "error" ? "var(--danger)" : "var(--text-muted)" }}
           >
             {state === "error" ? `${error} You can email me at ${EMAIL}.` : `Or email me directly at ${EMAIL}`}

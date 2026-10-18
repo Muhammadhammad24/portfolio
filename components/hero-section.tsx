@@ -22,7 +22,7 @@ export function HeroSection() {
               className="h-11 w-11 rounded-full object-cover object-top"
               style={{ border: "1px solid var(--border-dark)" }}
             />
-            <span className="flex items-center gap-2 text-[13px]" style={{ color: "var(--text-muted)" }}>
+            <span className="flex items-center gap-2 text-[14px]" style={{ color: "var(--text-muted)" }}>
               <span
                 className="h-1.5 w-1.5 rounded-full"
                 style={{ background: "var(--accent)" }}

@@ -102,7 +102,7 @@ export function JourneyMap() {
           {/* Globe */}
           <div className="relative">
             <Globe markers={MARKERS} className="mx-auto" />
-            <p className="mt-1 text-center text-[11.5px]" style={{ color: "var(--text-muted)" }}>
+            <p className="mt-1 text-center text-[13px]" style={{ color: "var(--text-muted)" }}>
               Drag to spin<span className="hidden sm:inline"> · hover to hold</span>
             </p>
           </div>
@@ -121,7 +121,7 @@ export function JourneyMap() {
             <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5">
               {FACTS.map((f) => (
                 <div key={f.k}>
-                  <dt className="text-[11px] uppercase" style={{ letterSpacing: "0.1em", color: "var(--text-muted)" }}>
+                  <dt className="text-[12.5px] uppercase" style={{ letterSpacing: "0.1em", color: "var(--text-muted)" }}>
                     {f.k}
                   </dt>
                   <dd className="mt-1 text-[14.5px] tabular-nums" style={{ color: "var(--text)" }}>
@@ -149,7 +149,7 @@ export function JourneyMap() {
             >
               {/* Year, on the rail */}
               <span
-                className="absolute left-0 top-0 hidden w-[38px] text-right text-[13px] tabular-nums sm:block"
+                className="absolute left-0 top-0 hidden w-[38px] text-right text-[14px] tabular-nums sm:block"
                 style={{ color: s.now || s.next ? "var(--accent)" : "var(--text-muted)" }}
               >
                 {s.year}
@@ -165,14 +165,14 @@ export function JourneyMap() {
 
               <div>
                 <div className="flex flex-wrap items-baseline gap-x-2.5">
-                  <span className="text-[13px] tabular-nums sm:hidden" style={{ color: "var(--text-muted)" }}>
+                  <span className="text-[14px] tabular-nums sm:hidden" style={{ color: "var(--text-muted)" }}>
                     {s.year}
                   </span>
                   <h3 className="font-medium" style={{ fontSize: 16, color: "var(--text)" }}>
                     {s.title}
                   </h3>
                   {s.place && (
-                    <span className="text-[12.5px]" style={{ color: "var(--text-muted)" }}>
+                    <span className="text-[13.5px]" style={{ color: "var(--text-muted)" }}>
                       {s.place}
                     </span>
                   )}
