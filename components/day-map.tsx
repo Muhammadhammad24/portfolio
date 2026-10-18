@@ -53,14 +53,11 @@ type Block = {
   tag: string
   /** Where it sits on the clock; null for the one that can land anywhere. */
   at: [number, number] | null
-  /** The one mark that stands for this block. */
-  mark: string
 }
 
 const DAY: Block[] = [
   {
     id: "check",
-    mark: "dev-grafana-original",
     at: [8, 9],
     tag: "SRE",
     name: "Monitoring & alerts",
@@ -70,7 +67,6 @@ const DAY: Block[] = [
   },
   {
     id: "triage",
-    mark: "servicenow",
     at: [9, 10],
     tag: "IT SUPPORT",
     name: "Service desk",
@@ -80,7 +76,6 @@ const DAY: Block[] = [
   },
   {
     id: "change",
-    mark: "dev-git-original",
     at: [10, 12],
     tag: "DEVOPS",
     name: "Change management",
@@ -90,7 +85,6 @@ const DAY: Block[] = [
   },
   {
     id: "automate",
-    mark: "terraform",
     at: [12, 15],
     tag: "AUTOMATION",
     name: "Automation & IaC",
@@ -100,7 +94,6 @@ const DAY: Block[] = [
   },
   {
     id: "identity",
-    mark: "ms-entra-id",
     at: [15, 16],
     tag: "SECURITY",
     name: "Identity & access",
@@ -110,7 +103,6 @@ const DAY: Block[] = [
   },
   {
     id: "incident",
-    mark: "crowdstrike",
     at: null,
     tag: "ON-CALL",
     name: "Incident response",
@@ -120,7 +112,6 @@ const DAY: Block[] = [
   },
   {
     id: "fleet",
-    mark: "ms-intune",
     at: [17, 18],
     tag: "ENDPOINTS",
     name: "Endpoint management",
@@ -139,17 +130,42 @@ const ALWAYS = [
 ]
 
 /**
- * One mark per block, and it is the company's own SVG in its own colours —
- * the same file the toolbox further down the page uses. Seven logos across
- * the whole diagram, each standing for the thing its block does: Grafana for
- * watching, ServiceNow for the desk, Git for a change, Terraform for the
- * code that replaces the work, Entra ID for who gets in, CrowdStrike for
- * when it goes wrong, Intune for the machines people actually hold.
+ * One mark per block, and it draws the thing itself rather than a company.
  *
- * There were twenty-two of them in a row under each name and it was too much
- * to look at. Nobody reads a diagram that asks for a minute.
+ * Vendor logos were tried here and they were the wrong answer: monitoring is
+ * not Grafana and a service desk is not ServiceNow, so picking one of them to
+ * stand for the whole category says something untrue about the work. The only
+ * one that read correctly was the endpoint mark, and only because it happens
+ * to be shaped like a device. So every block now gets a mark shaped like what
+ * it does — a pulse for watching, a queue and a ticket for the desk, a branch
+ * for a change, brackets for the code that replaces the work, a shield for
+ * who gets in, a triangle for the thing going wrong, a laptop and a phone for
+ * the machines people actually hold.
+ *
+ * Neurath's rule for a pictogram: it may not denote more than the fact it is
+ * chosen for. They carry no colour of their own either, so they dim when the
+ * day steps back and turn red when it breaks — which a brand logo, stuck in
+ * its own palette, could never do.
  */
 const MARK = 19
+const GLYPH: Record<string, string[]> = {
+  check: ["M2 12h4l2.5-6 3.5 12 2.5-6H22"],
+  triage: ["M3 5h18M3 10h18M3 15h11", "M18.5 14.3a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4Z"],
+  change: [
+    "M6 2.6a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8Z",
+    "M6 16.6a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8Z",
+    "M18 9.6a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8Z",
+    "M6 7.4v9.2M8.4 5h4.6a2.6 2.6 0 0 1 2.6 2.6v2",
+  ],
+  automate: ["M8.5 6 3.5 12l5 6M15.5 6l5 6-5 6"],
+  identity: ["M12 3 20 6v6c0 4.4-3.3 7.9-8 9-4.7-1.1-8-4.6-8-9V6Z", "M9.3 12.2l1.9 1.9 3.5-3.8"],
+  incident: ["M12 3.5 22 20H2Z", "M12 10v4M12 17h.01"],
+  fleet: [
+    "M3.6 4.5h9.8a1.6 1.6 0 0 1 1.6 1.6v6.3a1.6 1.6 0 0 1-1.6 1.6H3.6A1.6 1.6 0 0 1 2 12.4V6.1a1.6 1.6 0 0 1 1.6-1.6Z",
+    "M1 18h15",
+    "M18.4 9h3.1a1.4 1.4 0 0 1 1.4 1.4v8.2a1.4 1.4 0 0 1-1.4 1.4h-3.1a1.4 1.4 0 0 1-1.4-1.4v-8.2A1.4 1.4 0 0 1 18.4 9Z",
+  ],
+}
 
 /**
  * Colour on this page belongs to whatever is lit, so a mark that is not being
@@ -565,16 +581,22 @@ export function DayMap() {
                   style={{ transition: `fill ${EASE}` }}
                 />
 
-                {/* The one mark, in the company's own colours. */}
-                <image
-                  href={`/brands/${n.mark}.svg`}
-                  x={NODE_X + 12}
-                  y={y + (NODE_H - MARK) / 2}
-                  width={MARK}
-                  height={MARK}
-                  preserveAspectRatio="xMidYMid meet"
-                  style={{ opacity: live ? 1 : 0.78, transition: `opacity ${EASE}` }}
-                />
+                {/* The mark for what this block does. */}
+                <g
+                  transform={`translate(${NODE_X + 12} ${y + (NODE_H - MARK) / 2}) scale(${MARK / 24})`}
+                  fill="none"
+                  stroke={
+                    isBreak && breached ? "var(--danger)" : live ? "#FFFFFF" : "rgba(255,255,255,0.42)"
+                  }
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ transition: `stroke ${EASE}` }}
+                >
+                  {GLYPH[n.id].map((d, k) => (
+                    <path key={k} d={d} />
+                  ))}
+                </g>
 
                 <text x={NODE_X + 41} y={y + 19} fontSize="14" fontWeight="500" fill="var(--text)">
                   {n.name}
