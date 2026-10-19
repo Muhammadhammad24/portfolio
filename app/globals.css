@@ -69,29 +69,14 @@
   --accent-glow:  rgb(var(--accent-rgb) / 0.10);
   --accent-glow2: rgb(var(--accent-rgb) / 0.05);
 
-  /* ── Tailwind/shadcn tokens ── */
-  --background:           240 10% 4%;
-  --foreground:           240 10% 97%;
-  --card:                 228 10% 8%;
-  --card-foreground:      0 0% 100%;
-  --popover:              228 10% 8%;
-  --popover-foreground:   0 0% 100%;
-  --primary:              0 0% 100%;
-  --primary-foreground:   240 6% 4%;
-  --secondary:            225 8% 14%;
-  --secondary-foreground: 0 0% 100%;
-  --muted:                225 8% 12%;
-  --muted-foreground:     220 8% 58%;
-  --accent-foreground:    0 0% 100%;
-  --destructive:          0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --input:                225 8% 12%;
-  --ring:                 0 0% 80%;
-  --radius:               0.625rem;
 }
 
 @layer base {
-  * { @apply border-border; }
+  /* Tailwind's own border utilities are not used anywhere on this page, so
+     the default border colour is set here rather than routed through a theme
+     token: the token spelled it hsl(var(--border)) while --border holds an
+     rgba(), which is not a colour any browser accepts. */
+  * { border-color: var(--border); }
   html {
     /* The nav floats at top:20px and is about 44px tall. Without this, every
        anchor lands with its heading tucked underneath it. */
@@ -598,19 +583,29 @@ button:hover .mark-ring img,
   animation-fill-mode: both, none, none;
 }
 
-/* The queue is the one thing in the picture that only ever goes one way. */
-@keyframes queue-grow {
-  0%, 12%  { opacity: 0; transform: translateX(3px); }
-  26%, 88% { opacity: 1; transform: none; }
-  100%     { opacity: 1; transform: none; }
+/*
+  The queue is the one thing in the picture that only ever goes one way, so it
+  is drawn as the things themselves arriving rather than as a bar that grows.
+  Each ticket flies in from off the right, lands on the pile, and stays — they
+  come in staggered across one clock, which is why the pile is never empty and
+  never finishes filling.
+*/
+@keyframes ticket-in {
+  0%   { opacity: 0; transform: translateX(22px); }
+  6%   { opacity: 1; transform: translateX(0); }
+  92%  { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(0); }
 }
-.queue-bar {
+.ticket-in {
+  opacity: 1;
   transform-box: fill-box;
-  animation: queue-grow 5.6s ease-out infinite;
+  animation: ticket-in 5.2s cubic-bezier(0.25, 0.9, 0.35, 1) infinite;
 }
 
+/* The monitor's trace, with nothing on it. */
 @media (prefers-reduced-motion: reduce) {
-  .seethe, .seethe-hot, .queue-bar { animation: none; }
+  .seethe, .seethe-hot, .ticket-in { animation: none; }
+  .flat-blip { display: none; }
 }
 
 /*
@@ -674,3 +669,227 @@ button:hover .mark-ring img,
 @keyframes loop-flow { to { stroke-dashoffset: -16; } }
 .loop-flow { animation: loop-flow 1.1s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .loop-flow { animation: none; } }
+
+/* ─────────────────────────────────────────────────────────────
+   How I got here: the climb, as a step plot. Height is the layer
+   of the stack he owned, thickness is how many people were on it,
+   and the fill underneath is the ground he never gave back. The
+   motion only restates the drawing — the steps arrive in order,
+   and a band of light keeps climbing, because it is not finished.
+   ───────────────────────────────────────────────────────────── */
+/* A plot whose axis labels have shrunk into texture is decoration, so on a
+   narrow screen the figure scrolls at a readable size instead. */
+.stair-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.stair-svg { display: block; width: 100%; min-width: 760px; }
+
+/*
+  ── The whole story, in one screenful ──
+
+  A figure that is read by stopping on it is only worth drawing if stopping
+  on it shows all of it. On a desktop window the card is told how much room
+  it has — the viewport, less the floating nav and a margin — and the plot
+  takes whatever is left after the heading and the key have had theirs. So
+  wherever the scroll comes to rest on this section, nothing is cut off the
+  top or hanging past the bottom.
+
+  The figure keeps its aspect ratio while it does that, so a short window
+  gets a smaller plot rather than a cropped one.
+*/
+@media (min-width: 1024px) {
+  /*
+    The plot is capped against the window itself rather than against its
+    parent. A percentage height here would have nothing definite to resolve
+    against — the card is sized by its contents, and the plot is one of them,
+    so asking it to be a fraction of what it is helping to measure gives
+    `auto` and a cropped figure. The viewport is definite, so the cap is
+    written in those terms: the window, less the floating nav and the card's
+    own words above and below the figure. On an ordinary desktop window that
+    arithmetic lands above the plot's natural size and changes nothing; on a
+    short one the plot scales down, keeping its proportions, and the card
+    still ends inside the screen.
+  */
+  .stair-card > .stair-scroll { overflow: hidden; }
+  .stair-card > .stair-scroll > .stair-svg {
+    min-width: 0;
+    width: 100%;
+    height: auto;
+    max-height: calc(100vh - 150px);
+  }
+}
+/* A figure wider than the screen should look cut off on purpose, and say so,
+   rather than look like a drawing that did not fit. */
+.stair-hint { display: none; }
+@media (max-width: 860px) {
+  .stair-scroll {
+    -webkit-mask-image: linear-gradient(to right, #000 0, #000 92%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 0, #000 92%, transparent 100%);
+  }
+  .stair-hint {
+    display: block;
+    margin-top: 9px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+}
+
+@keyframes stair-in { from { stroke-dashoffset: 1; opacity: 0; } to { stroke-dashoffset: 0; opacity: 1; } }
+.stair-in { stroke-dasharray: 1; animation: stair-in 0.38s cubic-bezier(0.2, 0.9, 0.3, 1) both; }
+@keyframes stair-knee { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: scale(1); } }
+.stair-knee { transform-box: fill-box; transform-origin: center; animation: stair-knee 0.3s ease-out both; }
+/* Each job's name and number land with its tread, not before it. */
+@keyframes stair-step { from { opacity: 0; } to { opacity: 1; } }
+.stair-step { animation: stair-step 0.4s ease-out both; }
+@keyframes stair-ground { from { opacity: 0; } to { opacity: 1; } }
+.stair-ground { animation: stair-ground 0.8s ease-out 0.35s both, stair-breathe 6.4s ease-in-out 1.2s infinite; }
+@keyframes stair-next { from { opacity: 0; } to { opacity: 1; } }
+.stair-next { animation: stair-next 0.45s ease-out 0.8s both, stair-flow 1.1s linear infinite; }
+
+/*
+  ── The climb keeps time, on the hero's clock ──
+
+  The hero does not decorate: a band of light crosses the finished estate on
+  a fixed period and every drop hanging off it brightens exactly as the light
+  arrives, because a well-run system has a pulse. This figure is that same
+  machine, turned on its side and given seven years to cross — so the light
+  walks the stairs rather than sliding over them, and each job answers it as
+  it is reached. One beat, 6.4s, shared by every rule below.
+
+  The figure spends no colour of its own. The one accent on it is the rung he
+  is standing on now, and the light that keeps arriving there — a career that
+  is still being climbed, not a chart of one that is over.
+*/
+/*
+  ── The climb, and then the pause at the top ──
+
+  The light does not run the whole beat. It climbs for the first 80% of it
+  and then stops, resting on the rung he is on while the marker there reports
+  the arrival. The last fifth of every beat is that pause: the figure says
+  "this is where it has got to" and holds the thought before starting again.
+
+  pathLength=1 makes the dash a fraction of the whole climb, so these hold at
+  any size the figure is drawn at.
+*/
+@keyframes flight-trail {
+  0%   { stroke-dashoffset: 1; }
+  80%  { stroke-dashoffset: 0.085; }
+  100% { stroke-dashoffset: 0.085; }
+}
+.flight-trail {
+  stroke-dasharray: 0.085 0.915;
+  opacity: 0.85;
+  animation: flight-trail 6.4s linear infinite, stair-ground 0.6s ease-out 0.95s both;
+}
+
+/*
+  The head of the light is the same path again, with a dash short enough and
+  a cap round enough to be a dot. Its offset is the trail's less the trail's
+  own length, which parks it exactly on the leading edge and keeps it there.
+
+  It is cut at the instant it lands rather than held: a dash pattern that
+  comes to rest on the end of a path also shows at the start of it, and a
+  stray dot at the bottom of the ladder would say something that is not true.
+  The marker it hands over to is lit in the same frame, so the light is never
+  nowhere — it arrives, and the arrival takes over from it.
+*/
+@keyframes flight-dot {
+  0%     { stroke-dashoffset: 0.915; opacity: 1; }
+  79.9%  { stroke-dashoffset: 0.0015; opacity: 1; }
+  80%    { stroke-dashoffset: 0.0015; opacity: 0; }
+  100%   { stroke-dashoffset: 0.0015; opacity: 0; }
+}
+.flight-dot {
+  stroke-dasharray: 0.004 0.996;
+  animation: flight-dot 6.4s linear infinite,
+             stair-ground 0.6s ease-out 0.95s both;
+}
+
+/*
+  ── The end of the line answers differently ──
+
+  Every knee on the climb gets a small white flare as the light goes past: a
+  quick acknowledgement, gone in a beat. This point is not one of those. It is
+  where the climb has actually got to, so it is the one place on the figure
+  lit even when nothing is happening — a steady accent dot that says "here"
+  on its own, with no animation needed to read it.
+
+  Nothing here moves before the light lands. Every keyframe below is flat
+  until 80% of the beat, which is the exact frame the head reaches this point;
+  an earlier version let the rings run on past the end of the cycle and finish
+  in the next one, and the price was a ring glowing at the top while the light
+  was still down at the bottom — an alarm going off before the thing it is
+  reporting. So the alarm now lives entirely inside the pause it belongs to:
+  the core swells and holds, and two rings leave one after the other across
+  the full fifth of a beat, which is longer and larger than any flare on the
+  way up. One event, after the arrival, and unmistakably the last one.
+*/
+@keyframes now-core {
+  0%, 79.9% { opacity: 0.66; transform: scale(1); }
+  80%       { opacity: 1; transform: scale(1.65); }
+  100%      { opacity: 0.66; transform: scale(1); }
+}
+.now-core {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: now-core 6.4s ease-out infinite;
+}
+
+@keyframes now-ring {
+  0%, 79.9% { opacity: 0; transform: scale(1); }
+  80%       { opacity: 1; transform: scale(1); }
+  100%      { opacity: 0; transform: scale(5); }
+}
+.now-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: now-ring 6.4s ease-out infinite;
+}
+
+/* The second ring leaves later and travels further, so the arrival reads as
+   one event spreading rather than a single hoop popping. */
+@keyframes now-ring-2 {
+  0%, 84.9% { opacity: 0; transform: scale(1); }
+  85%       { opacity: 0.6; transform: scale(1); }
+  100%      { opacity: 0; transform: scale(7.5); }
+}
+.now-ring-2 {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: now-ring-2 6.4s ease-out infinite;
+}
+
+/* The ground he keeps breathes, the way the hero's pool of light does. */
+@keyframes stair-breathe { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
+
+/* The one unfinished thing on the figure is the only one that flows. */
+@keyframes stair-flow { to { stroke-dashoffset: -16; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .stair-in, .stair-knee, .stair-step, .stair-ground, .stair-next { animation: none; }
+  .flight-trail, .flight-dot, .knee-flare, .now-ring, .now-ring-2 { display: none; }
+  /* The point he is on stays lit without the beat. */
+  .now-core { animation: none; opacity: 1; }
+  /* Without motion the risers still have to carry their meaning, so they
+     keep the colour instead of borrowing the moment. */
+  .stair-pass { animation: none; opacity: 1; }
+}
+
+.stair-key {
+  margin-top: 14px;
+  font-size: 11px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.45);
+}
+.stair-key .mono {
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: var(--text);
+  margin-right: 5px;
+}
+.stair-key-sep { color: rgba(255, 255, 255, 0.22); margin: 0 9px; }

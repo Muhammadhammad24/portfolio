@@ -193,7 +193,15 @@ function Box({ n, mess, struck }: { n: Node; mess?: boolean; struck?: boolean })
         {n.label}
       </text>
       {/* The quiet layer: what was actually done to this one. The eight of
-          them together are the change, item by item, rather than a claim. */}
+          them together are the change, item by item, rather than a claim.
+
+          Each of these sits exactly where a drop line or the self-closing
+          loop runs, and a wire drawn straight through a word cuts the word
+          in half. A schematic solves that the way paper always has: the
+          writing gets a knockout the width of the stroke, so the wire passes
+          *behind* it and carries on out the other side. The run stays
+          continuous and the words stay readable — nothing is bent out of its
+          way, and nothing is sliced. */}
       {n.did && (
         <text
           x={n.x + NW / 2}
@@ -203,6 +211,10 @@ function Box({ n, mess, struck }: { n: Node; mess?: boolean; struck?: boolean })
           className="mono"
           letterSpacing="0.03em"
           fill="rgba(255,255,255,0.4)"
+          stroke="var(--bg)"
+          strokeWidth="3.4"
+          strokeLinejoin="round"
+          paintOrder="stroke"
         >
           {n.did}
         </text>
@@ -225,7 +237,7 @@ export function ChaosToOrder() {
         viewBox={`0 0 ${W} ${H}`}
         className="w-full"
         role="img"
-        aria-label="One figure in three parts. At the top, an estate as found: people, logins, tickets, network, servers, cloud, laptops and monitoring, cross-wired by eleven runs that nobody planned, with monitoring crossed out because there is none. Every one of those runs is drawn down into a single band in the middle marked Muhammad Hammad. Out of the bottom of that band comes one backbone, and the same eight things hang off it in order with nothing crossing, plus a loop from monitoring to tickets that closes them before anyone raises one."
+        aria-label="One figure in three parts. At the top, an estate as found: people, logins, tickets, network, servers, cloud, laptops and monitoring, cross-wired by eleven runs that nobody planned. Monitoring is crossed out because there is none, and the trace running out of its side is flat, with a sweep crossing it that never finds anything. Under the tickets, eight of them keep flying in from off the picture and piling up, and none of them leaves. Every one of those runs is drawn down into a single band in the middle marked Muhammad Hammad. Out of the bottom of that band comes one backbone, and the same eight things hang off it in order with nothing crossing, plus a loop from monitoring to tickets that closes them before anyone raises one."
       >
         <defs>
           {/* A band of light rather than a travelling dot: the system is
@@ -357,22 +369,91 @@ export function ChaosToOrder() {
           <Box key={n.id} n={n} mess struck={n.id === "monitor"} />
         ))}
 
-        {/* The queue that only ever gets longer. */}
-        {[0, 1, 2, 3].map((i) => (
-          <rect
-            key={i}
-            className="queue-bar"
-            style={{ animationDelay: `${i * 1.4}s` }}
-            x={404 + i * 1.5}
-            y={32 + i * 4.5}
-            width={50 - i * 2}
-            height={3}
-            rx="1"
+        {/*
+          ── The queue that only ever gets longer ──
+
+          This used to be four bars stacking up, which is a diagram *of* a
+          queue: you have to be told what it means before it means anything.
+          A queue is not felt as a bar chart, it is felt as things arriving
+          faster than they leave — so now it is the things themselves. Eight
+          of them, flying in from off the right one after another and landing
+          under the Tickets box, on the same clock as everything else.
+
+          Nothing ever drains out of the pile, which is the entire point: in
+          the half of the picture where nothing is automated, every one of
+          these is a person who cannot work, and they keep coming.
+
+          Strictly inside the band between the Tickets box and Cloud below it,
+          so no node moves by a pixel.
+        */}
+        {Array.from({ length: 8 }, (_, i) => {
+          const col = i % 4
+          const row = Math.floor(i / 4)
+          const tx = 388 + col * 19
+          const ty = 41 + row * 14
+          return (
+            <g
+              key={`t-${i}`}
+              className="ticket-in"
+              style={{ animationDelay: `${((i * BEAT) / 9).toFixed(2)}s` }}
+            >
+              <rect
+                x={tx}
+                y={ty}
+                width="16"
+                height="10"
+                rx="1.5"
+                fill="var(--bg)"
+                stroke="var(--danger-line)"
+                strokeWidth="0.8"
+              />
+              {/* The fold, so it reads as something addressed to someone
+                  rather than as another little box in a picture of boxes. */}
+              <path
+                d={`M${tx + 1.6} ${ty + 2.2} L${tx + 8} ${ty + 6.2} L${tx + 14.4} ${ty + 2.2}`}
+                fill="none"
+                stroke="var(--danger-line)"
+                strokeWidth="0.8"
+                strokeLinejoin="round"
+              />
+            </g>
+          )
+        })}
+
+        {/*
+          ── What "no monitoring" actually looks like ──
+
+          The dashed box already says the monitoring is not there. A struck
+          box is a statement, though, and the lower half of this figure makes
+          the opposite case with a pulse — a band of light crossing the estate
+          on a fixed period, because a well-run system has a heartbeat.
+
+          So this is that same instrument with nothing on it: the monitor's
+          own trace, running flat out of the side of the box, with a sweep
+          going across it that never finds anything to show. The two halves
+          now argue in the same language — flat here, a pulse down there.
+
+          It is unlabelled on purpose. A flat trace with a sweep running along
+          it and nothing ever rising says "dead instrument" without being told
+          to, and the words that sat here once only crowded the box they were
+          meant to explain.
+        */}
+        <g className="flatline">
+          <path
+            d="M334 96 H382"
             fill="none"
             stroke="var(--danger-line)"
-            strokeWidth="0.8"
+            strokeWidth="0.9"
           />
-        ))}
+          <circle className="flat-blip" cy="96" r="1.5" fill="var(--danger)">
+            <animate
+              attributeName="cx"
+              values="334;382"
+              dur={`${BEAT}s`}
+              repeatCount="indefinite"
+            />
+          </circle>
+        </g>
 
         <text
           className="mono"
@@ -596,6 +677,10 @@ export function ChaosToOrder() {
           fontSize="8.5"
           letterSpacing="0.08em"
           fill="rgba(255,255,255,0.45)"
+          stroke="var(--bg)"
+          strokeWidth="3"
+          strokeLinejoin="round"
+          paintOrder="stroke"
         >
           CLOSED BEFORE ANYONE RAISES ONE
         </text>

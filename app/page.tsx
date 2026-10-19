@@ -2,7 +2,7 @@ import Link from "next/link"
 import { GitHubMark, GmailMark, LinkedInMark, MapsMark, PhoneMark } from "@/components/brand-marks"
 import { ProjectsExplorer } from "@/components/projects-explorer"
 import { Timeline } from "@/components/timeline"
-import { JourneyMap } from "@/components/journey-map"
+import { CareerStair } from "@/components/career-stair"
 import { ContactForm } from "@/components/contact-form"
 import { FloatingNav } from "@/components/floating-nav"
 import { ScrollProgress } from "@/components/scroll-progress"
@@ -49,12 +49,13 @@ export default function Portfolio() {
           <SectionHeading title="How I got here" subtitle="The road" />
           <p className="section-lede">
             Seven years, two countries, seven employers. It started on a helpdesk in Karachi
-            and it has been the same job ever since, only the number of people depending
-            on it keeps going up.
+            and it has been the same job ever since, only the number of people depending on it
+            keeps going up. The figure below is that, plotted: one rung per layer of the stack
+            I was handed, and the line never comes back down.
           </p>
 
           <div className="section-body measure-wide">
-            <JourneyMap />
+            <CareerStair />
           </div>
 
           {/* The nav's Experience lands here, on the roles themselves. */}
@@ -104,7 +105,7 @@ export default function Portfolio() {
         <div className="container">
           <SectionHeading title="About me" subtitle="Background" />
 
-          <div className="section-body measure-wide grid grid-cols-1 gap-12 lg:grid-cols-[300px_1fr] lg:gap-16">
+          <div className="section-body measure-wide card p-6 sm:p-8 grid grid-cols-1 gap-12 lg:grid-cols-[300px_1fr] lg:gap-16">
 
             {/* ── Left: portrait + contact ── */}
             <div>

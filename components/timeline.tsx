@@ -127,25 +127,33 @@ const experiences = [
   },
 ]
 
-/* ── One role on the vertical timeline ── */
+/*
+  ── One role, on the same left edge as everything else ──
+
+  These used to hang off a rail: a vertical line down the left and a marker
+  dot per role, with every card pushed 56px clear of it. It read fine on its
+  own and wrong on the page, because nothing else in the portfolio starts
+  there. Every other box — the figure above these, the project cards, the
+  certificates, the two contact panels — begins at the container's own left
+  edge, so these were the one column that did not line up with the heading
+  sitting above them.
+
+  The rail is gone and the cards sit flush with the rest. The role being
+  current is still marked, but from inside the card: an accent edge down its
+  left side, the same device the hero uses to call out what comes next. One
+  margin, top to bottom of the page.
+*/
 function TimelineEntry({ exp }: { exp: (typeof experiences)[0] }) {
   return (
     <div
-      className="relative pl-10 sm:pl-14"
+      className="card p-5 pl-6"
+      style={
+        exp.current
+          ? { borderLeft: "2px solid var(--accent)" }
+          : undefined
+      }
     >
-      {/* Marker on the rail */}
-      <span
-        className="absolute left-[11px] sm:left-[19px] top-[26px] h-2.5 w-2.5 rounded-full"
-        style={{
-          background: exp.current ? "var(--accent)" : "var(--bg-base)",
-          border: `2px solid ${exp.current ? "var(--accent)" : "var(--border-dark)"}`,
-        }}
-      />
-
-      <div
-        className="card p-5 pl-6"
-      >
-        <div className="mb-4">
+      <div className="mb-4">
           <div className="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
             <div>
               <div className="flex flex-wrap items-center gap-2">
@@ -187,20 +195,14 @@ function TimelineEntry({ exp }: { exp: (typeof experiences)[0] }) {
               {item}
             </li>
           ))}
-        </ul>
-      </div>
+      </ul>
     </div>
   )
 }
 
 export function Timeline() {
   return (
-    <div className="measure-wide relative">
-      {/* Vertical rail */}
-      <div
-        className="absolute left-[15px] sm:left-[23px] top-2 bottom-2 w-px"
-        style={{ background: "linear-gradient(to bottom, transparent, var(--border-dark) 8%, var(--border-dark) 92%, transparent)" }}
-      />
+    <div className="measure-wide">
       <div className="space-y-5">
         {experiences.map((exp) => (
           <TimelineEntry key={exp.company} exp={exp} />

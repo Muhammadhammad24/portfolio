@@ -131,11 +131,11 @@ export function SkillsHex() {
         </span>
       </div>
 
-      <div className="space-y-px">
+      <div className="space-y-3">
         {DOMAINS.map((d, i) => (
           <div
             key={d.name}
-            className="skill-row grid grid-cols-1 gap-5 px-5 py-7 sm:grid-cols-[210px_1fr] sm:gap-8 sm:px-7"
+            className="card grid grid-cols-1 gap-5 px-5 py-7 sm:grid-cols-[210px_1fr] sm:gap-8 sm:px-7"
           >
             {/* The domain, numbered the way every other stack on this page is. */}
             <div className="flex items-start gap-4">
@@ -172,7 +172,12 @@ export function SkillsHex() {
                       }}
                     />
                   </div>
-                  <div className="mt-2 text-[13px] leading-[1.45]" style={{ color: "var(--text-muted)" }}>
+                  {/* The name is the page's own type, at the page's own
+                      reading colour — these sat a step dimmer and a size
+                      smaller than everything around them, which is what made
+                      them look like a different typeface rather than the same
+                      one quietly set small. */}
+                  <div className="mt-2 text-[13.5px] leading-[1.45]" style={{ color: "var(--text-dim)" }}>
                     {t.label}
                   </div>
                 </div>

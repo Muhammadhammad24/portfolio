@@ -334,7 +334,7 @@ export function CommandPalette() {
                         data-row={i}
                         onMouseEnter={() => setCursor(i)}
                         onClick={() => cmd.run({ close, markCopied })}
-                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left"
+                        className="flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 text-left"
                         style={{ background: activeRow ? "rgba(255,255,255,0.06)" : "transparent" }}
                       >
                         <span className="mark-ring">

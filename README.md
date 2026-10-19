@@ -88,8 +88,7 @@ components/
   certs-hex.tsx        # Certifications, built on hex-gallery
   hex-gallery.tsx      # Shared pick-one-and-read-it gallery
   projects-explorer.tsx
-  journey-map.tsx      # Karachi → Göttingen, drawn on globe.tsx
-  globe.tsx            # Orthographic globe; coastlines in world-land.ts
+  career-stair.tsx     # How I got here: a step plot of the climb
   timeline.tsx         # The seven roles, in detail
   contact-form.tsx     # Web3Forms, posted straight from the browser
   floating-nav.tsx     # Floating nav, mobile sheet, section spy
