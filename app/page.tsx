@@ -255,11 +255,14 @@ export default function Portfolio() {
           </div>
           <div className="flex items-center gap-4">
             {[
-              { icon: GitHubMark, href: "https://github.com/Muhammadhammad24" },
-              { icon: LinkedInMark, href: "https://www.linkedin.com/in/mhammad24/" },
-              { icon: GmailMark, href: "mailto:muhammad24997@gmail.com" },
-            ].map(({ icon: Icon, href }) => (
+              { icon: GitHubMark, href: "https://github.com/Muhammadhammad24", label: "GitHub" },
+              { icon: LinkedInMark, href: "https://www.linkedin.com/in/mhammad24/", label: "LinkedIn" },
+              { icon: GmailMark, href: "mailto:muhammad24997@gmail.com", label: "Email" },
+            ].map(({ icon: Icon, href, label }) => (
+              /* The mark is decorative, so without a label these three read as
+                 bare URLs to a screen reader. The hero's row names them. */
               <Link key={href} href={href} target="_blank" rel="noopener noreferrer"
+                aria-label={label}
                 className="mark-ring"
               >
                 <Icon className="h-5 w-5" />

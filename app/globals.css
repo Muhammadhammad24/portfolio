@@ -45,8 +45,6 @@
      stroke carries more weight here than a palette would anywhere else. */
   --danger:            #E5484D;
   --danger-line:       rgba(229,72,77,0.58);
-  --danger-dim:        rgba(229,72,77,0.30);
-  --danger-wash:       rgba(229,72,77,0.09);
 
   /* ── Radii ── */
   --radius-pill: 999px;
@@ -423,28 +421,6 @@ body { counter-reset: plate; }
   .spin-slow, .dot-pulse { animation: none; }
 }
 
-/* The day-map blocks are real controls: they take focus, so they show it. */
-.dm-hour:focus { outline: none; }
-.dm-hour:focus-visible rect:first-of-type {
-  stroke: #FFFFFF;
-  stroke-width: 1.4;
-}
-
-/* The day assembles the way it is read: the clock first, then hour by hour. */
-@keyframes dm-rise { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
-.dm-rise { animation: dm-rise 0.5s cubic-bezier(0.4, 0, 0.2, 1) both; }
-/* And the rail inks itself in once, before it starts tracking him. */
-@keyframes dm-draw { from { stroke-dashoffset: 1; } }
-.dm-draw { animation: dm-draw 1.1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both; }
-/* The estate is dashed because it runs on its own — so it runs on its own. */
-@keyframes dm-flow { to { stroke-dashoffset: -6; } }
-.dm-flow { animation: dm-flow 1.8s linear infinite; }
-/* The one that caught it has something urgent to say. */
-.dm-flow-hot { animation-duration: 0.5s; }
-@media (prefers-reduced-motion: reduce) {
-  .dm-rise, .dm-draw, .dm-flow { animation: none; }
-}
-
 /* Brand marks in the toolbox: dimmed until you look at one. */
 .brand img { opacity: 0.82; transition: opacity 0.2s ease, transform 0.2s ease; }
 .brand:hover img { opacity: 1; transform: translateY(-1px); }
@@ -548,15 +524,6 @@ button:hover .mark-ring img,
   color: var(--text);
   margin-bottom: 5px;
 }
-.panel-list { margin-top: 7px; display: flex; flex-direction: column; gap: 4px; }
-.panel-list li {
-  display: flex;
-  gap: 7px;
-  font-size: 12px;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.52);
-}
-
 /* The one forward-looking claim on the page. */
 .next-band {
   margin-top: 6px;
@@ -624,8 +591,8 @@ button:hover .mark-ring img,
 }
 /* The runs that are actually wrong also breathe. */
 @keyframes seethe-hot { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
-.seethe-hot { animation-name: tangle-in, seethe, seethe-hot; }
 .seethe-hot {
+  animation-name: tangle-in, seethe, seethe-hot;
   animation-timing-function: cubic-bezier(0.35, 0, 0.5, 1), ease-in-out, ease-in-out;
   animation-iteration-count: 1, infinite, infinite;
   animation-fill-mode: both, none, none;
