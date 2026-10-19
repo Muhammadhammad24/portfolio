@@ -96,9 +96,9 @@ export function HeroSection() {
                 href={href}
                 target="_blank" rel="noopener noreferrer"
                 aria-label={label}
-                className="social-icon-btn flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200"
+                className="mark-link flex h-9 w-9 items-center justify-center"
               >
-                <Icon className="h-[15px] w-[15px]" />
+                <Icon className="h-5 w-5" />
               </Link>
             ))}
           </div>

@@ -116,9 +116,7 @@ export default function Portfolio() {
                   { icon: GmailMark, text: "muhammad24997@gmail.com" },
                 ].map(({ icon: Icon, text }) => (
                   <div key={text} className="flex items-center gap-3">
-                    <span className="mark-well shrink-0">
-                      <Icon className="h-[15px] w-[15px]" />
-                    </span>
+                    <Icon className="h-5 w-5 shrink-0" />
                     <span className="text-sm" style={{ color: 'var(--text-dim)' }}>{text}</span>
                   </div>
                 ))}
@@ -219,10 +217,8 @@ export default function Portfolio() {
                   { icon: LinkedInMark, label: "LinkedIn", value: "linkedin.com/in/mhammad24", href: "https://www.linkedin.com/in/mhammad24/" },
                   { icon: GitHubMark, label: "GitHub", value: "github.com/Muhammadhammad24", href: "https://github.com/Muhammadhammad24" },
                 ].map(({ icon: Icon, label, value, href }) => (
-                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4">
-                    <span className="mark-well shrink-0">
-                      <Icon className="h-[15px] w-[15px]" />
-                    </span>
+                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="mark-link group flex items-center gap-4">
+                    <Icon className="h-5 w-5 shrink-0" />
                     <div>
                       <div className="text-[13px] tracking-wider uppercase" style={{ color: 'var(--text-muted)' }}>{label}</div>
                       <div className="text-sm" style={{ color: 'var(--text-dim)' }}>{value}</div>
@@ -260,9 +256,9 @@ export default function Portfolio() {
               { icon: GmailMark, href: "mailto:muhammad24997@gmail.com" },
             ].map(({ icon: Icon, href }) => (
               <Link key={href} href={href} target="_blank" rel="noopener noreferrer"
-                className="social-icon-btn flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300"
+                className="mark-link flex h-9 w-9 items-center justify-center"
               >
-                <Icon className="h-[15px] w-[15px]" />
+                <Icon className="h-5 w-5" />
               </Link>
             ))}
           </div>

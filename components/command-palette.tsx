@@ -337,9 +337,7 @@ export function CommandPalette() {
                         className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left"
                         style={{ background: activeRow ? "rgba(255,255,255,0.06)" : "transparent" }}
                       >
-                        <span className="mark-well shrink-0">
-                          <Icon className="h-[15px] w-[15px]" />
-                        </span>
+                        <Icon className="h-5 w-5 shrink-0" />
                         <span className="min-w-0 flex-1">
                           <span className="block truncate text-sm" style={{ color: "var(--text)" }}>
                             {cmd.label}
