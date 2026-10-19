@@ -27,11 +27,9 @@
 
 ## A day in production
 
-Monitoring and alerts · service desk triage from L1 to L3 · change management ·
-infrastructure automation · identity and access · endpoint management — over an
-estate of monitoring, network, systems and cloud that never stops. Partway
-through, monitoring catches an incident, the day stops, and containment runs
-before the day resumes.
+<p align="center">
+  <img src="public/day-map.svg" width="456" alt="A day in production: monitoring and alerts, service desk triage from L1 to L3, change management, infrastructure automation, identity and access, and endpoint management — over an estate of monitoring, network, systems and cloud that never stops. Partway through, monitoring catches an incident, the day stops, and containment runs before the day resumes." />
+</p>
 
 ---
 
