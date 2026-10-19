@@ -3,13 +3,13 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { GitHubMark, GmailMark, LinkedInMark } from "@/components/brand-marks"
-import { DayMap } from "@/components/day-map"
+import { ChaosToOrder } from "@/components/chaos-to-order"
 import { scrollToSection } from "@/components/smooth-scroll"
 
 export function HeroSection() {
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden">
-      <div className="container relative z-10 grid grid-cols-1 items-center gap-10 px-4 pb-8 pt-24 lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <div className="container relative z-10 grid grid-cols-1 items-center gap-10 pb-4 pt-24 lg:grid-cols-[0.78fr_1.22fr] lg:gap-10">
         {/* ── Left: identity ── */}
         <div className="hero-in">
           <div className="mb-6 flex items-center gap-3">
@@ -106,7 +106,7 @@ export function HeroSection() {
 
         {/* ── Right: proof ── */}
         <div className="hero-in" style={{ animationDelay: "0.12s" }}>
-          <DayMap />
+          <ChaosToOrder />
         </div>
       </div>
     </section>

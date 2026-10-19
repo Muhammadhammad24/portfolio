@@ -31,10 +31,10 @@ export default function Portfolio() {
         <div className="container">
           <SectionHeading title="Seven years, zero breaches" subtitle="Track record" />
           <p className="section-lede">
-            That day is not a wish list. I have run it for a government body in Karachi, a
-            logistics firm, a bookstore chain and now a company spread over twelve countries.
-            Below is my GitHub, read live from their API — not a claim about my work, just
-            the work.
+            The lower half of the picture above is not a wish list. I have handed it back to a
+            government body in Karachi, a logistics firm, a bookstore chain and now a company
+            spread over twelve countries. Below is my GitHub, read live from their API — not a
+            claim about my work, just the work.
           </p>
 
           <div className="section-body measure-wide">
