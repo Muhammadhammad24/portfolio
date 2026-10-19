@@ -476,43 +476,11 @@ body { counter-reset: plate; }
    on the page wearing somebody else's colours. They stand on the page
    itself at one size, with no well or disc drawn around them, the way the
    toolbox marks do; where a mark is a link, it lifts on hover. */
-.mark {
-  position: relative;
-  display: inline-flex;
-  isolation: isolate;
+.mark-link img {
+  opacity: 0.88;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
-/* Each mark is lit from its own colour, in two layers: a wide bloom behind it
-   for the glow on the page, and a tight drop-shadow on the artwork itself so
-   the colour reads as coming off the logo rather than sitting behind it. The
-   mark is `--glow` as an R G B triplet, so both layers can take it at the
-   alpha each one needs. No frame, and the artwork is never recoloured. */
-.mark::before {
-  content: "";
-  position: absolute;
-  inset: -60%;
-  z-index: -1;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgb(var(--glow) / 0.62), transparent 70%);
-  opacity: 0.55;
-  filter: blur(6px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.mark img {
-  filter: drop-shadow(0 0 3px rgb(var(--glow) / 0.42));
-  transition: filter 0.3s ease, transform 0.3s ease;
-}
-.mark-link:hover .mark::before,
-a:hover .mark::before { opacity: 1; transform: scale(1.18); }
-.mark-link:hover .mark img,
-a:hover .mark img {
-  filter: drop-shadow(0 0 7px rgb(var(--glow) / 0.78));
-  transform: translateY(-1px) scale(1.06);
-}
-@media (prefers-reduced-motion: reduce) {
-  .mark::before, .mark img { transition: none; }
-  .mark-link:hover .mark::before, a:hover .mark::before { transform: none; }
-  .mark-link:hover .mark img, a:hover .mark img { transform: none; }
-}
+.mark-link:hover img { opacity: 1; transform: translateY(-1px); }
 
 /* ─────────────────────────────────────────────────────────────
    Bring me the chaos: the same estate as found, then as handed
