@@ -18,31 +18,35 @@ type Props = {
   style?: React.CSSProperties
 }
 
-function Mark({ src, label, className, style }: Props & { src: string; label: string }) {
+function Mark({ src, label, glow, className, style }: Props & { src: string; label: string; glow: string }) {
   return (
-    <img
-      src={src}
-      alt=""
-      aria-hidden="true"
-      data-brand={label}
-      // Three tiny files that sit in the hero, the contact card and the
-      // footer: deferring them only buys a blank square where a logo goes.
-      loading="eager"
-      decoding="async"
-      className={className}
-      style={{ ...style, color: undefined, objectFit: "contain" }}
-    />
+    // The mark keeps the size the call site asks for; the glow is painted
+    // behind it by `.mark`, in the brand's own colour, with no edge of its own.
+    <span className={`mark ${className ?? ""}`} style={{ "--glow": glow } as React.CSSProperties}>
+      <img
+        src={src}
+        alt=""
+        aria-hidden="true"
+        data-brand={label}
+        // Three tiny files that sit in the hero, the contact card and the
+        // footer: deferring them only buys a blank square where a logo goes.
+        loading="eager"
+        decoding="async"
+        className="h-full w-full"
+        style={{ ...style, color: undefined, objectFit: "contain" }}
+      />
+    </span>
   )
 }
 
-export const GitHubMark = (p: Props) => <Mark src="/brands/si-github.svg" label="GitHub" {...p} />
+export const GitHubMark = (p: Props) => <Mark src="/brands/si-github.svg" label="GitHub" glow="#F7F8FA" {...p} />
 
-export const LinkedInMark = (p: Props) => <Mark src="/brands/si-linkedin.svg" label="LinkedIn" {...p} />
+export const LinkedInMark = (p: Props) => <Mark src="/brands/si-linkedin.svg" label="LinkedIn" glow="#0A66C2" {...p} />
 
-export const GmailMark = (p: Props) => <Mark src="/brands/si-gmail.svg" label="Gmail" {...p} />
+export const GmailMark = (p: Props) => <Mark src="/brands/si-gmail.svg" label="Gmail" glow="#EA4335" {...p} />
 
 /** A telephone has no brand, so this one is drawn in the page's text colour. */
-export const PhoneMark = (p: Props) => <Mark src="/brands/phone.svg" label="Phone" {...p} />
+export const PhoneMark = (p: Props) => <Mark src="/brands/phone.svg" label="Phone" glow="#F7F8FA" {...p} />
 
 /** The location row: Google's own pin, in its own colours. */
-export const MapsMark = (p: Props) => <Mark src="/brands/google-maps.svg" label="Google Maps" {...p} />
+export const MapsMark = (p: Props) => <Mark src="/brands/google-maps.svg" label="Google Maps" glow="#34A853" {...p} />
