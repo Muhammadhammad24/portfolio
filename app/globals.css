@@ -476,11 +476,40 @@ body { counter-reset: plate; }
    on the page wearing somebody else's colours. They stand on the page
    itself at one size, with no well or disc drawn around them, the way the
    toolbox marks do; where a mark is a link, it lifts on hover. */
-.mark-link img {
-  opacity: 0.88;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+/* ── Brand marks, in the buttons' outline ─────────────────────────
+   The page already has a shape for "a thing you can press that is not
+   shouting": the hairline pill the secondary button wears. The marks take
+   the same one — same border, same radius, same hover — so the row of
+   logos under the buttons reads as part of the same set rather than as
+   loose artwork. One ring size everywhere, the mark optically centred in
+   it, and no colour touched. */
+.mark-ring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  transition: border-color 0.22s ease, background 0.22s ease, transform 0.22s ease;
 }
-.mark-link:hover img { opacity: 1; transform: translateY(-1px); }
+.mark-ring img { opacity: 0.88; transition: opacity 0.22s ease; }
+a:hover > .mark-ring,
+button:hover .mark-ring,
+.mark-ring:hover {
+  border-color: #ffffff;
+  background: rgba(255,255,255,0.06);
+  transform: translateY(-1px);
+}
+a:hover > .mark-ring img,
+button:hover .mark-ring img,
+.mark-ring:hover img { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .mark-ring { transition: none; }
+  a:hover > .mark-ring, button:hover .mark-ring, .mark-ring:hover { transform: none; }
+}
 
 /* ─────────────────────────────────────────────────────────────
    Bring me the chaos: the same estate as found, then as handed

@@ -96,7 +96,7 @@ export function HeroSection() {
                 href={href}
                 target="_blank" rel="noopener noreferrer"
                 aria-label={label}
-                className="mark-link flex h-9 w-9 items-center justify-center"
+                className="mark-ring"
               >
                 <Icon className="h-5 w-5" />
               </Link>
