@@ -777,12 +777,16 @@ button:hover .mark-ring img,
   any size the figure is drawn at.
 */
 @keyframes flight-trail {
-  0%   { stroke-dashoffset: 1; }
-  80%  { stroke-dashoffset: 0.085; }
-  100% { stroke-dashoffset: 0.085; }
+  0%   { stroke-dashoffset: 0.085; }
+  80%  { stroke-dashoffset: -0.915; }
+  100% { stroke-dashoffset: -0.915; }
 }
 .flight-trail {
-  stroke-dasharray: 0.085 0.915;
+  /* The gap is longer than the path on purpose: with a pattern that sums to
+     exactly 1 the dash wraps, so the first frame of every beat shows the lit
+     length already sitting on the first company instead of growing out of
+     the floor. A gap this long cannot come round again. */
+  stroke-dasharray: 0.085 2;
   opacity: 0.85;
   animation: flight-trail 6.4s linear infinite, stair-ground 0.6s ease-out 0.95s both;
 }
@@ -799,13 +803,13 @@ button:hover .mark-ring img,
   nowhere — it arrives, and the arrival takes over from it.
 */
 @keyframes flight-dot {
-  0%     { stroke-dashoffset: 0.915; opacity: 1; }
-  79.9%  { stroke-dashoffset: 0.0015; opacity: 1; }
-  80%    { stroke-dashoffset: 0.0015; opacity: 0; }
-  100%   { stroke-dashoffset: 0.0015; opacity: 0; }
+  0%     { stroke-dashoffset: 0.002; opacity: 1; }
+  79.9%  { stroke-dashoffset: -0.998; opacity: 1; }
+  80%    { stroke-dashoffset: -0.998; opacity: 0; }
+  100%   { stroke-dashoffset: -0.998; opacity: 0; }
 }
 .flight-dot {
-  stroke-dasharray: 0.004 0.996;
+  stroke-dasharray: 0.004 2;
   animation: flight-dot 6.4s linear infinite,
              stair-ground 0.6s ease-out 0.95s both;
 }

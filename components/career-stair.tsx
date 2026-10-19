@@ -201,17 +201,14 @@ const MARKS = (() => {
 /**
  * How far in front of its own animation the light actually is.
  *
- * The lit length is drawn as a dash 8.5% of the climb long, travelling from
- * the start of the path — so at any moment its *front edge* is 8.5% further
- * along than the animation's own progress. Timing a flare to raw progress
- * therefore fires it 0.085 x 6.4s = half a second after the light has gone
- * past, which at one step per seventh of the beat is most of a step: the
- * light is already standing on the next company when the last one lights up.
- *
- * So every flare is timed to where the *front* of the light is, not where
- * its tail is. This has to stay equal to the dash in `.flight-trail`.
+ * Nothing, now. The lit length used to run on a dash pattern that summed to
+ * the whole path, so it wrapped: the first frame of every beat already had
+ * the light sitting 8.5% up the flight, on the first company, instead of
+ * growing out of the floor — the jump that read as a glitch at the start.
+ * The dash now has a gap longer than the path, so it grows from the origin
+ * and its front edge is exactly the animation's own progress.
  */
-const HEAD_LEAD = 0.085
+const HEAD_LEAD = 0
 
 /**
  * And the climb only occupies the first 80% of the beat — the rest is the
