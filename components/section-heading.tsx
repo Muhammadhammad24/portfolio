@@ -26,9 +26,9 @@ export function SectionHeading({ title, subtitle }: SectionHeadingProps) {
       </div>
 
       <h2
-        className="mt-4 font-semibold"
+        className="mt-3 font-semibold"
         style={{
-          fontSize: "clamp(32px, 4.5vw, 50px)",
+          fontSize: "clamp(25px, 3.1vw, 38px)",
           lineHeight: 1.12,
           letterSpacing: "-0.035em",
           color: "var(--text)",

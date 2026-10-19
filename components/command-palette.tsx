@@ -52,10 +52,10 @@ function copyText(text: string) {
 
 const COMMANDS: Command[] = [
   ...[
-    { id: "about", label: "About", hint: "Background and education" },
-    { id: "skills", label: "Skills", hint: "Tools and proficiency" },
-    { id: "projects", label: "Projects", hint: "Things I have built" },
     { id: "experience", label: "Experience", hint: "Seven roles since 2019" },
+    { id: "projects", label: "Projects", hint: "Things I have built" },
+    { id: "skills", label: "Skills", hint: "Tools and proficiency" },
+    { id: "about", label: "About", hint: "Background and education" },
     { id: "contact", label: "Contact", hint: "Send a message" },
   ].map(
     (s): Command => ({

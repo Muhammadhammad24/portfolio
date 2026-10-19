@@ -43,6 +43,62 @@ export default function Portfolio() {
         </div>
       </SectionReveal>
 
+      {/* ═══════════ EXPERIENCE ═══════════ */}
+      <SectionReveal id="experience-section" className="section">
+        <div className="container">
+          <SectionHeading title="How I got here" subtitle="The road" />
+          <p className="section-lede">
+            Seven years, two countries, seven employers. It started on a helpdesk in Karachi
+            and it has been the same job ever since, only the number of people depending
+            on it keeps going up.
+          </p>
+
+          <div className="section-body measure-wide">
+            <JourneyMap />
+          </div>
+
+          {/* The nav's Experience lands here, on the roles themselves. */}
+          <div id="experience" className="mt-20">
+            <h3 className="eyebrow mb-10">
+              The detail
+            </h3>
+            <Timeline />
+          </div>
+        </div>
+      </SectionReveal>
+
+      {/* ═══════════ PROJECTS ═══════════ */}
+      <SectionReveal id="projects" className="section">
+        <div className="container relative z-10">
+          <SectionHeading title="Projects" subtitle="Work" />
+
+          <ProjectsExplorer />
+        </div>
+      </SectionReveal>
+
+      {/* ═══════════ SKILLS — tabbed categories + circular rings ═══════════ */}
+      <SectionReveal id="skills" className="section">
+        <div className="container">
+          <SectionHeading title="Skills" subtitle="Expertise" />
+          <p className="section-lede">
+            Seven domains, and in each one the tools I actually have my hands on — not a list of everything I have ever opened.
+          </p>
+          <SkillsHex />
+        </div>
+      </SectionReveal>
+
+      {/* ═══════════ CERTIFICATIONS — live-site card style ═══════════ */}
+      <SectionReveal id="certifications" className="section">
+        <div className="container">
+          <SectionHeading title="Certifications" subtitle="Credentials" />
+          <p className="section-lede">
+            Pick one to read what it covered. The Coursera ones link out so you can check them yourself rather than take my word for it.
+          </p>
+          <CertsHex />
+
+          {/* Bottom stats removed */}
+        </div>
+      </SectionReveal>
       {/* ═══════════ ABOUT ═══════════ */}
       <SectionReveal id="about" className="section">
         <div className="container">
@@ -72,7 +128,7 @@ export default function Portfolio() {
             {/* ── Right: story, education, languages ── */}
             <div className="space-y-12">
               <div className="space-y-5">
-                <p style={{ fontSize: 17, lineHeight: 1.75, color: 'var(--text-dim)' }}>
+                <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--text-dim)' }}>
                   IT Infrastructure Engineer with{" "}
                   <span style={{ color: 'var(--text)' }}>7 years of experience</span> bridging
                   traditional system administration and cloud-native approaches. I manage{" "}
@@ -80,7 +136,7 @@ export default function Portfolio() {
                   with a strong foundation in Windows and Linux server administration, enterprise
                   networking, and GDPR-aligned Zero Trust security.
                 </p>
-                <p style={{ fontSize: 17, lineHeight: 1.75, color: 'var(--text-dim)' }}>
+                <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--text-dim)' }}>
                   I build infrastructure that runs quietly in the background, scales without drama,
                   stays secure, and rarely needs anyone to step in. If your systems feel messy,
                   manual, or held together by too many late-night fixes, that is the kind of problem
@@ -143,69 +199,13 @@ export default function Portfolio() {
         </div>
       </SectionReveal>
 
-      {/* ═══════════ SKILLS — tabbed categories + circular rings ═══════════ */}
-      <SectionReveal id="skills" className="section">
-        <div className="container">
-          <SectionHeading title="Skills" subtitle="Expertise" />
-          <p className="section-lede">
-            Seven domains, and in each one the tools I actually have my hands on — not a list of everything I have ever opened.
-          </p>
-          <SkillsHex />
-        </div>
-      </SectionReveal>
-
-      {/* ═══════════ CERTIFICATIONS — live-site card style ═══════════ */}
-      <SectionReveal id="certifications" className="section">
-        <div className="container">
-          <SectionHeading title="Certifications" subtitle="Credentials" />
-          <p className="section-lede">
-            Pick one to read what it covered. The Coursera ones link out so you can check them yourself rather than take my word for it.
-          </p>
-          <CertsHex />
-
-          {/* Bottom stats removed */}
-        </div>
-      </SectionReveal>
-      {/* ═══════════ PROJECTS ═══════════ */}
-      <SectionReveal id="projects" className="section">
-        <div className="container relative z-10">
-          <SectionHeading title="Projects" subtitle="Work" />
-
-          <ProjectsExplorer />
-        </div>
-      </SectionReveal>
-
-      {/* ═══════════ EXPERIENCE ═══════════ */}
-      <SectionReveal id="experience-section" className="section">
-        <div className="container">
-          <SectionHeading title="How I got here" subtitle="The road" />
-          <p className="section-lede">
-            Seven years, two countries, seven employers. It started on a helpdesk in Karachi
-            and it has been the same job ever since, only the number of people depending
-            on it keeps going up.
-          </p>
-
-          <div className="section-body measure-wide">
-            <JourneyMap />
-          </div>
-
-          {/* The nav's Experience lands here, on the roles themselves. */}
-          <div id="experience" className="mt-20">
-            <h3 className="eyebrow mb-10">
-              The detail
-            </h3>
-            <Timeline />
-          </div>
-        </div>
-      </SectionReveal>
-
       {/* ═══════════ CONTACT ═══════════ */}
       <SectionReveal id="contact" className="section">
         <div className="container relative z-10">
           <SectionHeading title="Get in touch" subtitle="Contact" />
           <div className="section-body measure-wide grid grid-cols-1 gap-6 md:grid-cols-2 items-start">
             <GlassmorphicCard>
-              <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--text)' }}>
+              <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--text)' }}>
                 Let's connect
               </h3>
               <p className="text-sm mb-8 leading-relaxed" style={{ color: 'var(--text-dim)' }}>

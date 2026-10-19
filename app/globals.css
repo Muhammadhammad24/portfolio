@@ -254,21 +254,21 @@
 .measure-wide { width: 100%; }
 
 /* One vertical step between sections, so the scroll has a pulse. */
-.section      { padding-block: clamp(56px, 6.5vw, 104px); position: relative; z-index: 1; }
+.section      { padding-block: clamp(38px, 4.2vw, 68px); position: relative; z-index: 1; }
 /* The body of a section always starts the same distance below its heading. */
-.section-body { margin-top: clamp(28px, 3.6vw, 52px); }
+.section-body { margin-top: clamp(20px, 2.3vw, 34px); }
 /* Intro paragraph under a heading, on the reading measure. */
 .section-lede {
-  margin-top: 18px;
-  max-width: 62ch;
-  font-size: clamp(15px, 1.5vw, 17px);
-  line-height: 1.7;
+  margin-top: 13px;
+  max-width: 64ch;
+  font-size: clamp(13.5px, 1.2vw, 15px);
+  line-height: 1.65;
   color: var(--text-dim);
 }
 
 /* A small label above a sub-block: the only heading style below h2. */
 .eyebrow {
-  font-size: 13.5px;
+  font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -707,51 +707,3 @@ a:hover > .mark-well,
 @keyframes loop-flow { to { stroke-dashoffset: -16; } }
 .loop-flow { animation: loop-flow 1.1s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .loop-flow { animation: none; } }
-
-/* ══════════════════════════════════════════════════════════════
-   One rule for every brand mark on the page
-   ══════════════════════════════════════════════════════════════
-   The art direction is monochrome with colour spent only on what
-   is lit, live or chosen — but the skills grid, the social discs
-   and the contact marks were each carrying their vendors' full
-   palettes at rest, which is why those sections read as a
-   different page from the hero.
-
-   So every mark now sits in the page's own greyscale until it is
-   actually addressed: a skills row brightens when you are reading
-   it, and a single mark takes its real colour only when you point
-   at it. Nothing is hidden, the logos are still there and still
-   recognisable by shape — they simply stop competing with the one
-   red the page keeps for things going wrong.
-   ══════════════════════════════════════════════════════════════ */
-.tool-mark img,
-.social-icon-btn img,
-.mark-well img,
-.brand img {
-  filter: grayscale(1) brightness(1.45) contrast(0.82);
-  opacity: 0.72;
-  transition: filter 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
-}
-
-/* Reading a row is enough to bring it up, but not to colour it. */
-.skill-row:hover .tool-mark img,
-.skill-row:focus-within .tool-mark img { opacity: 0.95; }
-
-/* Pointing at one thing is what spends the colour. */
-.tool-mark:hover img,
-.tool-mark:focus-visible img,
-.social-icon-btn:hover img,
-.social-icon-btn:focus-visible img,
-a:hover > .mark-well img,
-.mark-well:hover img,
-.brand:hover img,
-.brand:focus-visible img {
-  filter: none;
-  opacity: 1;
-  transform: translateY(-2px);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tool-mark img, .social-icon-btn img, .mark-well img, .brand img { transition: none; }
-  .tool-mark:hover img, .social-icon-btn:hover img, .mark-well:hover img, .brand:hover img { transform: none; }
-}

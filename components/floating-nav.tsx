@@ -7,10 +7,10 @@ import { useMobile } from "@/hooks/use-mobile"
 import { scrollToSection, scrollToY } from "@/components/smooth-scroll"
 
 const NAV_ITEMS = [
-  { name: "About", id: "about" },
-  { name: "Skills", id: "skills" },
-  { name: "Projects", id: "projects" },
   { name: "Experience", id: "experience" },
+  { name: "Projects", id: "projects" },
+  { name: "Skills", id: "skills" },
+  { name: "About", id: "about" },
 ]
 
 export function FloatingNav() {
