@@ -14,6 +14,8 @@
 <p align="center">
   <a href="mailto:muhammad24997@gmail.com"><strong>Get in touch&nbsp;→</strong></a>
   &nbsp;·&nbsp;
+  <a href="https://muhammadhammad.vercel.app"><strong>Live site&nbsp;→</strong></a>
+  &nbsp;·&nbsp;
   <a href="https://github.com/Muhammadhammad24?tab=repositories"><strong>View projects&nbsp;→</strong></a>
 </p>
 
@@ -25,11 +27,9 @@
 
 ---
 
-## A day in production
+## What the hero shows
 
-<p align="center">
-  <img src="public/day-map.svg" width="456" alt="A day in production: monitoring and alerts, service desk triage from L1 to L3, change management, infrastructure automation, identity and access, and endpoint management — over an estate of monitoring, network, systems and cloud that never stops. Partway through, monitoring catches an incident, the day stops, and containment runs before the day resumes." />
-</p>
+The right half of the landing page is one figure: the estate as found at the top — eight things cross-wired, with no monitoring — pulled through a single band in the middle (triage → root cause → fix → harden → automate → document), and out of the bottom as one backbone with everything in order and nothing crossing. Chaos goes in, order comes out. The four rows beneath it pair what I walk into with what I hand back, in the tools I actually ran.
 
 ---
 
@@ -81,10 +81,10 @@ app/
   page.tsx             # The whole page, section by section
 
 components/
-  hero-section.tsx     # Name, intro and the day map
-  day-map.tsx          # A working day, 08:00 → 17:30, as a diagram
+  hero-section.tsx     # Name, intro and the chaos-to-order figure
+  chaos-to-order.tsx   # The estate as found → method → handed back
   github-panel.tsx     # Live GitHub data (server component)
-  skills-hex.tsx       # Skills grouped in six layers
+  skills-hex.tsx       # Skills grouped by domain, with tool logos
   certs-hex.tsx        # Certifications, built on hex-gallery
   hex-gallery.tsx      # Shared pick-one-and-read-it gallery
   projects-explorer.tsx
@@ -105,4 +105,5 @@ hooks/
 public/
   photo_hammad.jpg     # Portrait
   favicon.svg
+  brands/              # Tool logos — dark-mode treated SVGs
 ```
