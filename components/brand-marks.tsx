@@ -39,14 +39,14 @@ function Mark({ src, label, glow, className, style }: Props & { src: string; lab
   )
 }
 
-export const GitHubMark = (p: Props) => <Mark src="/brands/si-github.svg" label="GitHub" glow="#F7F8FA" {...p} />
+export const GitHubMark = (p: Props) => <Mark src="/brands/si-github.svg" label="GitHub" glow="247 248 250" {...p} />
 
-export const LinkedInMark = (p: Props) => <Mark src="/brands/si-linkedin.svg" label="LinkedIn" glow="#0A66C2" {...p} />
+export const LinkedInMark = (p: Props) => <Mark src="/brands/si-linkedin.svg" label="LinkedIn" glow="10 102 194" {...p} />
 
-export const GmailMark = (p: Props) => <Mark src="/brands/si-gmail.svg" label="Gmail" glow="#EA4335" {...p} />
+export const GmailMark = (p: Props) => <Mark src="/brands/si-gmail.svg" label="Gmail" glow="234 67 53" {...p} />
 
 /** A telephone has no brand, so this one is drawn in the page's text colour. */
-export const PhoneMark = (p: Props) => <Mark src="/brands/phone.svg" label="Phone" glow="#F7F8FA" {...p} />
+export const PhoneMark = (p: Props) => <Mark src="/brands/phone.svg" label="Phone" glow="247 248 250" {...p} />
 
 /** The location row: Google's own pin, in its own colours. */
-export const MapsMark = (p: Props) => <Mark src="/brands/google-maps.svg" label="Google Maps" glow="#34A853" {...p} />
+export const MapsMark = (p: Props) => <Mark src="/brands/google-maps.svg" label="Google Maps" glow="52 168 83" {...p} />

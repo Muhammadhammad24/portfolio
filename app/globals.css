@@ -481,25 +481,33 @@ body { counter-reset: plate; }
   display: inline-flex;
   isolation: isolate;
 }
-/* The brand's own colour, bloomed behind the mark. It has no edge, so it
-   frames nothing — it only lets five different palettes sit on the same
-   black page without each one shouting on its own. */
+/* Each mark is lit from its own colour, in two layers: a wide bloom behind it
+   for the glow on the page, and a tight drop-shadow on the artwork itself so
+   the colour reads as coming off the logo rather than sitting behind it. The
+   mark is `--glow` as an R G B triplet, so both layers can take it at the
+   alpha each one needs. No frame, and the artwork is never recoloured. */
 .mark::before {
   content: "";
   position: absolute;
-  inset: -55%;
+  inset: -60%;
   z-index: -1;
   border-radius: 50%;
-  background: radial-gradient(closest-side, var(--glow, #fff), transparent 72%);
-  opacity: 0.20;
-  filter: blur(5px);
-  transition: opacity 0.28s ease, transform 0.28s ease;
+  background: radial-gradient(closest-side, rgb(var(--glow) / 0.62), transparent 70%);
+  opacity: 0.55;
+  filter: blur(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.mark img { transition: transform 0.28s ease; }
+.mark img {
+  filter: drop-shadow(0 0 3px rgb(var(--glow) / 0.42));
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
 .mark-link:hover .mark::before,
-a:hover .mark::before { opacity: 0.46; transform: scale(1.12); }
+a:hover .mark::before { opacity: 1; transform: scale(1.18); }
 .mark-link:hover .mark img,
-a:hover .mark img { transform: translateY(-1px); }
+a:hover .mark img {
+  filter: drop-shadow(0 0 7px rgb(var(--glow) / 0.78));
+  transform: translateY(-1px) scale(1.06);
+}
 @media (prefers-reduced-motion: reduce) {
   .mark::before, .mark img { transition: none; }
   .mark-link:hover .mark::before, a:hover .mark::before { transform: none; }
@@ -653,17 +661,17 @@ a:hover .mark img { transform: translateY(-1px); }
   15%          { fill: #ffffff; }
   26%, 100%    { fill: rgba(255, 255, 255, 0.3); }
 }
-.method-step { fill: rgba(255, 255, 255, 0.3); animation: method-step 3.4s linear infinite; }
+.method-step { fill: rgba(255, 255, 255, 0.3); animation: method-step 5.2s linear infinite; }
 @keyframes method-pass {
   0%   { stroke-dashoffset: 1; }
   88%  { stroke-dashoffset: 0; }
   100% { stroke-dashoffset: 0; opacity: 0; }
 }
-.method-pass { stroke-dasharray: 1; animation: method-pass 3.4s linear infinite; }
+.method-pass { stroke-dasharray: 1; animation: method-pass 5.2s linear infinite; }
 
 /* And the estate below keeps time with it. */
 @keyframes sys-drop { 0%, 100% { opacity: 0; } 8% { opacity: 0.85; } 24% { opacity: 0; } }
-.sys-drop { opacity: 0; animation: sys-drop 3.4s ease-out infinite; }
+.sys-drop { opacity: 0; animation: sys-drop 5.2s ease-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   .method-step { fill: rgba(255, 255, 255, 0.72); }
@@ -674,7 +682,7 @@ a:hover .mark img { transform: translateY(-1px); }
 /* The pool of light under the backbone breathes on the same clock as
    everything else below the waist — slowly, and barely. */
 @keyframes bus-glow { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; } }
-.bus-glow { animation: bus-glow 3.4s ease-in-out infinite; }
+.bus-glow { animation: bus-glow 5.2s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .bus-glow { animation: none; } }
 
 /*

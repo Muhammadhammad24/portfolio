@@ -58,7 +58,7 @@ const WAIST_W = 418
 const WAIST_MID = WAIST_X + WAIST_W / 2
 const BUS_Y = 292
 /** One clock for the whole machine, in seconds. */
-const BEAT = 3.4
+const BEAT = 5.2
 
 /**
  * What actually happens inside the door. These are not adjectives — each one
