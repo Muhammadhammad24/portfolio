@@ -1,9 +1,46 @@
-# Muhammad Hammad — IT Infrastructure Engineer Portfolio
+<p align="center">
+  <img src="public/photo_hammad.jpg" width="112" height="112" alt="Muhammad Hammad" style="border-radius:50%" />
+</p>
+
+<h1 align="center">Muhammad Hammad</h1>
+
+<p align="center">🟢 Available · Germany</p>
+
+<p align="center">
+  IT Infrastructure Engineer. I keep company systems running and locked down:<br />
+  cloud, networks, servers, and the laptops people actually sit in front of.
+</p>
+
+<p align="center">
+  <a href="mailto:muhammad24997@gmail.com"><strong>Get in touch&nbsp;→</strong></a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/Muhammadhammad24?tab=repositories"><strong>View projects&nbsp;→</strong></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Muhammadhammad24">GitHub</a> ·
+  <a href="https://www.linkedin.com/in/mhammad24/">LinkedIn</a> ·
+  <a href="mailto:muhammad24997@gmail.com">Email</a>
+</p>
+
+---
+
+## A day in production
+
+Monitoring and alerts · service desk triage from L1 to L3 · change management ·
+infrastructure automation · identity and access · endpoint management — over an
+estate of monitoring, network, systems and cloud that never stops. Partway
+through, monitoring catches an incident, the day stops, and containment runs
+before the day resumes.
+
+---
+
+## This repository
 
 Personal portfolio site. Single static page, no database, no CMS: the only live
 data is read from the GitHub API at build time and refreshed hourly.
 
-## Tech
+### Tech
 
 - **Next.js 15** — App Router, statically rendered
 - **TypeScript**
@@ -11,7 +48,7 @@ data is read from the GitHub API at build time and refreshed hourly.
 - **Framer Motion** — nav, scroll progress, command palette
 - **Lucide React** — icons
 
-## Getting started
+### Getting started
 
 ```bash
 npm install
@@ -20,14 +57,14 @@ npm run dev
 
 Open <http://localhost:3000>.
 
-## Build
+### Build
 
 ```bash
 npm run build
 npm start
 ```
 
-## Environment
+### Environment
 
 Copy `.env.local.example` to `.env.local`. Both values are optional — the site
 builds and runs without them.
@@ -37,7 +74,7 @@ builds and runs without them.
 | `GITHUB_TOKEN` | `components/github-panel.tsx` | Rate limit drops to 60 req/h and the contribution graph is hidden |
 | `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` | `components/contact-form.tsx` | The form reports that email delivery is not configured |
 
-## Structure
+### Structure
 
 ```
 app/
